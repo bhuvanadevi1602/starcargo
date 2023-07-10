@@ -72,9 +72,10 @@ include('include/config.php');
                                                 <!--    <label class="form-check-label" for="customSwitchSuccess">Remember me</label>-->
                                                 <!--</div>-->
                                             </div><!--end col--> 
-                                            <div class="col-sm-6 text-end">
+                                            <!-- <div class="col-sm-6 text-end">
                                                 <a href="auth-recover-pw.html" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot password?</a>                                    
-                                            </div><!--end col--> 
+                                            </div> -->
+                                            <!--end col--> 
                                         </div><!--end form-group--> 
             
                                         <div class="form-group mb-0 row">
@@ -122,7 +123,7 @@ if(isset($_POST['login'])){
     $username=isset($_POST['username'])?$_POST['username']:"";
     $password=isset($_POST['password'])?$_POST['password']:"";
    
-    $query="select * from login where username=:username and password=:password";
+    $query="select * from user where username=:username and password=:password";
     $exe=$con->prepare($query);
     $data=[':username'=>$username,':password'=>$password];
     $queryexecute=$exe->execute($data);

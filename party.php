@@ -2,11 +2,13 @@
 session_start();
 $user_name = $_SESSION['user_name'];
 include('include/config.php');
+$dates=date("Y-m-d");
 // print_r($user_name);die();
-if($user_name!="") { 
-include('header.php');
+if ($user_name != "") {
+    include('header.php');
 ?>
-<div class="page-wrapper">
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   <div class="page-wrapper">
 
         <!-- Page Content-->
         <div class="page-content-tab">
@@ -18,12 +20,12 @@ include('header.php');
                         <div class="page-title-box">
                             <div class="float-end">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="#">Unikit</a></li>
+                                    <li class="breadcrumb-item"><a href="#">Party</a></li>
                                     <li class="breadcrumb-item"><a href="#">Tables</a></li>
                                     <li class="breadcrumb-item active">Datatables</li>
                                 </ol>
                             </div>
-                            <h4 class="page-title">Datatables</h4>
+                            <h4 class="page-title">Party Datatables</h4>
                         </div>
                         <!--end page-title-box-->
                     </div>
@@ -34,12 +36,12 @@ include('header.php');
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Customers Details </h4>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
-                                                        Add Party
-                                                    </button>
-                                                    <!--Start modal-header-->
-                                                                                    <div class="modal fade bd-example-modal-lg" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <!-- <h4 class="card-title">Customers Details </h4> -->
+                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
+                                    Add Party
+                                </button>
+                                <!--Start modal-header-->
+                                <div class="modal fade bd-example-modal-lg" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -48,138 +50,171 @@ include('header.php');
                                             </div><!--end modal-header-->
                                             <div class="modal-body">
                                                 <div class="row">
-                    
-                        
-                            <div class="card-header">
-                                <h4 class="card-title">Add Party</h4>
-                             
-                              
-                            </div><!--end card-header-->
-                            <div class="card-body">
-                                <form class="row g-3 needs-validation" novalidate>
-                                    <div class="col-md-4">
-                                      <label for="validationCustom01" class="form-label">Date</label>
-                                      <input type="date" class="form-control" id="validationCustom01"  required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid Date.
-                                      </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                      <label for="validationCustom01" class="form-label">Party Name</label>
-                                      <input type="text" class="form-control" id="validationCustom01"  required>
-                                      <div class="invalid-feedback">
-                                       Please provide a valid Party Name.
-                                      </div>
-                                    </div>
-                                      <div class="col-md-3">
-                                      <label for="validationCustom03" class="form-label">Mobile</label>
-                                      <input type="number" class="form-control" id="validationCustom03" required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid Mobile.
-                                      </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                      <label for="validationCustom02" class="form-label">Address</label>
-                                      <input type="text" class="form-control" id="validationCustom02"  required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid Address.
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                      <label for="validationCustom04" class="form-label">State</label>
-                                      <select class="form-select" id="validationCustom04" required>
-                                        <option selected disabled value="">Choose...</option>
-                                        <option>...</option>
-                                      </select>
-                                      <div class="invalid-feedback">
-                                        Please select a valid state.
-                                      </div>
-                                    </div>
-                                    <div class="col-md-3">
-                                      <label for="validationCustom05" class="form-label">Zip</label>
-                                      <input type="number" class="form-control" id="validationCustom05" required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid zip.
-                                      </div>
-                                    </div>
-                                    
-                                    <div class="col-md-3" id="validationCustom05" >
-                                            <label for="validationCustom05" class="form-label">Tranport Mode</label>
-                                            <div class="col-md-12" >
 
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Air</label>
+
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Add Party</h4>
+
+
+                                                    </div><!--end card-header-->
+                                                    <div class="card-body">
+                                                        <form class="row g-3 needs-validation" method="POST" novalidate>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom01" class="form-label">Date</label>
+                                                                <input type="date" value="<?=$dates?>" class="form-control" id="creationdate" name="creationdate" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Date.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom01" class="form-label">Party Name</label>
+                                                                <input type="text" class="form-control" id="partyname" name="partyname" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Party Name.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom03" class="form-label">Mobile</label>
+                                                                <input type="number" class="form-control" id="partymobile" name="partymobile" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Mobile.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="validationCustom02" class="form-label">Address</label>
+                                                                <!-- <input type="text" class="form-control" id="validationCustom02"  required> -->
+                                                                <textarea name="partyaddress" id="partyaddress" class="form-control"></textarea>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Address.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom04" class="form-label">State</label>
+                                                                <input list="states" class="form-control" name="state" id="state">
+
+                                                                <datalist id="states">
+                                                                    <?php
+                                                                    $sqlstate = "select * from states";
+                                                                    $exestate = $con->prepare($sqlstate);
+                                                                    $exestate->execute();
+                                                                    $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                                                                    foreach ($result as $res) {
+                                                                    ?>
+
+                                                                        <option selected disabled value="">Choose State...</option>
+                                                                        <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
+                                                                    <?php } ?>
+                                                                </datalist>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom04" class="form-label">City</label>
+                                                                <input list="cities" class="form-control" name="city" id="city">
+
+                                                                <datalist id="cities">
+                                                                    <?php
+                                                                    $sqlcity = "select * from cities";
+                                                                    $execity = $con->prepare($sqlcity);
+                                                                    $execity->execute();
+                                                                    $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
+                                                                    foreach ($rescity as $resc) {
+                                                                    ?>
+
+                                                                        <option selected disabled value="">Choose City...</option>
+                                                                        <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
+                                                                    <?php } ?>
+                                                                </datalist>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom05" class="form-label">Zip</label>
+                                                                <input type="number" class="form-control" name="partyzip" id="partyzip" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid zip.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="validationCustom05">
+                                                                <label for="validationCustom05" class="form-label">Type of Booking</label>
+                                                                <div class="col-md-12">
+
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="bookmode" name="bookmode" value="Air">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="bookmode" name="bookmode" value="Train">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!--end row-->
+                                                            <div class="col-md-3" id="airprices">
+                                                                <label for="validationCustom03" class="form-label">Air Price</label>
+                                                                <input type="number" class="form-control" name="airprice" id="airprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Air Prize.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="trainprices">
+                                                                <label for="validationCustom03" class="form-label">Trian Price</label>
+                                                                <input type="number" class="form-control" name="trainprice" id="trainprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Trian Prize.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="trainprices">
+                                                                <label for="validationCustom03" class="form-label">GST Number</label>
+                                                                <input type="text" class="form-control" name="gst" id="gst" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Trian Prize.
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12" id="validationCustom05">
+                                                                <label for="validationCustom05" class="form-label">Destination</label>
+                                                                <div class="col-md-12">
+
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Delhi">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Delhi</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Agra">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Agra</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kaura">
+                                                                        <label class="form-check-label" for="inlineCheckbox3">Kaura</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kanpur">
+                                                                        <label class="form-check-label" for="inlineCheckbox4">Kanpur</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!--end row-->
+
+
+
+                                                            <div class="col-12">
+                                                                <button class="btn btn-primary" type="submit" name="createparty" id="createparty">Create Party</button>
+                                                            </div>
+                                                        </form><!--end form-->
+                                                    </div><!--end card-body-->
+
+
+
+
                                                 </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Train</label>
-                                                </div>
-                                              <div class="invalid-feedback">
-                                        Please provide a valid zip.
-                                      </div>
-                                            </div>
 
-                                        </div><!--end row-->  
-                                  
-
-                             
-                                    
-                                          <div class="col-md-3">
-                                      <label for="validationCustom03" class="form-label">Air Prize</label>
-                                      <input type="number" class="form-control" id="validationCustom03" required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid Air Prize.
-                                      </div>
-                                    </div>    <div class="col-md-3">
-                                      <label for="validationCustom03" class="form-label">Trian Prize</label>
-                                      <input type="number" class="form-control" id="validationCustom03" required>
-                                      <div class="invalid-feedback">
-                                        Please provide a valid Trian Prize.
-                                      </div>
-                                    </div>
-                                    
-                                    
-                                       <div class="col-md-12" id="validationCustom05" >
-                                            <label for="validationCustom05" class="form-label">Destination</label>
-                                            <div class="col-md-12" >
-
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox1" value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox1">Delhi</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox2" value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox2">Agra</label>
-                                                </div> 
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox3" value="option1">
-                                                    <label class="form-check-label" for="inlineCheckbox3">Delhi</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input class="form-check-input sample" type="checkbox" id="inlineCheckbox3" value="option2">
-                                                    <label class="form-check-label" for="inlineCheckbox4">Agra</label>
-                                                </div>
-                                              <div class="invalid-feedback">
-                                        Please provide a valid zip.
-                                      </div>
-                                            </div>
-
-                                        </div><!--end row-->  
-                                    
-                                    
-                                    
-                                    <div class="col-12">
-                                      <button class="btn btn-primary" type="submit">Create Party</button>
-                                    </div>
-                                </form><!--end form-->                                          
-                            </div><!--end card-body-->
-                       
-                   
-
-                  
-                </div>
-                                                
                                             </div><!--end modal-body-->
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -187,64 +222,62 @@ include('header.php');
                                         </div><!--end modal-content-->
                                     </div><!--end modal-dialog-->
                                 </div><!--end modal-->
-                                
+
                             </div><!--end card-header-->
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table" id="datatable_1">
                                         <thead class="thead-light">
-                                          <tr>
-                                            <th>Name</th>
-                                            <th>Ext.</th>
-                                            <th>City</th>
-                                            <th data-type="date" data-format="YYYY/DD/MM">Start Date</th>
-                                            <th>Completion</th>
-                                          </tr>
+                                            <tr>
+                                                <th>S.No</th>
+                                                <th>Party</th>
+                                                <th>Mobile</th>
+                                                <th>Address</th>
+                                                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                                                <th>Book Mode</th>
+                                                <th>Destination</th>
+                                                <th colspan="2">Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
+                                            <?php
+                                            $sqlparty="select * from party";
+                                            $exeparty=$con->prepare($sqlparty);
+                                            $exeparty->execute();
+                                            $resultparty=$exeparty->fetchAll(PDO::FETCH_ASSOC);
+                                          $i=0;
+                                            foreach($resultparty as $party)
+                                          {  
+                                            $i+=1;
+                                            ?>
                                             <tr>
-                                                <td>Unity Pugh</td>
-                                                <td>9958</td>
-                                                <td>Curicó</td>
-                                                <td>2005/02/11</td>
-                                                <td>37%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Theodore Duran</td><td>8971</td><td>Dhanbad</td><td>1999/04/07</td><td>97%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Kylie Bishop</td><td>3147</td><td>Norman</td><td>2005/09/08</td><td>63%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Willow Gilliam</td><td>3497</td><td>Amqui</td><td>2009/29/11</td><td>30%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Blossom Dickerson</td><td>5018</td><td>Kempten</td><td>2006/11/09</td><td>17%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Elliott Snyder</td><td>3925</td><td>Enines</td><td>2006/03/08</td><td>57%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Castor Pugh</td><td>9488</td><td>Neath</td><td>2014/23/12</td><td>93%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Pearl Carlson</td><td>6231</td><td>Cobourg</td><td>2014/31/08</td><td>100%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Deirdre Bridges</td><td>1579</td><td>Eberswalde-Finow</td><td>2014/26/08</td><td>44%</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Daniel Baldwin</td><td>6095</td><td>Moircy</td><td>2000/11/01</td><td>33%</td>
-                                            </tr>  
-                                            <tr>
-                                                <td>Pearl Carlson</td><td>6231</td><td>Cobourg</td><td>2014/31/08</td><td>100%</td>
-                                            </tr>                                                                                        
+                                                <td><?=$i?></td>
+                                                <td><?=$party['partyname']?></td>
+                                                <td><?=$party['partymobile']?></td>
+                                                <td><?=$party['partyaddress']?></td>
+                                                <td><?=$party['creationdate']?></td>
+                                                <td><?=$party['bookmode']?></td>
+                                                <td><?=$party['destinate']?></td>
+                                                <td>  <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
+                                  <i class="fa fa-pen"></i>
+                                </button>
+                                          </td>
+                                          <td> <form method="POST" action="">
+                                  <input type="hidden" name="partydid" id="partydid" value="<?= $party['id'] ?>" />
+                                  <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
+                                  <button type="submit" class="btn btn-edit btn-sm partydelete btn-danger" name="partydelete" id="partydelete">
+                                    <i class="fa fa-trash"></i>
+                                  </button>
+                                </form>
+                                          </td>
+                                          </tr>
+                                           <?php } ?>
                                         </tbody>
-                                      </table>
-                                         <button type="button" class="btn btn-sm btn-de-primary csv">Export CSV</button>
+                                    </table>
+                                    <!-- <button type="button" class="btn btn-sm btn-de-primary csv">Export CSV</button>
                                     <button type="button" class="btn btn-sm btn-de-primary sql">Export SQL</button>
                                     <button type="button" class="btn btn-sm btn-de-primary txt">Export TXT</button>
-                                    <button type="button" class="btn btn-sm btn-de-primary json">Export JSON</button>
+                                    <button type="button" class="btn btn-sm btn-de-primary json">Export JSON</button> -->
                                 </div>
                             </div>
                         </div>
@@ -253,17 +286,194 @@ include('header.php');
 
 
 
-                
+
             </div><!-- container -->
+
+            <div class="modal fade bd-example-modal-lg" id="editparty" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h6 class="modal-title m-0" id="myLargeModalLabel">Edit Party</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div><!--end modal-header-->
+                      <div class="modal-body">
+                        <div class="row">
+ <div class="card-body">
+                          <form class="row g-3 needs-validation" method="POST" novalidate>
+                          <input type="hidden" name="edpartyid" id="edpartyid" value="<?= $party['id'] ?>" />
+                                                                    <div class="col-md-4">
+                                                                <label for="validationCustom01" class="form-label">Date</label>
+                                                                <input type="date" value="<?=$dates?>" class="form-control" id="edcreationdate" name="edcreationdate" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Date.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom01" class="form-label">Party Name</label>
+                                                                <input type="text" class="form-control" id="edpartyname" name="edpartyname" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Party Name.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom03" class="form-label">Mobile</label>
+                                                                <input type="number" class="form-control" id="edpartymobile" name="edpartymobile" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Mobile.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12">
+                                                                <label for="validationCustom02" class="form-label">Address</label>
+                                                                <!-- <input type="text" class="form-control" id="validationCustom02"  required> -->
+                                                                <textarea name="edpartyaddress" id="edpartyaddress" class="form-control"></textarea>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Address.
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom04" class="form-label">State</label>
+                                                                <input list="states" class="form-control" name="edstate" id="edstate">
+
+                                                                <datalist id="states">
+                                                                    <?php
+                                                                    $sqlstate = "select * from states";
+                                                                    $exestate = $con->prepare($sqlstate);
+                                                                    $exestate->execute();
+                                                                    $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                                                                    foreach ($result as $res) {
+                                                                    ?>
+
+                                                                        <option selected disabled value="">Choose State...</option>
+                                                                        <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
+                                                                    <?php } ?>
+                                                                </datalist>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom04" class="form-label">City</label>
+                                                                <input list="cities" class="form-control" name="edcity" id="edcity">
+
+                                                                <datalist id="cities">
+                                                                    <?php
+                                                                    $sqlcity = "select * from cities";
+                                                                    $execity = $con->prepare($sqlcity);
+                                                                    $execity->execute();
+                                                                    $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
+                                                                    foreach ($rescity as $resc) {
+                                                                    ?>
+
+                                                                        <option selected disabled value="">Choose City...</option>
+                                                                        <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
+                                                                    <?php } ?>
+                                                                </datalist>
+                                                            </div>
+                                                            <div class="col-md-4">
+                                                                <label for="validationCustom05" class="form-label">Zip</label>
+                                                                <input type="number" class="form-control" name="edpartyzip" id="edpartyzip" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid zip.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="validationCustom05">
+                                                                <label for="validationCustom05" class="form-label">Type of Booking</label>
+                                                                <div class="col-md-12">
+
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="bookmode" name="bookmode" value="Air">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="bookmode" name="bookmode" value="Train">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!--end row-->
+                                                            <div class="col-md-3" id="airprices">
+                                                                <label for="validationCustom03" class="form-label">Air Price</label>
+                                                                <input type="number" class="form-control" name="edairprice" id="edairprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Air Prize.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="trainprices">
+                                                                <label for="validationCustom03" class="form-label">Trian Price</label>
+                                                                <input type="number" class="form-control" name="edtrainprice" id="edtrainprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Trian Prize.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-3" id="trainprices">
+                                                                <label for="validationCustom03" class="form-label">GST Number</label>
+                                                                <input type="text" class="form-control" name="edgst" id="edgst" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Trian Prize.
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="col-md-12" id="validationCustom05">
+                                                                <label for="validationCustom05" class="form-label">Destination</label>
+                                                                <div class="col-md-12">
+
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Delhi">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Delhi</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Agra">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Agra</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kaura">
+                                                                        <label class="form-check-label" for="inlineCheckbox3">Kaura</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kanpur">
+                                                                        <label class="form-check-label" for="inlineCheckbox4">Kanpur</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                </div>
+
+                                                            </div><!--end row-->
+
+
+
+                                                            <div class="col-12">
+                                                                <button class="btn btn-primary" type="submit" name="party_updation" id="party_updation">Update Party</button>
+                                                            </div>
+                                                        </form><!--end form-->
+                                                     </div><!--end card-body-->
+
+
+
+
+                        </div>
+
+                      </div><!--end modal-body-->
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+                      </div><!--end modal-footer-->
+                    </div><!--end modal-content-->
+                  </div><!--end modal-dialog-->
+                </div><!--end modal-->
+
 
             <!--Start Rightbar-->
             <!--Start Rightbar/offcanvas-->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="Appearance" aria-labelledby="AppearanceLabel">
                 <div class="offcanvas-header border-bottom">
-                  <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
-                  <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <h5 class="m-0 font-14" id="AppearanceLabel">Appearance</h5>
+                    <button type="button" class="btn-close text-reset p-0 m-0 align-self-center" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body">  
+                <div class="offcanvas-body">
                     <h6>Account Settings</h6>
                     <div class="p-2 text-start mt-3">
                         <div class="form-check form-switch mb-2">
@@ -293,24 +503,257 @@ include('header.php');
                             <input class="form-check-input" type="checkbox" id="settings-switch6">
                             <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
                         </div><!--end form-switch-->
-                    </div><!--end /div-->               
+                    </div><!--end /div-->
                 </div><!--end offcanvas-body-->
             </div>
-         
-             <script src="assets/pages/form-validation.js"></script>
-    <!-- App js -->
-    <script src="assets/js/app.js"></script>
-    <script src="assets/plugins/datatables/simple-datatables.js"></script>
-    <script src="assets/pages/datatable.init.js"></script>
 
-    <!-- App js -->
-    <script src="assets/js/app.js"></script>
-</body>
-</html>
-<?php
-include('footer.php');
-}
-else{
-    header("location:login.php");
-}
-?> 
+            <script src="assets/pages/form-validation.js"></script>
+            <!-- App js -->
+            <script src="assets/js/app.js"></script>
+            <script src="assets/plugins/datatables/simple-datatables.js"></script>
+            <script src="assets/pages/datatable.init.js"></script>
+            <script>
+                $(document).ready(function() {
+                    // $("#trainprices").hide();
+                    // $("#airprices").hide();
+                    // $("input[type='radio']").click(function() {
+                    //     var radioValue = $("input[name='book']:checked").val();
+                    //     if (radioValue == "Air") {
+                    //         $("#trainprices").show();
+                    //         $("#airprices").hide();
+                    //     } else {
+                    //         $("#airprices").show();
+                    //         $("#trainprices").hide();
+                    //     }
+                    // });
+               $("#createparty").click(function(e) {
+          e.preventDefault();
+          var ids = $('#ed_userid').val();
+          var creationdate = $('#creationdate').val();
+          var partyname = $('#partyname').val();
+          var partymobile = $('#partymobile').val();
+          var partyaddress = $('#partyaddress').val();
+          var state = $('#state').val();
+          var city = $('#city').val();
+          var partyzip = $('#partyzip').val();
+       
+          var bookmode = [];
+          $.each($("input[name='bookmode']:checked"), function(){
+            bookmode.push($(this).val());
+              });
+              book_mode = bookmode.toString();
+             
+
+
+
+
+              var destinate = [];
+              $.each($("input[name='destination']:checked"), function(){
+            destinate.push($(this).val());
+              });
+              destination = destinate.toString();
+            
+              var trainprice = $('#trainprice').val();
+          var airprice = $('#airprice').val();
+          var gst = $('#gst').val();
+          var destinate = [];
+           $.ajax({
+            url: 'ajax/ajax_request.php?action=partycreation',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "partycreation",
+              'creationdate': creationdate,
+              'partyname': partyname,
+              'partymobile': partymobile,
+              'partyaddress': partyaddress,
+              'state': state,
+              'city': city,
+              'partyzip': partyzip,
+              'bookmode': book_mode,
+            'trainprice': trainprice,
+              'airprice': airprice,
+              'gst': gst,
+              'destinate':destination
+            },
+            success: function(response) {
+              if (response.msg == "Success") {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Party Creation Success',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              } else {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Party Creation Failed',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              }
+            }
+          });
+        });
+    });
+
+        
+    $(".edit_party").click(function(e) {
+          e.preventDefault();
+          var partyid = $(this).attr("ids");
+          $("#partyid").val(partyid);
+          $.ajax({
+            url: 'ajax/ajax_request.php?action=partyfetch',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "partyfetch",
+              'ids': partyid
+            },
+            success: function(response) {
+              $("#edcreationdate").val(response.data.creationdate);
+              $("#edpartyname").val(response.data.partyname);
+              $("#edpartymobile").val(response.data.partymobile);
+              $("#edstate").val(response.data.state);
+              $("#edcity").val(response.data.city);
+              $("#edpartyzip").val(response.data.partyzip);
+              $("#edpartyaddress").val(response.data.partyaddress);
+            //   $("#edbookmode").val(response.data.bookmode);
+               $("#edairprice").val(response.data.airprice);
+               $("#edtrainprice").val(response.data.trainprice);
+               $("#edgst").val(response.data.gst);
+            //    $("#eddestination").val(response.data.destination);
+            }
+          });
+        
+        $("#party_updation").click(function(e) {
+          e.preventDefault();
+          var ids = $('#edpartyid').val();
+          var creationdate=$("#edcreationdate").val();
+           var partyname = $("#edpartyname").val();
+            var partymobile =  $("#edpartymobile").val();
+          var state =  $("#edstate").val();
+             var city = $("#edcity").val();
+             var partyzip = $("#edpartyzip").val();
+              var partyaddress = $("#edpartyaddress").val();
+             var airprice = $("#edairprice").val();
+              var trainprice = $("#edtrainprice").val();
+              var gst = $("#edgst").val();
+        
+              var bookmode = [];
+          $.each($("input[name='edbookmode']:checked"), function(){
+            bookmode.push($(this).val());
+              });
+              book_mode = bookmode.toString();
+              $.each($("input[name='eddestination']:checked"), function(){
+            destinate.push($(this).val());
+              });
+              destination = destinate.toString();
+              
+              $.ajax({
+            url: 'ajax/ajax_request.php?action=partyupdation',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "partyupdation",
+              'ids': ids,
+              'creationdate': creationdate,
+              'partyname': partyname,
+              'partymobile': partymobile,
+              'state': state,
+              'city' :city,
+              'partyzip' :partyzip,
+              'partyaddress':partyaddress,
+              'airprice':airprice,
+              'trainprice':trainprice,
+              'gst':gst,
+              'bookmode':book_mode,
+              'destinate':destination
+            },
+            success: function(response) {
+              console.log(response.data)
+              if (response.msg == "Success") {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Party Updation Success',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              } else {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Party Updation Failed',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              }
+            }
+          });
+        });
+
+        $("#partydelete").click(function(e) {
+          e.preventDefault();
+          var partydid = $("#partydid").val();
+           alert(partydid)
+          $.ajax({
+            url: 'ajax/ajax_request.php?action=partydeletion',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "partydeletion",
+              'ids': partydid
+            },
+            success: function(response) {
+              console.log(response.data)
+              if (response.msg == "Success") {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'User Deletion Success',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              } else {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'User Deletion Failed',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'party.php';
+                })
+              }
+            }
+          });
+        });
+''
+    });
+
+
+            </script>
+            <!-- App js -->
+            <script src="assets/js/app.js"></script>
+            </body>
+
+            </html>
+        <?php
+        include('footer.php');
+    } else {
+        header("location:login.php");
+    }
+        ?>
