@@ -262,10 +262,11 @@ if ($user_name != "") {
                                   <i class="fa fa-pen"></i>
                                 </button>
                                           </td>
-                                          <td> <form method="POST" action="">
+                                          <td> 
+                                          <form method="POST" action="">
                                   <input type="hidden" name="partydid" id="partydid" value="<?= $party['id'] ?>" />
                                   <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
-                                  <button type="submit" class="btn btn-edit btn-sm partydelete btn-danger" name="partydelete" id="partydelete">
+                                  <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" id="partydeletion">
                                     <i class="fa fa-trash"></i>
                                   </button>
                                 </form>
@@ -543,10 +544,6 @@ if ($user_name != "") {
               });
               book_mode = bookmode.toString();
              
-
-
-
-
               var destinate = [];
               $.each($("input[name='destination']:checked"), function(){
             destinate.push($(this).val());
@@ -601,10 +598,8 @@ if ($user_name != "") {
             }
           });
         });
-    });
-
-        
-    $(".edit_party").click(function(e) {
+ 
+        $(".edit_party").click(function(e) {
           e.preventDefault();
           var partyid = $(this).attr("ids");
           $("#partyid").val(partyid);
@@ -631,6 +626,7 @@ if ($user_name != "") {
             //    $("#eddestination").val(response.data.destination);
             }
           });
+        });
         
         $("#party_updation").click(function(e) {
           e.preventDefault();
@@ -703,10 +699,10 @@ if ($user_name != "") {
           });
         });
 
-        $("#partydelete").click(function(e) {
+        $(".partydeletion").click(function(e) {
           e.preventDefault();
           var partydid = $("#partydid").val();
-           alert(partydid)
+        //    alert(partydid)
           $.ajax({
             url: 'ajax/ajax_request.php?action=partydeletion',
             type: 'POST',
@@ -725,7 +721,7 @@ if ($user_name != "") {
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
-                  window.location.href = 'party.php';
+                  window.location.href = 'user.php';
                 })
               } else {
                 Swal.fire({
@@ -735,13 +731,13 @@ if ($user_name != "") {
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
-                  window.location.href = 'party.php';
+                  window.location.href = 'user.php';
                 })
               }
             }
           });
         });
-''
+    
     });
 
 
