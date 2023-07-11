@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 $user_name = $_SESSION['user_name'];
 include('include/config.php');
 // print_r($user_name);die();
@@ -36,7 +37,7 @@ if ($user_name != "") {
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <!--<h4 class="card-title">Customers Details </h4>-->
+                <h4 class="card-title">User Details </h4>
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
                   Create User
                 </button>
@@ -96,8 +97,8 @@ if ($user_name != "") {
                               </div>
 
 
-                              <div class="col-12">
-                                <input type="submit" name="usercreation" id="usercreation" class="btn btn-primary" value="Create">
+                              <div class="col-12 text-center">
+                                <input type="submit" name="usercreation" id="usercreation" class="btn btn-primary" value="Create User">
                               </div>
                             </form><!--end form-->
                           </div><!--end card-body-->
@@ -170,8 +171,8 @@ if ($user_name != "") {
                               </div>
 
 
-                              <div class="col-12">
-                                <input type="submit" name="ed_usercreation" id="ed_usercreation" class="btn btn-primary" value="Update">
+                              <div class="col-12 text-center">
+                                <input type="submit" name="ed_usercreation" id="ed_usercreation" class="btn btn-primary" value="Update User">
                               </div>
                             </form><!--end form-->
                           </div><!--end card-body-->
@@ -365,9 +366,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'User Creation Success',
+                  title: 'User Created',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -375,9 +376,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'User Creation Failed',
+                  title: 'User Create Failed',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -404,9 +405,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'User Deletion Success',
+                  title: 'User Deleted',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -414,9 +415,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'User Deletion Failed',
+                  title: 'User Delete Failed',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -450,9 +451,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'User Updation Success',
+                  title: 'User Updated',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -460,9 +461,9 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'User Updation Failed',
+                  title: 'User Update Failed',
                   showConfirmButton: false,
-                  timer: 3000
+                  timer: 1500
                 }).then(function() {
                   window.location.href = 'user.php';
                 })

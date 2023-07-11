@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 include('include/config.php');
 ?>
 <!DOCTYPE html>
@@ -80,7 +81,7 @@ include('include/config.php');
                             </li><!--end nav-item-->
 
                             <li class="nav-item">
-                                <a class="nav-link" href="booking-datatable.php"><i class="ti ti-file-diff menu-icon"></i><span>booking</span></a>
+                                <a class="nav-link" href="booking.php"><i class="ti ti-file-diff menu-icon"></i><span>booking</span></a>
                             </li><!--end nav-item-->
                             <li class="nav-item">
                                 <a class="nav-link" href="bonofied.php"><i class="ti ti-headphones menu-icon"></i><span>Bonofied</span></a>
