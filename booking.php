@@ -398,7 +398,11 @@ include('header.php');
                                                 <td><?=$book['gst']?></td>
                                                 <td><?=$book['payment']?></td>
                                                 <td>
+<<<<<<< HEAD
                                                 <button type="button" class="btn btn-primary btn-sm edit_" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
+=======
+                                                <button type="button" class="btn btn-primary btn-sm edit_book" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
+>>>>>>> 5214a33cf634dd5e388b194fb47c1bd63a15980f
                                   <i class="fa fa-pen"></i>
                                 </button>
                                                 </td>

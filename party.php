@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 $user_name = $_SESSION['user_name'];
 include('include/config.php');
 $dates=date("Y-m-d");
@@ -36,7 +37,7 @@ if ($user_name != "") {
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <!-- <h4 class="card-title">Customers Details </h4> -->
+                                <h4 class="card-title">Party Details </h4>
                                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
                                     Add Party
                                 </button>
@@ -204,7 +205,7 @@ if ($user_name != "") {
 
 
 
-                                                            <div class="col-12">
+                                                            <div class="col-12 text-center">
                                                                 <button class="btn btn-primary" type="submit" name="createparty" id="createparty">Create Party</button>
                                                             </div>
                                                         </form><!--end form-->
@@ -447,7 +448,7 @@ if ($user_name != "") {
 
 
 
-                                                            <div class="col-12">
+                                                            <div class="col-12 text-center">
                                                                 <button class="btn btn-primary" type="submit" name="party_updation" id="party_updation">Update Party</button>
                                                             </div>
                                                         </form><!--end form-->
@@ -618,7 +619,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Party Creation Success',
+                  title: 'Party Created',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
@@ -628,7 +629,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'Party Creation Failed',
+                  title: 'Party Create Failed',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
@@ -773,7 +774,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Party Updation Success',
+                  title: 'Party Updated',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
@@ -783,7 +784,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'Party Updation Failed',
+                  title: 'Party Update Failed',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
@@ -812,7 +813,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
-                  title: 'Party Deletion Success',
+                  title: 'Party Deleted',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
@@ -822,7 +823,7 @@ if ($user_name != "") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'error',
-                  title: 'Party Deletion Failed',
+                  title: 'Party Delete Failed',
                   showConfirmButton: false,
                   timer: 3000
                 }).then(function() {
