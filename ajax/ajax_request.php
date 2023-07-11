@@ -149,6 +149,9 @@ else{
 $msg="Failure";
 }
 }
+
+
+
 else{
 $msg="Failure";
 }
@@ -174,9 +177,10 @@ if($action=="partyupdation") {
   $gst=isset($_POST['gst'])?$_POST['gst']:"";
   $destinate=isset($_POST['destinate'])?$_POST['destinate']:"";
 
-$query="update user set creationdate=:creationdate,partyname=:partyname,partymobile=:partymobile,partyaddress=:partyaddress,state=:state,city=:city,partyzip=:partyzip,bookmode=:bookmode,trainprice=:trainprice,airprice=:airprice,gst=:gst,destinate=:destinate where id=:ids";
+$query="update party set creationdate=:creationdate,partyname=:partyname,partymobile=:partymobile,partyaddress=:partyaddress,state=:state,city=:city,partyzip=:partyzip,bookmode=:bookmode,trainprice=:trainprice,airprice=:airprice,gst=:gst,destinate=:destinate where id=:ids";
 $exe=$con->prepare($query);
-$data=[':creationdate'=>$creationdate,':username'=>$username,':password'=>$password,':role'=>$role,':ids'=>$ids];
+$data=['ids'=>$ids,':creationdate'=>$creationdate,':partyname'=>$partyname,':partymobile'=>$partymobile,':partyaddress'=>$partyaddress,':state'=>$state,':city'=>$city,':partyzip'=>$partyzip,':bookmode'=>$bookmode,':trainprice'=>$trainprice,':airprice'=>$airprice,':gst'=>$gst,':destinate'=>$destinate];
+// print_r($data);die();
 $query_execute=$exe->execute($data);
 if($query_execute){
 $msg="Success";
