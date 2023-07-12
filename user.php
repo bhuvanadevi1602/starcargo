@@ -60,20 +60,34 @@ if ($user_name != "") {
                           </div><!--end card-header-->
                           <div class="card-body">
                             <form class="row g-3 needs-validation" novalidate action="" method="POST">
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <label for="creationdate" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="creationdate" name="creationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
                                   Please provide a creattion date
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <label for="username" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
                                 <div class="valid-feedback">
                                   Please provide a valid User Name.
                                 </div>
                               </div>
+
+                              
+                              <div class="col-md-4">
+                                <label for="role" class="form-label">Type</label>
+                                <select class="form-select" id="type" required name="type">
+                                  <option selected disabled value="">Choose Type </option>
+                                  <option type="Air">Air</option>
+                                  <option type="Train">Train</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                  Please provide a valid role.
+                                </div>
+                              </div>
+
                               <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
@@ -96,8 +110,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-
-                              <div class="col-12 text-center">
+                            <div class="col-12 text-center">
                                 <input type="submit" name="usercreation" id="usercreation" class="btn btn-primary" value="Create User">
                               </div>
                             </form><!--end form-->
@@ -134,20 +147,35 @@ if ($user_name != "") {
                           <div class="card-body">
                             <form class="row g-3 needs-validation" novalidate action="" method="POST">
                               <input type="hidden" name="ed_userid" id="ed_userid" />
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <label for="creationdate" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="ed_creationdate" name="ed_creationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
                                   Please provide a creattion date
                                 </div>
                               </div>
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <label for="username" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="ed_username" name="ed_username" required>
                                 <div class="valid-feedback">
                                   Please provide a valid User Name.
                                 </div>
                               </div>
+
+                              <div class="col-md-4">
+                                <label for="role" class="form-label">Type</label>
+                                <select class="form-select" id="ed_type" required name="ed_type">
+                                  <option selected disabled value="">Choose Type </option>
+                                  <option type="Air">Air</option>
+                                  <option type="Train">Train</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                  Please provide a valid role.
+                                </div>
+                              </div>
+
+
+
                               <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="ed_password" name="ed_password" required>
@@ -160,18 +188,17 @@ if ($user_name != "") {
                               <div class="col-md-6">
                                 <label for="role" class="form-label">User Role</label>
                                 <select class="form-select" id="ed_role" required name="ed_role">
-                                  <option selected disabled value="">Choose...</option>
-                                  <option>Super Admin</option>
-                                  <option>Admin</option>
-                                  <option>User</option>
+                                  <option selected disabled value="">Choose The Role</option>
+                                  <!-- <option value="Super Admin">Super Admin</option> -->
+                                  <option value="Admin">Admin</option>
+                                  <option value="User">User</option>
                                 </select>
                                 <div class="invalid-feedback">
                                   Please provide a valid role.
                                 </div>
                               </div>
 
-
-                              <div class="col-12 text-center">
+                           <div class="col-12 text-center">
                                 <input type="submit" name="ed_usercreation" id="ed_usercreation" class="btn btn-primary" value="Update User">
                               </div>
                             </form><!--end form-->
@@ -201,6 +228,7 @@ if ($user_name != "") {
                         <th>Username</th>
                         <th>Password</th>
                         <th>Role</th>
+                        <th>Type</th>
                         <th data-type="date" data-format="YYYY/DD/MM">Creation Date</th>
                         <th colspan="2">Action</th>
                       </tr>
@@ -221,6 +249,7 @@ if ($user_name != "") {
                             <td><?= $res['username'] ?></td>
                             <td><?= $res['password'] ?></td>
                             <td><?= $res['role'] ?></td>
+                            <td><?= $res['type'] ?></td>
                             <td><?= $res['creationdate'] ?></td>
                             <td>
                               <?php if ($res['role'] != 'Super Admin') { ?>
@@ -340,7 +369,8 @@ if ($user_name != "") {
               $("#ed_username").val(response.data.username);
               $("#ed_password").val(response.data.password);
               $("#ed_role").val(response.data.role);
-            }
+              $("#ed_type").val(response.data.type);
+             }
           });
         });
 
@@ -350,6 +380,7 @@ if ($user_name != "") {
           var username = $('#username').val();
           var password = $('#password').val();
           var role = $('#role').val();
+          var type = $('#type').val();
           $.ajax({
             url: 'ajax/ajax_request.php?action=usercreation',
             type: 'POST',
@@ -360,6 +391,7 @@ if ($user_name != "") {
               'username': username,
               'password': password,
               'role': role,
+              'type':type
             },
             success: function(response) {
               if (response.msg == "Success") {
@@ -368,7 +400,7 @@ if ($user_name != "") {
                   icon: 'success',
                   title: 'User Created',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -378,7 +410,7 @@ if ($user_name != "") {
                   icon: 'error',
                   title: 'User Create Failed',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -407,7 +439,7 @@ if ($user_name != "") {
                   icon: 'success',
                   title: 'User Deleted',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -417,7 +449,7 @@ if ($user_name != "") {
                   icon: 'error',
                   title: 'User Delete Failed',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -433,6 +465,7 @@ if ($user_name != "") {
           var username = $('#ed_username').val();
           var password = $('#ed_password').val();
           var role = $('#ed_role').val();
+          var type = $('#ed_type').val();
           $.ajax({
             url: 'ajax/ajax_request.php?action=userupdation',
             type: 'POST',
@@ -444,6 +477,7 @@ if ($user_name != "") {
               'username': username,
               'password': password,
               'role': role,
+              'type': type
             },
             success: function(response) {
               console.log(response.data)
@@ -453,7 +487,7 @@ if ($user_name != "") {
                   icon: 'success',
                   title: 'User Updated',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -463,7 +497,7 @@ if ($user_name != "") {
                   icon: 'error',
                   title: 'User Update Failed',
                   showConfirmButton: false,
-                  timer: 1500
+                  timer: 2000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
