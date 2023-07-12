@@ -64,34 +64,35 @@ if ($user_name != "") {
                                 <label for="creationdate" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="creationdate" name="creationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
-                                  Please provide a creattion date
+                                  Please provide a creation date
                                 </div>
                               </div>
                               <div class="col-md-4">
                                 <label for="username" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
-                                <div class="valid-feedback">
-                                  Please provide a valid User Name.
+                                <div class="invalid-username text text-danger" id="invalid-username">
+                             Please provide a valid Username.
                                 </div>
-                              </div>
+                                <div class="text text-danger" id="already">User Already Exist</div>
+                               </div>
 
                               
                               <div class="col-md-4">
                                 <label for="role" class="form-label">Type</label>
                                 <select class="form-select" id="type" required name="type">
-                                  <option selected disabled value="">Choose Type </option>
-                                  <option type="Air">Air</option>
-                                  <option type="Train">Train</option>
+                                  <option selected value="">Choose Type </option>
+                                  <option value="Air">Air</option>
+                                  <option value="Train">Train</option>
                                 </select>
-                                <div class="invalid-feedback">
-                                  Please provide a valid role.
+                                <div class="invalid-type text text-danger" id="invalid-type">
+                                  Please provide a valid type.
                                 </div>
                               </div>
 
                               <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
-                                <div class="valid-feedback">
+                                <div class="invalid-password text text-danger" id="invalid-password">
                                   Please provide a valid password.
                                 </div>
                               </div>
@@ -100,12 +101,12 @@ if ($user_name != "") {
                               <div class="col-md-6">
                                 <label for="role" class="form-label">User Role</label>
                                 <select class="form-select" id="role" required name="role">
-                                  <option selected disabled value="">Choose...</option>
+                                  <option selected value="">Choose...</option>
                                   <!-- <option>Super Admin</option> -->
-                                  <option>Admin</option>
-                                  <option>User</option>
+                                  <option value="Admin">Admin</option>
+                                  <option value="User">User</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="invalid-role text text-danger" id="invalid-role">
                                   Please provide a valid role.
                                 </div>
                               </div>
@@ -151,7 +152,7 @@ if ($user_name != "") {
                                 <label for="creationdate" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="ed_creationdate" name="ed_creationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
-                                  Please provide a creattion date
+                                  Please provide a creation date
                                 </div>
                               </div>
                               <div class="col-md-4">
@@ -169,7 +170,7 @@ if ($user_name != "") {
                                   <option type="Air">Air</option>
                                   <option type="Train">Train</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback ">
                                   Please provide a valid role.
                                 </div>
                               </div>
@@ -352,6 +353,71 @@ if ($user_name != "") {
     ?>
     <script type="text/javascript">
       $(document).ready(function() {
+      
+        $("#already").hide(); 
+       $("#invalid-username").hide(); 
+        $("#invalid-password").hide(); 
+        $("#invalid-role").hide(); 
+        $("#invalid-type").hide(); 
+
+        $('#username').change(function() {
+    var uname = this.value;
+         $.ajax({
+            url: 'ajax/ajax_request.php?action=usernamecheck',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "usernamecheck",
+              'username': uname
+               },
+            success: function(response) {
+              console.log(response.data)
+              if (response.msg == "Success") {
+             $("#already").show();
+              } else {
+                $("#already").hide();
+           }
+            }
+          });
+
+   if(uname==""){
+  $("#invalid-username").show(); 
+ }
+ else{
+  $("#invalid-username").hide(); 
+ }
+  });
+
+  $('#password').change(function() {
+    var pass = this.value;
+ if(pass==""){
+  $("#invalid-password").show(); 
+ }
+ else{
+  $("#invalid-password").hide(); 
+ }
+  });
+
+  $('#role').change(function() {
+    var roles = this.value;
+ if(roles==""){
+  $("#invalid-role").show(); 
+ }
+ else{
+  $("#invalid-role").hide(); 
+ }
+  });
+
+  $('#type').change(function() {
+    var type = this.value;
+ if(type==""){
+  $("#invalid-type").show(); 
+ }
+ else{
+  $("#invalid-type").hide(); 
+ }
+  });
+
         $(".edit_user").click(function(e) {
           e.preventDefault();
           var usereid = $(this).attr("ids");
@@ -376,12 +442,29 @@ if ($user_name != "") {
 
         $("#usercreation").click(function(e) {
           e.preventDefault();
-          var creationdate = $('#creationdate').val();
+  var creationdate = $('#creationdate').val();
           var username = $('#username').val();
-          var password = $('#password').val();
-          var role = $('#role').val();
-          var type = $('#type').val();
-          $.ajax({
+         var password = $('#password').val();
+          var role = $('#role :selected').val();
+         var type = $('#type :selected').val();
+if(username=="") {
+$("#invalid-username").show(); 
+}
+if(password==""){
+$("#invalid-password").show(); 
+}
+if(role==""){
+$("#invalid-role").show(); 
+}
+if(type==""){
+$("#invalid-type").show(); 
+}
+else if(username!="" && password!="" && role!="" && type!=""){
+$("#invalid-username").hide();  
+$("#invalid-password").hide();    
+$("#invalid-role").hide();    
+$("#invalid-type").hide();      
+       $.ajax({
             url: 'ajax/ajax_request.php?action=usercreation',
             type: 'POST',
             dataType: "JSON",
@@ -394,7 +477,7 @@ if ($user_name != "") {
               'type':type
             },
             success: function(response) {
-              if (response.msg == "Success") {
+               if (response.msg == "Success") {
                 Swal.fire({
                   position: 'top-end',
                   icon: 'success',
@@ -417,7 +500,8 @@ if ($user_name != "") {
               }
             }
           });
-        });
+        }
+       });
 
         $(".userdeletion").click(function(e) {
           e.preventDefault();
