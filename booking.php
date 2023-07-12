@@ -785,6 +785,7 @@ if ($user_name != "") {
       <!-- App js -->
       <script src="assets/js/app.js"></script>
       <script>
+
         $(document).ready(function() {
           $("input[type='checkbox']").click(function() {
             var gst = $("input[id='gst']:checked").val();

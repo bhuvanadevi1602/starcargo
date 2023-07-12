@@ -52,6 +52,31 @@ $data['msg']=$msg;
 $data['data']=$result;
 echo json_encode($data);
 }
+
+if($action=="usernamecheck") {
+  $username=isset($_POST['username'])?$_POST['username']:"";
+ if($username!="") {
+ $query="select * from user where username=:username";
+$exe=$con->prepare($query);
+$data=[':username'=>$username];
+$exe->execute($data);
+$result = $exe->fetch(PDO::FETCH_ASSOC);
+if($result){
+ $msg="Success";
+}
+else{
+$msg="Failure";
+}
+}
+else{
+$msg="Failure";
+}
+$data=[];
+$data['msg']=$msg;
+$data['data']=$result;
+echo json_encode($data);
+}
+
 if($action=="userupdation") {
       $ids=isset($_POST['ids'])?$_POST['ids']:"";
      $creationdate=isset($_POST['creationdate'])?$_POST['creationdate']:"";
