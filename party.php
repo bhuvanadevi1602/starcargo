@@ -7,7 +7,9 @@ $dates=date("Y-m-d");
 // print_r($user_name);die();
 if ($user_name != "") {
     include('header.php');
-?>
+    $types=$_SESSION['types'];
+    $roles=$_SESSION['role'];
+    ?>
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    <div class="page-wrapper">
 
@@ -137,17 +139,29 @@ if ($user_name != "") {
                                                                 <label for="validationCustom05" class="form-label">Type of Booking</label>
                                                                 <div class="col-md-12">
 
-                                                                    <div class="form-check form-check-inline">
+                                                                <?php if($types=="") { ?>
+                                                                       <div class="form-check form-check-inline">
                                                                         <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
                                                                         <label class="form-check-label" for="inlineCheckbox1">Air</label>
                                                                     </div>
-                                                                    <div class="form-check form-check-inline">
+                                                                   <div class="form-check form-check-inline">
                                                                         <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
                                                                         <label class="form-check-label" for="inlineCheckbox2">Train</label>
                                                                     </div>
                                                                     <div class="invalid-feedback">
                                                                         Please provide a valid zip.
                                                                     </div>
+                                                                    <?php } else if($types=="Train") { ?>
+                                                                        <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                                    </div>
+                                                                       <?php } else if($types=="Air") { ?>
+                                                                        <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                                    </div>
+                                                                      <?php } ?>
                                                                 </div>
 
                                                             </div><!--end row-->
@@ -232,10 +246,26 @@ if ($user_name != "") {
                                         </thead>
                                         <tbody>
                                             <?php
+                                            if($roles=="Super Admin" && $types=="") {
                                             $sqlparty="select * from party";
                                             $exeparty=$con->prepare($sqlparty);
                                             $exeparty->execute();
                                             $resultparty=$exeparty->fetchAll(PDO::FETCH_ASSOC);
+                                            }
+                                            else if($roles=="Admin" && $types=="Air") {
+                                                   $sqlparty="select * from party where bookmode=:bookmode";
+                                                    $exeparty=$con->prepare($sqlparty);
+                                                    $data=[':bookmode'=>$types];
+                                                    $exeparty->execute($data);
+                                                    $resultparty=$exeparty->fetchAll(PDO::FETCH_ASSOC);
+                                                     }
+                                                     else if($roles=="Admin" && $types=="Train") {
+                                                        $sqlparty="select * from party where bookmode=:bookmode";
+                                                         $exeparty=$con->prepare($sqlparty);
+                                                         $data=[':bookmode'=>$types];
+                                                         $exeparty->execute($data);
+                                                         $resultparty=$exeparty->fetchAll(PDO::FETCH_ASSOC);
+                                                          }
                                           $i=0;
                                             foreach($resultparty as $party)
                                           {  
@@ -370,6 +400,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom05" class="form-label">Type of Booking</label>
                                                                 <div class="col-md-12">
 <input type="hidden" id="ed_bookmode" name="ed_bookmode" />
+<?php if($types=="") { ?>
                                                                     <div class="form-check form-check-inline">
                                                                         <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
                                                                         <label class="form-check-label" for="inlineCheckbox1">Air</label>
@@ -381,6 +412,24 @@ if ($user_name != "") {
                                                                     <div class="invalid-feedback">
                                                                         Please provide a valid zip.
                                                                     </div>
+                                                                    <?php } else if($types=="Air") { ?>
+                                                                        <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                        <?php } else if($types=="Train") { ?>
+                                                                            <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="edtrain" name="edbookmode" value="Train">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                                    </div>
+                                                                    <div
+                                                                     class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                    <?php } ?>
                                                                 </div>
 
                                                             </div><!--end row-->
