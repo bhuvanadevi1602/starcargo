@@ -717,8 +717,8 @@ if ($user_name != "") {
             let val=value.toLowerCase();
             $('#'+val).prop('checked',true);
         });
-        
-            }
+         
+                }
           });
         });
         
