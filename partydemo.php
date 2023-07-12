@@ -138,11 +138,11 @@ if ($user_name != "") {
                                                                 <div class="col-md-12">
 
                                                                     <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
+                                                                        <input class="form-check-input sample" type="checkbox" id="air" name="bookmode" value="Air">
                                                                         <label class="form-check-label" for="inlineCheckbox1">Air</label>
                                                                     </div>
                                                                     <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
+                                                                        <input class="form-check-input sample" type="checkbox" id="train" name="bookmode" value="Train">
                                                                         <label class="form-check-label" for="inlineCheckbox2">Train</label>
                                                                     </div>
                                                                     <div class="invalid-feedback">
@@ -176,19 +176,29 @@ if ($user_name != "") {
                                                             </div>
 
 
-                                                            <div class="col-md-3" id="validationCustom05">
+                                                            <div class="col-md-12" id="validationCustom05">
                                                                 <label for="validationCustom05" class="form-label">Destination</label>
                                                                 <div class="col-md-12">
-                                                                <input list="destinates" class="form-control" name="destination" id="destination">
 
-<datalist id="destinates">
-  <option value="Delhi">Delhi</option>
-  <option value="Agra">Agra</option>
-  <option value="Kaura">Kaura</option>
-  <option value="Kanpur">Kanpur</option>
-</datalist>
-                                                         
-
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Delhi">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Delhi</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Agra">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Agra</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kaura">
+                                                                        <label class="form-check-label" for="inlineCheckbox3">Kaura</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="destination" name="destination" value="Kanpur">
+                                                                        <label class="form-check-label" for="inlineCheckbox4">Kanpur</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
                                                                 </div>
 
                                                             </div><!--end row-->
@@ -371,11 +381,11 @@ if ($user_name != "") {
                                                                 <div class="col-md-12">
 <input type="hidden" id="ed_bookmode" name="ed_bookmode" />
                                                                     <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
+                                                                        <input class="form-check-input sample" type="checkbox" id="edair" name="edbookmode" value="Air">
                                                                         <label class="form-check-label" for="inlineCheckbox1">Air</label>
                                                                     </div>
                                                                     <div class="form-check form-check-inline">
-                                                                        <input class="form-check-input sample" type="radio" id="edtrain" name="edbookmode" value="Train">
+                                                                        <input class="form-check-input sample" type="checkbox" id="edtrain" name="edbookmode" value="Train">
                                                                         <label class="form-check-label" for="inlineCheckbox2">Train</label>
                                                                     </div>
                                                                     <div class="invalid-feedback">
@@ -409,17 +419,29 @@ if ($user_name != "") {
                                                             </div>
 
 
-                                                            <div class="col-md-3" id="validationCustom05">
-                                                                <label for="validationCustom05">Destination</label>
+                                                            <div class="col-md-12" id="validationCustom05">
+                                                                <label for="validationCustom05" class="form-label">Destination</label>
                                                                 <div class="col-md-12">
-                                                                <input list="eddestinates" class="form-control" name="ed_destination" id="ed_destination">
-
-<datalist id="eddestinates">
-  <option value="Delhi">Delhi</option>
-  <option value="Agra">Agra</option>
-  <option value="Kaura">Kaura</option>
-  <option value="Kanpur">Kanpur</option>
-</datalist>
+<input type="hidden" name="eddestinate" id="eddestinate" />
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="delhi" name="eddestination" value="Delhi">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Delhi</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="agra" name="eddestination" value="Agra">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Agra</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="kaura" name="eddestination" value="Kaura">
+                                                                        <label class="form-check-label" for="inlineCheckbox3">Kaura</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="checkbox" id="kanpur" name="eddestination" value="Kanpur">
+                                                                        <label class="form-check-label" for="inlineCheckbox4">Kanpur</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
                                                                 </div>
 
                                                             </div><!--end row-->
@@ -497,30 +519,53 @@ if ($user_name != "") {
                     $("#trainprices").hide();
                     $("#airprices").hide();
 
-                    $("input[type='radio']").click(function() {
-                    var bookmodes = $("input[name='bookmode']:checked").val();
-            
-                if (bookmodes == "Air") {
+                    $("input[type='checkbox']").click(function() {
+                    var airs = $("input[id='air']:checked").val();
+                    var trains = $("input[id='train']:checked").val();
+                //  alert(airs+" - "+trains)
+
+                if (airs == "Air" && trains!="Train") {
                         $("#trainprices").hide();
                         $("#airprices").show( );
                         }
-               else{
-                   $("#trainprices").show();
+               else if (airs != "Air" && trains=="Train") {
+                        $("#trainprices").show();
+                        $("#airprices").hide( );
+                        }
+               else if (airs == "Air" && trains=="Train") {
+                        $("#trainprices").show();
+                        $("#airprices").show( );
+                        }
+               else if (airs != "Air" && trains!="Train") {
+                        $("#trainprices").hide();
                         $("#airprices").hide( );
                         }
 
-                        var edbookmodes = $("input[name='edbookmode']:checked").val();
-               
-                if (edbookmodes == "Air") {
+
+                        var edairs = $("input[id='edair']:checked").val();
+                    var edtrains = $("input[id='edtrain']:checked").val();
+                //  alert(airs+" - "+trains)
+
+                if (edairs == "Air" && edtrains!="Train") {
                         $("#edtrainprices").hide();
                         $("#edtrainprice").val(0);
                         $("#edairprices").show();
                         }
-               else {
+               else if (edairs != "Air" && edtrains=="Train") {
                         $("#edtrainprices").show();
                         $("#edairprice").val(0);
                         $("#edairprices").hide();
                         }
+               else if (edairs == "Air" && edtrains=="Train") {
+                        $("#edtrainprices").show();
+                        $("#edairprices").show();
+                        }
+               else if (edairs != "Air" && edtrains!="Train") {
+                        $("#edtrainprices").hide();
+                        $("#edairprices").hide();
+
+                        }
+
                     });
 
 
@@ -534,13 +579,17 @@ if ($user_name != "") {
           var city = $('#city').val();
           var partyzip = $('#partyzip').val();
        
-              book_mode = $("input[name='bookmode']:checked").val();
-            
+          var bookmode = [];
+          $.each($("input[name='bookmode']:checked"), function(){
+            bookmode.push($(this).val());
+              });
+              book_mode = bookmode.toString();
+             
               var destinate = [];
               $.each($("input[name='destination']:checked"), function(){
             destinate.push($(this).val());
               });
-              destination = $("#destination").val();
+              destination = destinate.toString();
             
               var trainprice = $('#trainprice').val();
           var airprice = $('#airprice').val();
@@ -593,7 +642,12 @@ if ($user_name != "") {
  
         $(".edit_party").click(function(e) {
           e.preventDefault();
-            var partyid = $(this).attr("ids");
+            $("#delhi").prop("checked",false);
+            $("#agra").prop("checked",false);
+            $("#kaura").prop("checked",false);
+            $("#kanpur").prop("checked",false);
+
+          var partyid = $(this).attr("ids");
           $("#partyid").val(partyid);
           $.ajax({
             url: 'ajax/ajax_request.php?action=partyfetch',
@@ -617,23 +671,39 @@ if ($user_name != "") {
              $("#edpartyaddress").val(response.data.partyaddress);
              $("#edgst").val(response.data.gst);
               var booksmode=$("#ed_bookmode").val();
-      
+              var commas = booksmode.includes(",");
+
               if(booksmode=="Train"){
                     $('#edtrain').prop('checked',true);
                     $("#edtrainprices").show();
                     $('#edair').prop('checked',false);
                 $("#edairprices").hide();
                 }
-              else {      $('#edtrain').prop('checked',false);
+                else if(booksmode=="Air"){
+                    $('#edtrain').prop('checked',false);
                     $("#edtrainprices").hide();
                     $('#edair').prop('checked',true);
                 $("#edairprices").show();
                  }
-              
+                 else{
+                    if(commas==true) {
+                    $('#edair').prop('checked',true);
+                     $("#edairprices").show();
+                     $('#edtrain').prop('checked',true);
+                    $("#edtrainprices").show();
+                    }
+                    else{
+                        $('#edair').prop('checked',false);
+                     $("#edairprices").hide();
+                     $('#edtrain').prop('checked',false);
+                    $("#edtrainprices").hide();
+                    }
+                 }
+
                $("#edairprice").val(response.data.airprice);
                $("#edtrainprice").val(response.data.trainprice);
                $("#edgst").val(response.data.gst);
-                $("#ed_destination").val(response.data.destinate);
+                $("#eddestinate").val(response.data.destinate);
             
                 var booksmode=$("#eddestinate").val();
                 var commas = booksmode.split(',');
@@ -666,9 +736,17 @@ if ($user_name != "") {
               var trainprice = $("#edtrainprice").val();
               var gst = $("#edgst").val();
         
-           book_mode = $("input[name='edbookmode']:checked").val();
+              var bookmode = [];
+          $.each($("input[name='edbookmode']:checked"), function(){
+            bookmode.push($(this).val());
+              });
+              book_mode = bookmode.toString();
             
-              destination = $("#ed_destination").val();;
+              var destinate = [];
+        $.each($("input[name='eddestination']:checked"), function(){
+            destinate.push($(this).val());
+              });
+              destination = destinate.toString();
               
               $.ajax({
             url: 'ajax/ajax_request.php?action=partyupdation',

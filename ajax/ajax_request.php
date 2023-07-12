@@ -8,10 +8,11 @@ if($action=="usercreation") {
     $username=isset($_POST['username'])?$_POST['username']:"";
     $password=isset($_POST['password'])?$_POST['password']:"";
     $role=isset($_POST['role'])?$_POST['role']:"";
-    if($creationdate!="" && $username!="" && $password!="" && $role!="") {
-    $query="insert into user(creationdate,username,password,role) values(:creationdate,:username,:password,:role)";
+    $type=isset($_POST['type'])?$_POST['type']:"";
+    if($creationdate!="" && $username!="" && $password!="" && $role!="" && $type!="") {
+    $query="insert into user(creationdate,username,password,role,type) values(:creationdate,:username,:password,:role,:type)";
 $exe=$con->prepare($query);
-$data=[':creationdate'=>$creationdate,':username'=>$username,':password'=>$password,':role'=>$role];
+$data=[':creationdate'=>$creationdate,':username'=>$username,':password'=>$password,':role'=>$role,':type'=>$type];
  $query_execute=$exe->execute($data);
 if($query_execute){
     $msg="Success";
@@ -57,10 +58,11 @@ if($action=="userupdation") {
     $username=isset($_POST['username'])?$_POST['username']:"";
     $password=isset($_POST['password'])?$_POST['password']:"";
     $role=isset($_POST['role'])?$_POST['role']:"";
+    $type=isset($_POST['type'])?$_POST['type']:"";
     if($creationdate!="" && $username!="" && $password!="" && $role!="") {
-    $query="update user set creationdate=:creationdate,username=:username,password=:password,role=:role where id=:ids";
+    $query="update user set creationdate=:creationdate,username=:username,password=:password,role=:role,type=:type where id=:ids";
 $exe=$con->prepare($query);
-$data=[':creationdate'=>$creationdate,':username'=>$username,':password'=>$password,':role'=>$role,':ids'=>$ids];
+$data=[':creationdate'=>$creationdate,':username'=>$username,':password'=>$password,':role'=>$role,':type'=>$type,':ids'=>$ids];
  $query_execute=$exe->execute($data);
 if($query_execute){
     $msg="Success";
@@ -254,6 +256,92 @@ $msg="Failure";
 else{
 $msg="Failure";
 }
+$data=[];
+$data['msg']=$msg;
+echo json_encode($data);
+}
+
+if($action=="bookingdeletion") {
+  $ids=isset($_POST['ids'])?$_POST['ids']:"";
+if($ids!="") {
+$query="delete from booking where id=:ids";
+$exe=$con->prepare($query);
+$data=[':ids'=>$ids];
+$query_execute=$exe->execute($data);
+if($query_execute){
+$msg="Success";
+}
+else{
+$msg="Failure";
+}
+}
+else{
+$msg="Failure";
+}
+$data=[];
+$data['msg']=$msg;
+echo json_encode($data);
+}
+if($action=="bookfetch") {
+  $ids=isset($_POST['ids'])?$_POST['ids']:"";
+ if($ids!="") {
+ $query="select * from booking where id=:ids";
+$exe=$con->prepare($query);
+$data=[':ids'=>$ids];
+$exe->execute($data);
+$result = $exe->fetch(PDO::FETCH_ASSOC);
+if($result){
+ $msg="Success";
+}
+else{
+$msg="Failure";
+}
+}
+else{
+$msg="Failure";
+}
+$data=[];
+$data['msg']=$msg;
+$data['data']=$result;
+echo json_encode($data);
+}
+if($action=="bookupdation") {
+
+  $ids=isset($_POST['ids'])?$_POST['ids']:"";
+  $creationdate=isset($_POST['creationdate'])?$_POST['creationdate']:"";
+  $state=isset($_POST['state'])?$_POST['state']:"";
+  $origin=isset($_POST['origin'])?$_POST['origin']:"";
+  $destination=isset($_POST['destination'])?$_POST['destination']:"";
+   $coraddress=isset($_POST['coraddress'])?$_POST['coraddress']:"";
+  $corstate=isset($_POST['corstate'])?$_POST['corstate']:"";
+  $corzip=isset($_POST['corzip'])?$_POST['corzip']:""; 
+  $conaddress=isset($_POST['conaddress'])?$_POST['conaddress']:"";
+  $constate=isset($_POST['constate'])?$_POST['constate']:"";
+  $conzip=isset($_POST['conzip'])?$_POST['conzip']:"";
+  $area=isset($_POST['area'])?$_POST['area']:"";
+  $transport=isset($_POST['transport'])?$_POST['transport']:"";
+  $pack=isset($_POST['pack'])?$_POST['pack']:"";
+  $invoiceno=isset($_POST['invoiceno'])?$_POST['invoiceno']:"";
+  $describe=isset($_POST['describe'])?$_POST['describe']:"";
+  $quantity=isset($_POST['quantity'])?$_POST['quantity']:"";
+  $gross=isset($_POST['gross'])?$_POST['gross']:"";
+  $weight=isset($_POST['weight'])?$_POST['weight']:"";
+  $amount=isset($_POST['amount'])?$_POST['amount']:"";
+  $gst=isset($_POST['gst'])?$_POST['gst']:"";
+  $paymentmode=isset($_POST['paymentmode'])?$_POST['paymentmode']:"";
+  $paid=isset($_POST['paid'])?$_POST['paid']:"";
+  
+$query="update booking set creationdate=:creationdate,state=:state,origin=:origin,destination=:destination,coraddress=:coraddress,corstate=:corstate,corzip=:corzip,conaddress=:conaddress,constate=:constate,conzip=:conzip,area=:area,transport=:transport,pack=:pack,invoiceno=:invoiceno,description=:description,quantity=:quantity,gross=:gross,weight=:weight,amount=:amount,gst=:gst,paymentmode=:paymentmode,paid=:paid where id=:ids";
+$exe=$con->prepare($query);
+$data=[':creationdate'=>$creationdate,':creationdate'=>$creationdate,':state'=>$state,':origin'=>$origin,':destination'=>$destination,':coraddress'=>$coraddress,':corstate'=>$corstate,':corzip'=>$corzip,':conaddress'=>$conaddress,':constate'=>$constate,':conzip'=>$conzip,':area'=>$area,':transport'=>$transport,':pack'=>$pack,':invoiceno'=>$invoiceno,':description'=>$describe,':quantity'=>$quantity,':gross'=>$gross,':weight'=>$weight,':amount'=>$amount,':gst'=>$gst,':paymentmode'=>$paymentmode,':paid'=>$paid,':ids'=>$ids];
+$query_execute=$exe->execute($data);
+if($query_execute){
+$msg="Success";
+}
+else{
+$msg="Failure";
+}
+
 $data=[];
 $data['msg']=$msg;
 echo json_encode($data);
