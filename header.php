@@ -2,6 +2,17 @@
 session_start();
 error_reporting(0);
 include('include/config.php');
+$usernames=ucfirst($_SESSION['user_name']);
+$sqluser="select * from user where username=:username";
+$exeuser=$con->prepare($sqluser);
+$data=[':username'=>$usernames];
+$exeuser->execute($data);
+$userrole=$exeuser->fetch(PDO::FETCH_ASSOC);
+$_SESSION['types']=$userrole['type'];
+$_SESSION['role']=$userrole['role'];
+// print_r($userrole);die();
+$types=$_SESSION['types'];
+$roles=$_SESSION['role'];
 ?>
 <!DOCTYPE html>
   <html lang="en">
@@ -42,8 +53,15 @@ include('include/config.php');
                         <img src="assets/images/Star-cargo-logo.png" alt="logo-small" class="logo-sm">
                     </span>
                     <span>
-                        <img src="assets/images/star-cargo-logo-text-white.png" alt="logo-large" class="logo-lg logo-light">
-                        <img src="assets/images/star-cargo-logo-text.png" alt="logo-large" class="logo-lg logo-dark">
+                        <?php if($roles=="Super Admin")  { ?>
+                       <h4 style="color:#fff"> Star Admin Cargo</h4>
+                       <?php } else if($roles=='Air' || $roles=='Train') { ?>
+                       <h4 style="color:#fff"> Star <?=$types?> Cargo</h4>
+                       <?php } else{ ?>
+                        <h4 style="color:#fff"> Star <?=$types?> Cargo</h4>
+                      <?php } ?>
+                        <!-- <img src="assets/images/star-cargo-logo-text-white.png" alt="logo-large" class="logo-lg logo-light">
+                        <img src="assets/images/star-cargo-logo-text.png" alt="logo-large" class="logo-lg logo-dark"> -->
                     </span>
                 </a>
             </div>
@@ -89,10 +107,11 @@ include('include/config.php');
                             <li class="nav-item">
                                 <a class="nav-link" href="party.php"><i class="ti ti-calendar menu-icon"></i><span>Party</span></a>
                             </li><!--end nav-item-->
+                            <?php if($roles=="Super Admin") { ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="user.php"><i class="ti ti-file-invoice menu-icon"></i><span>User Control</span></a>
                             </li><!--end nav-item-->
-
+<?php } ?>
                         </ul>
                    
                     </div><!--end sidebarCollapse-->
