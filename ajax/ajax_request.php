@@ -107,6 +107,7 @@ if($action=="userdeletion") {
       $ids=isset($_POST['ids'])?$_POST['ids']:"";
     if($ids!="") {
     $query="delete from user where id=:ids";
+    // print_r($query);die();
 $exe=$con->prepare($query);
 $data=[':ids'=>$ids];
  $query_execute=$exe->execute($data);

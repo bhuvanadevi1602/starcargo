@@ -24,12 +24,12 @@ if ($user_name != "") {
             <div class="page-title-box">
               <div class="float-end">
                 <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Booking</a></li>
+                  <li class="breadcrumb-item"><a href="#">Bonofied</a></li>
                   <li class="breadcrumb-item"><a href="#">Tables</a></li>
                   <li class="breadcrumb-item active">Datatables</li>
                 </ol>
               </div>
-              <h4 class="page-title">Booking Datatables</h4>
+              <h4 class="page-title">Bonofied Datatables</h4>
             </div>
             <!--end page-title-box-->
           </div>
@@ -40,7 +40,7 @@ if ($user_name != "") {
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Booking Details</h4>
+                <h4 class="card-title">Bonofied Details</h4>
                 <!-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
                   Add Booking
                 </button> -->
@@ -49,7 +49,7 @@ if ($user_name != "") {
                   <div class="modal-dialog modal-xl" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h6 class="modal-title m-0" id="myLargeModalLabel">Booking</h6>
+                        <h6 class="modal-title m-0" id="myLargeModalLabel">Bonofied</h6>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div><!--end modal-header-->
                       <div class="modal-body">
@@ -57,7 +57,7 @@ if ($user_name != "") {
 
 
                           <div class="card-header">
-                            <h4 class="card-title" style="color:#22b783;">Booking Details</h4>
+                            <h4 class="card-title" style="color:#22b783;">Bonofied Details</h4>
                           </div><!--end card-header-->
 
 
@@ -369,7 +369,7 @@ if ($user_name != "") {
                               </div>
 
                               <div class="col-12 text-center">
-                                <button class="btn btn-primary" type="submit" name="bookcreation" id="bookcreation">Save Booking</button>
+                                <button class="btn btn-primary" type="submit" name="bookcreation" id="bookcreation">Save Bonofied</button>
                               </div>
                             </form><!--end form-->
                           </div><!--end card-body-->
@@ -452,8 +452,7 @@ if ($user_name != "") {
                           </td>
                           <td>
                             <form method="POST" action="">
-                              <input type="hidden" name="bookdid" id="bookdid" value="<?= $book['id'] ?>" />
-                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" name="bookingdeletion" id="bookingdeletion">
+                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>" name="bookingdeletion" id="bookingdeletion">
                                 <i class="fa fa-trash"></i>
                               </button>
                             </form>
@@ -523,7 +522,7 @@ if ($user_name != "") {
         <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title m-0" id="myLargeModalLabel">Edit Booking</h6>
+              <h6 class="modal-title m-0" id="myLargeModalLabel">Edit Bonofied</h6>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!--end modal-header-->
             <div class="modal-body">
@@ -836,7 +835,7 @@ if ($user_name != "") {
                     </div>
 
                     <div class="col-12 text-center">
-                      <button class="btn btn-primary" type="submit" name="bookupdation" id="bookupdation">Update Booking</button>
+                      <button class="btn btn-primary" type="submit" name="bookupdation" id="bookupdation">Update Bonofied</button>
                     </div>
                   </form><!--end form-->
                 </div><!--end card-body-->
@@ -1085,7 +1084,7 @@ if ($user_name != "") {
                 var gstamt = parseFloat(amount) + parseFloat(gsttot);
                 $("#ed_paid").val(gstamt);
               } else {
-                var amount = $("#amount").val();
+                var amount = $("#ed_amount").val();
                 $("#ed_paid").val(amount);
               }
 
@@ -1225,8 +1224,8 @@ if ($user_name != "") {
           });
           $(".bookingdeletion").click(function(e) {
             e.preventDefault();
-            var bookdid = $("#bookdid").val();
-            //  alert(userdid)
+            var bookdid = $(this).attr('ids');   
+      //  alert(userdid)
             $.ajax({
               url: 'ajax/ajax_request.php?action=bookingdeletion',
               type: 'POST',

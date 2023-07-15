@@ -285,9 +285,8 @@ if ($user_name != "") {
                                           </td>
                                           <td> 
                                           <form method="POST" action="">
-                                  <input type="hidden" name="partydid" id="partydid" value="<?= $party['id'] ?>" />
-                                  <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
-                                  <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" id="partydeletion">
+                                 <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
+                                  <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" ids="<?= $party['id'] ?>" id="partydeletion">
                                     <i class="fa fa-trash"></i>
                                   </button>
                                 </form>
@@ -768,7 +767,7 @@ if ($user_name != "") {
 
         $(".partydeletion").click(function(e) {
           e.preventDefault();
-          var partydid = $("#partydid").val();
+          var partydid = $(this).attr('ids');   
         //    alert(partydid)
           $.ajax({
             url: 'ajax/ajax_request.php?action=partydeletion',
