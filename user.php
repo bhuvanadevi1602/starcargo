@@ -265,9 +265,9 @@ if ($user_name != "") {
                             <td>
                               <?php if ($res['role'] != 'Super Admin') { ?>
                                 <form method="POST" action="">
-                                  <input type="hidden" name="delid" id="delid" value="<?= $res['id'] ?>" />
+                                  <!-- <input type="hidden" name="delid" id="delid" value="<?= $res['id'] ?>" /> -->
                                   <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
-                                  <button type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion">
+                                  <button type="submit" class="btn btn-danger btn-sm userdeletion" ids="<?= $res['id'] ?>" name="userdeletion" id="userdeletion">
                                     <i class="fa fa-trash"></i>
                                   </button>
                                 </form>
@@ -505,7 +505,7 @@ $("#invalid-type").hide();
 
         $(".userdeletion").click(function(e) {
           e.preventDefault();
-          var userdid = $("#delid").val();
+          var userdid = $(this).attr('ids');   
           //  alert(userdid)
           $.ajax({
             url: 'ajax/ajax_request.php?action=userdeletion',

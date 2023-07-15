@@ -452,8 +452,7 @@ if ($user_name != "") {
                           </td>
                           <td>
                             <form method="POST" action="">
-                              <input type="hidden" name="bookdid" id="bookdid" value="<?= $book['id'] ?>" />
-                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" name="bookingdeletion" id="bookingdeletion">
+                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>"  name="bookingdeletion" id="bookingdeletion">
                                 <i class="fa fa-trash"></i>
                               </button>
                             </form>
@@ -1085,7 +1084,7 @@ if ($user_name != "") {
                 var gstamt = parseFloat(amount) + parseFloat(gsttot);
                 $("#ed_paid").val(gstamt);
               } else {
-                var amount = $("#amount").val();
+                var amount = $("#ed_amount").val();
                 $("#ed_paid").val(amount);
               }
 
@@ -1225,8 +1224,8 @@ if ($user_name != "") {
           });
           $(".bookingdeletion").click(function(e) {
             e.preventDefault();
-            var bookdid = $("#bookdid").val();
-            //  alert(userdid)
+            var bookdid = $(this).attr('ids');   
+        //  alert(userdid)
             $.ajax({
               url: 'ajax/ajax_request.php?action=bookingdeletion',
               type: 'POST',
