@@ -47,8 +47,8 @@
                 <footer class="footer text-center text-sm-start">
                     &copy; <script>
                         document.write(new Date().getFullYear())
-                    </script> STAR CARGO <span class="text-muted d-none d-sm-inline-block float-end">Crafted with <i
-                            class="mdi mdi-heart text-danger"></i> by WEBSERVE</span>
+                    </script> STAR CARGO <span class="text-muted d-none d-sm-inline-block float-end">Crafted <i
+                            class="mdi mdi-heart text-danger"></i> by <a href="https://webserve.co.in/" target="_blank">WEBSERVE</a></span>
                 </footer>
                 <!-- end Footer -->                
                 <!--end footer-->
