@@ -7,6 +7,11 @@ $username="root";
 $password="";
 $dbname="starcargo";
 
+// $servername="localhost";
+// $username="udhaarsu_starcargo";
+// $password="starcargo@123";
+// $dbname="udhaarsu_starcargo";
+
 try { 
 $con=new PDO("mysql:host=$servername;dbname=$dbname",$username,$password);
 $con->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
