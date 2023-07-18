@@ -12,7 +12,11 @@ if ($user_name != "") {
 ?>
   <!DOCTYPE html>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <div class="page-wrapper">
+  
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+     <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+ <div class="page-wrapper">
 
     <!-- Page Content-->
     <div class="page-content-tab">
@@ -1204,7 +1208,7 @@ if ($user_name != "") {
                     icon: 'success',
                     title: 'Booking Created',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1214,7 +1218,7 @@ if ($user_name != "") {
                     icon: 'error',
                     title: 'Booking Failed',
                     showConfirmButton: false,
-                    timer: 1500
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1242,7 +1246,7 @@ if ($user_name != "") {
                     icon: 'success',
                     title: 'Booking Deleted',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1252,7 +1256,7 @@ if ($user_name != "") {
                     icon: 'error',
                     title: 'Booking Delete Failed',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1394,7 +1398,7 @@ if ($user_name != "") {
                     icon: 'success',
                     title: 'User Updated',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1404,7 +1408,7 @@ if ($user_name != "") {
                     icon: 'error',
                     title: 'User Update Failed',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })

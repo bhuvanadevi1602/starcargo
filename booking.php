@@ -7,11 +7,15 @@ $dates = date("Y-m-d");
 // print_r($user_name);die();
 if ($user_name != "") {
   include('header.php');
-  $types=$_SESSION['types'];
-  $roles=$_SESSION['role'];
+  $types = $_SESSION['types'];
+  $roles = $_SESSION['role'];
 ?>
   <!DOCTYPE html>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
   <div class="page-wrapper">
 
     <!-- Page Content-->
@@ -74,11 +78,11 @@ if ($user_name != "") {
                               <div class="col-md-3">
                                 <label for="validationCustom02" class="form-label">Type</label>
                                 <select name="types" id="types" class="form-control">
-                                  <option>Select Types</option>
+                                  <option disabled selected value="">Select Types</option>
                                   <option>Air</option>
                                   <option>Train</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="booktypes">
                                   Please provide a valid types.
                                 </div>
                               </div>
@@ -121,7 +125,7 @@ if ($user_name != "") {
                                   <?php } ?>
                                 </datalist>
 
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookorigin">
                                   Please provide a valid Orgin.
                                 </div>
                               </div>
@@ -142,7 +146,7 @@ if ($user_name != "") {
                                     <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
                                   <?php } ?>
                                 </datalist>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookdestination">
                                   Please provide a valid Destination.
                                 </div>
                               </div>
@@ -150,7 +154,7 @@ if ($user_name != "") {
                               <div class="col-md-12">
                                 <label for="validationCustom05" class="form-label">Area</label>
                                 <textarea class="form-control" id="area" name="area" required></textarea>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookarea">
                                   Please provide a valid zip.
                                 </div>
                               </div>
@@ -159,8 +163,8 @@ if ($user_name != "") {
                               <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">Consignor</label>
                                 <input type="text" class="form-control" id="coraddress" name="coraddress" required>
-                                <div class="invalid-feedback">
-                                  Please provide a valid Address.
+                                <div class="invalid-feedback" id="bookfromaddress">
+                                  Please provide a consignor address.
                                 </div>
                               </div>
                               <!-- <div class="col-md-3">
@@ -197,8 +201,8 @@ if ($user_name != "") {
                               <div class="col-md-4">
                                 <label for="validationCustom03" class="form-label">Consignee</label>
                                 <input type="text" class="form-control" id="conaddress" name="conaddress" required>
-                                <div class="invalid-feedback">
-                                  Please provide a valid Address.
+                                <div class="invalid-feedback" id="booktoaddress">
+                                  Please provide a valid consignee address.
                                 </div>
                               </div>
                               <!-- <div class="col-md-3">
@@ -233,7 +237,16 @@ if ($user_name != "") {
                               <div class="col-md-4" id="validationCustom05">
                                 <label for="validationCustom05" class="form-label">Transport</label>
                                 <div class="col-md-12 mt-1">
-                                  <div class="form-check form-check-inline">
+                                  <input list="transports" class="form-control" name="transport" id="transport">
+                                  <datalist id="transports">
+                                    <option selected disabled value="">Choose Transport</option>
+                                    <option value="MAR">MAR</option>
+                                    <option value="SAR">SAR</option>
+                                    <option value="AMT">AMT</option>
+                                    <option value="Others">Others</option>
+                                  </datalist>
+
+                                  <!-- <div class="form-check form-check-inline">
                                     <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="MAR">
                                     <label class="form-check-label" for="inlineCheckbox1">MAR</label>
                                   </div>
@@ -248,15 +261,13 @@ if ($user_name != "") {
                                   <div class="form-check form-check-inline">
                                     <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="Others">
                                     <label class="form-check-label" for="inlineCheckbox4">Others</label>
-                                  </div>
-                                  <div class="invalid-feedback">
-                                    Please provide a valid zip.
+                                  </div> -->
+                                  <div class="invalid-feedback" id="booktransport">
+                                    Please provide a valid Transport.
                                   </div>
                                 </div>
 
                               </div><!--end row-->
-
-
 
                               <div class="card-header">
                                 <h4 class="card-title" style="color:#ff9f43;">Package Details</h4>
@@ -275,42 +286,42 @@ if ($user_name != "") {
                                   <option>P/B</option>
                                   <option>Box</option>
                                 </datalist>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookpack">
                                   Please select a valid Packing.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom03" class="form-label">Party Invice No</label>
                                 <input type="text" class="form-control" id="invoiceno" name="invoiceno" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookinvno">
                                   Please provide a valid Party Invice No.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Said to Content</label>
                                 <input type="text" class="form-control" id="describe" name="describe" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookdescribe">
                                   Please provide a valid Said to Content.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Quantity</label>
                                 <input type="text" class="form-control" id="quantity" name="quantity" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookquantity">
                                   Please provide a valid Quantity.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Gross Weight</label>
                                 <input type="text" class="form-control" id="gross" name="gross" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookgross">
                                   Please provide a valid Gross Weight.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Charged Weight</label>
                                 <input type="text" class="form-control" id="weight" name="weight" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookweight">
                                   Please provide a valid Charged Weight.
                                 </div>
                               </div>
@@ -318,14 +329,14 @@ if ($user_name != "") {
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Doc Charge</label>
                                 <input type="text" class="form-control" id="docs" name="docs" required value="50">
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookdocs">
                                   Please provide a valid Rate.
                                 </div>
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Rate</label>
                                 <input type="text" class="form-control" id="rate" name="rate" required>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookrate">
                                   Please provide a valid Rate.
                                 </div>
                               </div>
@@ -335,6 +346,9 @@ if ($user_name != "") {
                                   <input class="form-control" type="text" name="amount" id="amount">
                                   <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
                                 </div>
+                                <div class="invalid-feedback" id="bookamount">
+                                  Please provide a valid Rate.
+                                </div>
                               </div>
 
                               <div class="col-md-2">
@@ -342,9 +356,15 @@ if ($user_name != "") {
                                 <div class="col-sm-12">
                                   <input type="text" name="gsts" id="gsts" value="5" class="form-control">
                                 </div>
+                                <div class="invalid-feedback" id="bookgst">
+                                  Please provide a valid Rate.
+                                </div>
                               </div>
                               <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
                                 <input type="checkbox" name="gst" id="gst" value="GST"><span> GST(<span id="gstp">5%</span>)
+                                  <div class="invalid-feedback" id="bookgsts">
+                                    Please provide a valid Rate.
+                                  </div>
                               </div>
 
                               <div class="col-md-2">
@@ -355,7 +375,7 @@ if ($user_name != "") {
                                   <option value="Cash">Cash</option>
                                   <option value="To Pay">To Pay</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="bookpayment">
                                   Please select a valid Packing.
                                 </div>
                               </div>
@@ -365,6 +385,9 @@ if ($user_name != "") {
                                 <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
                                 <div class="col-sm-12">
                                   <input class="form-control form-control-lg" type="text" name="paid" id="paid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
+                                </div>
+                                <div class="invalid-feedback" id="bookpaid">
+                                  Please select a valid Packing.
                                 </div>
                               </div>
 
@@ -410,25 +433,23 @@ if ($user_name != "") {
                     <tbody>
                       <?php
                       $i = 0;
-                      if($roles=="Super Admin" && $types=="") {
+                      if ($roles == "Super Admin" && $types == "") {
                         $sqlbook = "select * from booking";
-                      $exebook = $con->prepare($sqlbook);
-                      $exebook->execute();
-                      $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                      }
-                      else if($roles=="Admin" && ($types=="Air" || $types=="Train")) {
+                        $exebook = $con->prepare($sqlbook);
+                        $exebook->execute();
+                        $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                      } else if ($roles == "Admin" && ($types == "Air" || $types == "Train")) {
                         $sqlbook = "select * from booking where type=:types";
                         $exebook = $con->prepare($sqlbook);
-                        $data=[':types'=>$types];
-                      $exebook->execute($data);
-                       $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                      }
-                      else if($roles=="Admin" && $types=="Train") {
-                        $sqlbook = "select * from booking where type=:types";
-                        $exebook = $con->prepare($sqlbook);
-                        $data=[':types'=>$types];
+                        $data = [':types' => $types];
                         $exebook->execute($data);
-                       $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                        $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                      } else if ($roles == "Admin" && $types == "Train") {
+                        $sqlbook = "select * from booking where type=:types";
+                        $exebook = $con->prepare($sqlbook);
+                        $data = [':types' => $types];
+                        $exebook->execute($data);
+                        $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
                       }
                       foreach ($resultbook as $book) {
                         $i++;
@@ -437,7 +458,7 @@ if ($user_name != "") {
                           <td><?= $i ?></td>
                           <td><?= $book['creationdate'] ?></td>
                           <td><?= $book['type'] ?></td>
-                         <td><?= $book['origin'] ?></td>
+                          <td><?= $book['origin'] ?></td>
                           <td><?= $book['destination'] ?></td>
                           <td><?= $book['coraddress'] ?></td>
                           <td><?= $book['conaddress'] ?></td>
@@ -452,7 +473,7 @@ if ($user_name != "") {
                           </td>
                           <td>
                             <form method="POST" action="">
-                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>"  name="bookingdeletion" id="bookingdeletion">
+                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>" name="bookingdeletion" id="bookingdeletion">
                                 <i class="fa fa-trash"></i>
                               </button>
                             </form>
@@ -541,11 +562,11 @@ if ($user_name != "") {
                     <div class="col-md-3">
                       <label for="validationCustom02" class="form-label">Type</label>
                       <select name="ed_types" id="ed_types" class="form-control">
-                        <option>Select Types</option>
+                        <option value="" disabled>Select Types</option>
                         <option>Air</option>
                         <option>Train</option>
                       </select>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edtypes">
                         Please provide a valid types.
                       </div>
                     </div>
@@ -588,7 +609,7 @@ if ($user_name != "") {
                         <?php } ?>
                       </datalist>
 
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edorigin">
                         Please provide a valid Orgin.
                       </div>
                     </div>
@@ -607,16 +628,17 @@ if ($user_name != "") {
                           <option selected disabled value="">Choose State...</option>
                           <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
                         <?php } ?>
-                        <div class="invalid-feedback">
-                          Please provide a valid Destination.
-                        </div>
+                      </datalist>
+                      <div class="invalid-feedback" id="eddestination">
+                        Please provide a valid Destination.
+                      </div>
                     </div>
 
                     <div class="col-md-12">
                       <label for="validationCustom05" class="form-label">Area</label>
                       <textarea class="form-control" id="ed_area" name="ed_area" required></textarea>
-                      <div class="invalid-feedback">
-                        Please provide a valid zip.
+                      <div class="invalid-feedback" id="edarea">
+                        Please provide a valid Area.
                       </div>
                     </div>
 
@@ -624,8 +646,8 @@ if ($user_name != "") {
                     <div class="col-md-3">
                       <label for="validationCustom03" class="form-label">Consignor</label>
                       <input type="text" class="form-control" id="ed_coraddress" name="ed_coraddress" required>
-                      <div class="invalid-feedback">
-                        Please provide a valid Address.
+                      <div class="invalid-feedback" id="edcoraddress">
+                        Please provide a valid Consignor.
                       </div>
                     </div>
                     <!-- <div class="col-md-3">
@@ -659,11 +681,12 @@ if ($user_name != "") {
 
 
 
-                    <div class="col-md-3">
+                    <div class="col
+                    -md-3">
                       <label for="validationCustom03" class="form-label">Consignee</label>
                       <input type="text" class="form-control" id="ed_conaddress" name="ed_conaddress" required>
-                      <div class="invalid-feedback">
-                        Please provide a valid Address.
+                      <div class="invalid-feedback" id="edconaddress">
+                        Please provide a valid Consignee.
                       </div>
                     </div>
                     <!-- <div class="col-md-3">
@@ -698,7 +721,15 @@ if ($user_name != "") {
                     <div class="col-md-6" id="validationCustom05">
                       <label for="validationCustom05" class="form-label">Transport</label>
                       <div class="col-md-12 mt-1">
-                        <input type="hidden" id="edtransports" name="edtransports" value="">
+                        <input list="edtransports" class="form-control" name="edtransport" id="edtransport">
+                        <datalist id="edtransports">
+                          <option selected disabled value="">Choose Transport</option>
+                          <option value="MAR">MAR</option>
+                          <option value="SAR">SAR</option>
+                          <option value="AMT">AMT</option>
+                          <option value="Others">Others</option>
+                        </datalist>
+                        <!-- <input type="hidden" id="edtransports" name="edtransports" value="">
                         <div class="form-check form-check-inline">
                           <input class="form-check-input sample" type="checkbox" id="mar" name="edtransport" value="MAR">
                           <label class="form-check-label" for="inlineCheckbox1">MAR</label>
@@ -714,9 +745,9 @@ if ($user_name != "") {
                         <div class="form-check form-check-inline">
                           <input class="form-check-input sample" type="checkbox" id="others" name="edtransport" value="Others">
                           <label class="form-check-label" for="inlineCheckbox4">Others</label>
-                        </div>
-                        <div class="invalid-feedback">
-                          Please provide a valid zip.
+                        </div> -->
+                        <div class="invalid-feedback" id="ed_transports">
+                          Please provide a valid Transport.
                         </div>
                       </div>
 
@@ -741,42 +772,42 @@ if ($user_name != "") {
                         <option>P/B</option>
                         <option>Box</option>
                       </datalist>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edpack">
                         Please select a valid Packing.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom03" class="form-label">Party Invice No</label>
                       <input type="text" class="form-control" id="ed_invoiceno" name="ed_invoiceno" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edinvno">
                         Please provide a valid Party Invice No.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Said to Content</label>
                       <input type="text" class="form-control" id="ed_describe" name="ed_describe" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="eddescribe">
                         Please provide a valid Said to Content.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Quantity</label>
                       <input type="text" class="form-control" id="ed_quantity" name="ed_quantity" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edquantity">
                         Please provide a valid Quantity.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Gross Weight</label>
                       <input type="text" class="form-control" id="ed_gross" name="ed_gross" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edgross">
                         Please provide a valid Gross Weight.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Charged Weight</label>
                       <input type="text" class="form-control" id="ed_weight" name="ed_weight" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edweight">
                         Please provide a valid Charged Weight.
                       </div>
                     </div>
@@ -784,14 +815,14 @@ if ($user_name != "") {
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Doc Charge</label>
                       <input type="text" class="form-control" id="ed_docs" name="ed_docs" required value="50">
-                      <div class="invalid-feedback">
-                        Please provide a valid Rate.
+                      <div class="invalid-feedback" id="eddoc">
+                        Please provide a valid Doc Charge.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Rate</label>
                       <input type="text" class="form-control" id="ed_rate" name="ed_rate" required>
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" id="edrate">
                         Please provide a valid Rate.
                       </div>
                     </div>
@@ -801,6 +832,9 @@ if ($user_name != "") {
                         <input class="form-control" type="text" name="ed_amount" id="ed_amount">
                         <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
                       </div>
+                      <div class="invalid-feedback" id="edamount">
+                        Please provide a valid Amount.
+                      </div>
                     </div>
 
                     <div class="col-md-2">
@@ -808,7 +842,11 @@ if ($user_name != "") {
                       <div class="col-sm-12">
                         <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
                       </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
                     </div>
+
                     <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
                       <input type="checkbox" name="ed_gst" id="ed_gst" value="GST"><span> GST(<span id="gstp">5%</span>)
                     </div>
@@ -821,8 +859,8 @@ if ($user_name != "") {
                         <option value="Cash">Cash</option>
                         <option value="To Pay">To Pay</option>
                       </select>
-                      <div class="invalid-feedback">
-                        Please select a valid Packing.
+                      <div class="invalid-feedback" id="edpaymentmode">
+                        Please select a valid Payment Mode.
                       </div>
                     </div>
 
@@ -832,6 +870,9 @@ if ($user_name != "") {
                       <div class="col-sm-12">
                         <input class="form-control form-control-lg" type="text" name="ed_paid" id="ed_paid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
                       </div>
+                      <div class="invalid-feedback" id="edpaid">
+                        Please select a valid Paid.
+                      </div>
                     </div>
 
                     <div class="col-12 text-center">
@@ -839,11 +880,6 @@ if ($user_name != "") {
                     </div>
                   </form><!--end form-->
                 </div><!--end card-body-->
-
-
-
-
-
               </div>
 
             </div><!--end modal-body-->
@@ -865,6 +901,17 @@ if ($user_name != "") {
       <script src="assets/js/app.js"></script>
       <script>
         $(document).ready(function() {
+
+          $('#types').change(function() {
+            var types = this.value;
+            if (types == "") {
+              $("#booktypes").show();
+            } else {
+              $("#booktypes").hide();
+            }
+          });
+
+
           $("#gsts").keyup(function() {
             var gstv = $("#gsts").val();
             $("#gstp").text(gstv + "%");
@@ -1148,12 +1195,13 @@ if ($user_name != "") {
             var coraddress = $('#coraddress').val();
             var conaddress = $('#conaddress').val();
 
-            var transport = [];
-            $.each($("input[name='transport']:checked"), function() {
-              transport.push($(this).val());
-            });
-            transports = transport.toString();
+            // var transport = [];
+            // $.each($("input[name='transport']:checked"), function() {
+            //   transport.push($(this).val());
+            // });
+            // transports = transport.toString();
 
+            var transports = $('#transport').val();
 
             var packs = $('#packs').val();
             var invoiceno = $('#invoiceno').val();
@@ -1169,63 +1217,139 @@ if ($user_name != "") {
             var paymentmode = $('#paymentmode').val();
             var paid = $('#paid').val();
 
-            $.ajax({
-              url: 'ajax/ajax_request.php?action=bookcreation',
-              type: 'POST',
-              dataType: "JSON",
-              data: {
-                'action': "bookcreation",
-                'creationdate': creationdate,
-                'type': type,
-                'origin': origin,
-                'destination': destination,
-                'area': area,
-                'coraddress': coraddress,
-                'conaddress': conaddress,
-                'transport': transports,
-                'pack': packs,
-                'invoiceno': invoiceno,
-                'describe': describe,
-                'quantity': quantity,
-                'gross': gross,
-                'weight': weight,
-                'docs': docs,
-                'rate': rate,
-                'amount': amount,
-                'gsts': gsts,
-                'gst': gst,
-                'paymentmode': paymentmode,
-                'paid': paid
-              },
-              success: function(response) {
-                if (response.msg == "Success") {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Booking Created',
-                    showConfirmButton: false,
-                    timer: 1500
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
-                } else {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Booking Failed',
-                    showConfirmButton: false,
-                    timer: 1500
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
+            if (creationdate != '' && type != '' && origin != '' && destination != '' && area != '' && area != '' && coraddress != '' && conaddress != '' && transport != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gsts != '' && gst != '' && paymentmode != '' && paid != '') {
+              $.ajax({
+                url: 'ajax/ajax_request.php?action=bookcreation',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "bookcreation",
+                  'creationdate': creationdate,
+                  'type': type,
+                  'origin': origin,
+                  'destination': destination,
+                  'area': area,
+                  'coraddress': coraddress,
+                  'conaddress': conaddress,
+                  'transport': transports,
+                  'pack': packs,
+                  'invoiceno': invoiceno,
+                  'describe': describe,
+                  'quantity': quantity,
+                  'gross': gross,
+                  'weight': weight,
+                  'docs': docs,
+                  'rate': rate,
+                  'amount': amount,
+                  'gsts': gsts,
+                  'gst': gst,
+                  'paymentmode': paymentmode,
+                  'paid': paid
+                },
+                success: function(response) {
+                  if (response.msg == "Success") {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Booking Created',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  } else {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: 'Booking Failed',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  }
                 }
+              });
+            } else {
+              if (type == '' || type == null) {
+                $("#booktypes").show();
               }
-            });
+
+              if (origin == '') {
+                $("#bookorigin").show();
+              }
+
+              if (destination == '') {
+                $("#bookdestination").show();
+              }
+
+              if (area == '') {
+                $("#bookarea").show();
+              }
+
+              if (coraddress == '') {
+                $("#bookfromaddress").show();
+              }
+
+              if (conaddress == '') {
+                $("#booktoaddress").show();
+              }
+
+              if (transports == '') {
+                $("#booktransport").show();
+              }
+
+              if (packs == '') {
+                $("#bookpack").show();
+              }
+
+              if (invoiceno == '') {
+                $("#bookinvno").show();
+              }
+
+              if (describe == '') {
+                $("#bookdescribe").show();
+              }
+
+              if (quantity == '') {
+                $("#bookquantity").show();
+              }
+
+              if (gross == '') {
+                $("#bookgross").show();
+              }
+
+              if (weight == '') {
+                $("#bookweights").show();
+              }
+
+              if (rate == '') {
+                $("#bookrate").show();
+              }
+
+              if (amount == '') {
+                $("#bookamount").show();
+              }
+
+              if (amount == '') {
+                $("#bookamount").show();
+              }
+
+              if (paymentmode == '' || paymentmode == null) {
+                $("#bookpayment").show();
+              }
+
+              if (paid == '') {
+                $("#bookpaid").show();
+              }
+
+            }
+
           });
           $(".bookingdeletion").click(function(e) {
             e.preventDefault();
-            var bookdid = $(this).attr('ids');   
-        //  alert(userdid)
+            var bookdid = $(this).attr('ids');
+            //  alert(userdid)
             $.ajax({
               url: 'ajax/ajax_request.php?action=bookingdeletion',
               type: 'POST',
@@ -1242,7 +1366,7 @@ if ($user_name != "") {
                     icon: 'success',
                     title: 'Booking Deleted',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1252,7 +1376,7 @@ if ($user_name != "") {
                     icon: 'error',
                     title: 'Booking Delete Failed',
                     showConfirmButton: false,
-                    timer: 2000
+                    timer: 3000
                   }).then(function() {
                     window.location.href = 'booking.php';
                   })
@@ -1285,19 +1409,19 @@ if ($user_name != "") {
                 $('#ed_conaddress').val(response.data.conaddress);
                 $('#ed_area').val(response.data.area);
 
-                $("#edtransports").val(response.data.transport);
-                var transport = $("#edtransports").val();
-                var commas = transport.split(',');
-                var desti = [];
-                for (var i = 0; i < commas.length; i++) {
-                  desti.push(commas[i]);
-                }
+                $("#edtransport").val(response.data.transport);
+                // var transport = $("#edtransports").val();
+                // var commas = transport.split(',');
+                // var desti = [];
+                // for (var i = 0; i < commas.length; i++) {
+                //   desti.push(commas[i]);
+                // }
 
-                $.each(desti, function(index, value) {
-                  // alert( index + ": " + value );
-                  let val = value.toLowerCase();
-                  $('#' + val).prop('checked', true);
-                });
+                // $.each(desti, function(index, value) {
+                //   // alert( index + ": " + value );
+                //   let val = value.toLowerCase();
+                //   $('#' + val).prop('checked', true);
+                // });
 
 
                 $('#ed_packs').val(response.data.pack);
@@ -1331,13 +1455,14 @@ if ($user_name != "") {
             var conaddress = $('#ed_conaddress').val();
             var area = $('#ed_area').val();
 
-            var transport = [];
-            $.each($("input[name='edtransport']:checked"), function() {
-              transport.push($(this).val());
-            });
-            transports = transport.toString();
+            // var transport = [];
+            // $.each($("input[name='edtransport']:checked"), function() {
+            //   transport.push($(this).val());
+            // });
+            // transports = transport.toString();
+            transports = $("#edtransport").val();
 
-            var packs = $('#ed_spacks').val();
+            var packs = $('#ed_packs').val();
             var invoiceno = $('#ed_invoiceno').val();
             var describe = $('#ed_describe').val();
             var quantity = $('#ed_quantity').val();
@@ -1357,60 +1482,146 @@ if ($user_name != "") {
               gst = "";
             }
 
-            $.ajax({
-              url: 'ajax/ajax_request.php?action=bookupdation',
-              type: 'POST',
-              dataType: "JSON",
-              data: {
-                'action': "bookupdation",
-                'ids': ids,
-                'creationdate': creationdate,
-                'type': type,
-                'origin': origin,
-                'destination': destination,
-                'area': area,
-                'coraddress': coraddress,
-                'conaddress': conaddress,
-                'transport': transports,
-                'pack': packs,
-                'invoiceno': invoiceno,
-                'describe': describe,
-                'quantity': quantity,
-                'gross': gross,
-                'weight': weight,
-                'docs': docs,
-                'rate': rate,
-                'amount': amount,
-                'gsts': gsts,
-                'gst': gst,
-                'paymentmode': paymentmode,
-                'paid': paid
-              },
-              success: function(response) {
-                console.log(response.data)
-                if (response.msg == "Success") {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'User Updated',
-                    showConfirmButton: false,
-                    timer: 2000
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
-                } else {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'User Update Failed',
-                    showConfirmButton: false,
-                    timer: 2000
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
+            if (creationdate != '' && type != '' && origin != '' && destination != '' && coraddress != '' && conaddress != '' && area != '' && transports != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gsts != '' && paymentmode != '' && paid != '') {
+              $.ajax({
+                url: 'ajax/ajax_request.php?action=bookupdation',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "bookupdation",
+                  'ids': ids,
+                  'creationdate': creationdate,
+                  'type': type,
+                  'origin': origin,
+                  'destination': destination,
+                  'area': area,
+                  'coraddress': coraddress,
+                  'conaddress': conaddress,
+                  'transport': transports,
+                  'pack': packs,
+                  'invoiceno': invoiceno,
+                  'describe': describe,
+                  'quantity': quantity,
+                  'gross': gross,
+                  'weight': weight,
+                  'docs': docs,
+                  'rate': rate,
+                  'amount': amount,
+                  'gsts': gsts,
+                  'gst': gst,
+                  'paymentmode': paymentmode,
+                  'paid': paid
+                },
+                success: function(response) {
+                  console.log(response.data)
+                  if (response.msg == "Success") {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'User Updated',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  } else {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: 'User Update Failed',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  }
                 }
+              });
+            } else {
+              if (type == '') {
+                $("#ed_types").show();
               }
-            });
+
+              if (origin == '') {
+                $("#edorigin").show();
+              }
+
+
+              if (area == '') {
+                $("#edarea").show();
+              }
+
+              if (destination == '') {
+                $("#eddestination").show();
+              }
+
+              if (coraddress == '') {
+                $("#edcoraddress").show();
+              }
+
+              if (conaddress == '') {
+                $("#edconaddress").show();
+              }
+
+              if(transports==''){
+                $("#ed_transports").show();
+              }
+
+              if(packs==''){
+                $("#edpack").show();
+              }
+
+              if(packs==''){
+                $("#edpack").show();
+              }
+
+              if(invoiceno==''){
+                $("#edinvno").show();
+              }
+
+              if(describe==''){
+                $("#eddescribe").show();
+              }
+
+              if(quantity==''){
+                $("#edquantity").show();
+              }
+
+              if(gross==''){
+                $("#edgross").show();
+              }
+
+              if(weight==''){
+                $("#edweight").show();
+              }
+
+              if(docs==''){
+                $("#eddoc").show();
+              }
+
+              if(rate==''){
+                $("#edrate").show();
+              }
+
+              if(amount==''){
+                $("#edamount").show();
+              }
+
+              if(gsts==''){
+                $("#edgsts").show();
+              }
+
+              var edgst = $("input[id='ed_gst']:checked").val();
+            if (edgst == "GST") {
+              $("#edgst").show();
+             }
+
+             if(paid==''){
+                $("#edpaid").show();
+              }
+
+
+            }
           });
 
 

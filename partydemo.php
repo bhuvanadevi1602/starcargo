@@ -155,7 +155,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">Air Price</label>
                                                                 <input type="number" class="form-control" name="airprice" id="airprice" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Air Prize.
+                                                                    Please provide a valid Air Price.
                                                                 </div>
                                                             </div>
 
@@ -163,7 +163,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">Trian Price</label>
                                                                 <input type="number" class="form-control" name="trainprice" id="trainprice" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Trian Prize.
+                                                                    Please provide a valid Trian Price.
                                                                 </div>
                                                             </div>
 
@@ -171,7 +171,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">GST Number</label>
                                                                 <input type="text" class="form-control" name="gst" id="gst" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Trian Prize.
+                                                                    Please provide a valid Trian Price.
                                                                 </div>
                                                             </div>
 
@@ -398,7 +398,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">Air Price</label>
                                                                 <input type="number" class="form-control " name="edairprice" id="edairprice" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Air Prize.
+                                                                    Please provide a valid Air Price.
                                                                 </div>
                                                             </div>
 
@@ -406,7 +406,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">Trian Price</label>
                                                                 <input type="number" class="form-control " name="edtrainprice" id="edtrainprice" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Trian Prize.
+                                                                    Please provide a valid Trian Price.
                                                                 </div>
                                                             </div>
 
@@ -414,7 +414,7 @@ if ($user_name != "") {
                                                                 <label for="validationCustom03" class="form-label">GST Number</label>
                                                                 <input type="text" class="form-control" name="edgst" id="edgst" required>
                                                                 <div class="invalid-feedback">
-                                                                    Please provide a valid Trian Prize.
+                                                                    Please provide a valid Trian Price.
                                                                 </div>
                                                             </div>
 

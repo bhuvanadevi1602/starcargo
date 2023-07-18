@@ -9,6 +9,15 @@ if ($user_name != "") {
   $dates = date('Y-m-d');
 ?>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+  <link href="assets/css/app.min.css" rel="stylesheet" type="text/css" />
+  <style>
+    .swal2-popup {
+      font-size: 1.0rem !important;
+    }
+  </style>
   <div class="page-wrapper">
 
     <!-- Page Content-->
@@ -71,12 +80,12 @@ if ($user_name != "") {
                                 <label for="username" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="username" name="username" required>
                                 <div class="invalid-username text text-danger" id="invalid-username">
-                             Please provide a valid Username.
+                                  Please provide a valid Username.
                                 </div>
                                 <div class="text text-danger" id="already">User Already Exist</div>
-                               </div>
+                              </div>
 
-                              
+
                               <div class="col-md-4">
                                 <label for="role" class="form-label">Type</label>
                                 <select class="form-select" id="type" required name="type">
@@ -111,7 +120,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                            <div class="col-12 text-center">
+                              <div class="col-12 text-center">
                                 <input type="submit" name="usercreation" id="usercreation" class="btn btn-primary" value="Create User">
                               </div>
                             </form><!--end form-->
@@ -158,8 +167,8 @@ if ($user_name != "") {
                               <div class="col-md-4">
                                 <label for="username" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="ed_username" name="ed_username" required>
-                                <div class="valid-feedback">
-                                  Please provide a valid User Name.
+                                <div class="invalid-username text text-danger" id="invalidusername">
+                                  Please provide a valid Username.
                                 </div>
                               </div>
 
@@ -170,8 +179,8 @@ if ($user_name != "") {
                                   <option type="Air">Air</option>
                                   <option type="Train">Train</option>
                                 </select>
-                                <div class="invalid-feedback ">
-                                  Please provide a valid role.
+                                <div class="invalid-feedback" id="invalidtype">
+                                  Please provide a valid Type.
                                 </div>
                               </div>
 
@@ -180,7 +189,7 @@ if ($user_name != "") {
                               <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="ed_password" name="ed_password" required>
-                                <div class="valid-feedback">
+                                <div class="invalid-feedback" id="invalidpassword">
                                   Please provide a valid password.
                                 </div>
                               </div>
@@ -194,12 +203,12 @@ if ($user_name != "") {
                                   <option value="Admin">Admin</option>
                                   <option value="User">User</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="invalid-feedback" id="invalidrole">
                                   Please provide a valid role.
                                 </div>
                               </div>
 
-                           <div class="col-12 text-center">
+                              <div class="col-12 text-center">
                                 <input type="submit" name="ed_usercreation" id="ed_usercreation" class="btn btn-primary" value="Update User">
                               </div>
                             </form><!--end form-->
@@ -353,70 +362,74 @@ if ($user_name != "") {
     ?>
     <script type="text/javascript">
       $(document).ready(function() {
-      
-        $("#already").hide(); 
-       $("#invalid-username").hide(); 
-        $("#invalid-password").hide(); 
-        $("#invalid-role").hide(); 
-        $("#invalid-type").hide(); 
+
+        $("#already").hide();
+        $("#invalid-username").hide();
+        $("#invalid-password").hide();
+        $("#invalid-role").hide();
+        $("#invalid-type").hide();
+
+
+        $("#invalidusername").hide();
+        $("#invalidpassword").hide();
+        $("#invalidrole").hide();
+        $("#invalidtype").hide();
+
 
         $('#username').change(function() {
-    var uname = this.value;
-         $.ajax({
+          var uname = this.value;
+          $.ajax({
             url: 'ajax/ajax_request.php?action=usernamecheck',
             type: 'POST',
             dataType: "JSON",
             data: {
               'action': "usernamecheck",
               'username': uname
-               },
+            },
             success: function(response) {
               console.log(response.data)
               if (response.msg == "Success") {
-             $("#already").show();
+                $("#already").show();
               } else {
                 $("#already").hide();
-           }
+              }
             }
           });
 
-   if(uname==""){
-  $("#invalid-username").show(); 
- }
- else{
-  $("#invalid-username").hide(); 
- }
-  });
+          if (uname == "") {
+            $("#invalid-username").show();
+          } else {
+            $("#invalid-username").hide();
+          }
+        });
 
-  $('#password').change(function() {
-    var pass = this.value;
- if(pass==""){
-  $("#invalid-password").show(); 
- }
- else{
-  $("#invalid-password").hide(); 
- }
-  });
 
-  $('#role').change(function() {
-    var roles = this.value;
- if(roles==""){
-  $("#invalid-role").show(); 
- }
- else{
-  $("#invalid-role").hide(); 
- }
-  });
+        $('#password').change(function() {
+          var pass = this.value;
+          if (pass == "") {
+            $("#invalid-password").show();
+          } else {
+            $("#invalid-password").hide();
+          }
+        });
 
-  $('#type').change(function() {
-    var type = this.value;
- if(type==""){
-  $("#invalid-type").show(); 
- }
- else{
-  $("#invalid-type").hide(); 
- }
-  });
+        $('#role').change(function() {
+          var roles = this.value;
+          if (roles == "") {
+            $("#invalid-role").show();
+          } else {
+            $("#invalid-role").hide();
+          }
+        });
+
+        $('#type').change(function() {
+          var type = this.value;
+          if (type == "") {
+            $("#invalid-type").show();
+          } else {
+            $("#invalid-type").hide();
+          }
+        });
 
         $(".edit_user").click(function(e) {
           e.preventDefault();
@@ -436,76 +449,75 @@ if ($user_name != "") {
               $("#ed_password").val(response.data.password);
               $("#ed_role").val(response.data.role);
               $("#ed_type").val(response.data.type);
-             }
+            }
           });
         });
 
         $("#usercreation").click(function(e) {
           e.preventDefault();
-  var creationdate = $('#creationdate').val();
+          var creationdate = $('#creationdate').val();
           var username = $('#username').val();
-         var password = $('#password').val();
+          var password = $('#password').val();
           var role = $('#role :selected').val();
-         var type = $('#type :selected').val();
-if(username=="") {
-$("#invalid-username").show(); 
-}
-if(password==""){
-$("#invalid-password").show(); 
-}
-if(role==""){
-$("#invalid-role").show(); 
-}
-if(type==""){
-$("#invalid-type").show(); 
-}
-else if(username!="" && password!="" && role!="" && type!=""){
-$("#invalid-username").hide();  
-$("#invalid-password").hide();    
-$("#invalid-role").hide();    
-$("#invalid-type").hide();      
-       $.ajax({
-            url: 'ajax/ajax_request.php?action=usercreation',
-            type: 'POST',
-            dataType: "JSON",
-            data: {
-              'action': "usercreation",
-              'creationdate': creationdate,
-              'username': username,
-              'password': password,
-              'role': role,
-              'type':type
-            },
-            success: function(response) {
-               if (response.msg == "Success") {
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'User Created',
-                  showConfirmButton: false,
-                  timer: 2000
-                }).then(function() {
-                  window.location.href = 'user.php';
-                })
-              } else {
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: 'User Create Failed',
-                  showConfirmButton: false,
-                  timer: 2000
-                }).then(function() {
-                  window.location.href = 'user.php';
-                })
+          var type = $('#type :selected').val();
+          if (username == "") {
+            $("#invalid-username").show();
+          }
+          if (password == "") {
+            $("#invalid-password").show();
+          }
+          if (role == "") {
+            $("#invalid-role").show();
+          }
+          if (type == "") {
+            $("#invalid-type").show();
+          } else if (username != "" && password != "" && role != "" && type != "") {
+            $("#invalid-username").hide();
+            $("#invalid-password").hide();
+            $("#invalid-role").hide();
+            $("#invalid-type").hide();
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=usercreation',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "usercreation",
+                'creationdate': creationdate,
+                'username': username,
+                'password': password,
+                'role': role,
+                'type': type
+              },
+              success: function(response) {
+                if (response.msg == "Success") {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User Created',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'user.php';
+                  })
+                } else {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'User Create Failed',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'user.php';
+                  })
+                }
               }
-            }
-          });
-        }
-       });
+            });
+          }
+        });
 
         $(".userdeletion").click(function(e) {
           e.preventDefault();
-          var userdid = $(this).attr('ids');   
+          var userdid = $(this).attr('ids');
           //  alert(userdid)
           $.ajax({
             url: 'ajax/ajax_request.php?action=userdeletion',
@@ -523,7 +535,7 @@ $("#invalid-type").hide();
                   icon: 'success',
                   title: 'User Deleted',
                   showConfirmButton: false,
-                  timer: 2000
+                  timer: 3000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -533,7 +545,7 @@ $("#invalid-type").hide();
                   icon: 'error',
                   title: 'User Delete Failed',
                   showConfirmButton: false,
-                  timer: 2000
+                  timer: 3000
                 }).then(function() {
                   window.location.href = 'user.php';
                 })
@@ -541,7 +553,7 @@ $("#invalid-type").hide();
             }
           });
         });
-        
+
         $("#ed_usercreation").click(function(e) {
           e.preventDefault();
           var ids = $('#ed_userid').val();
@@ -550,47 +562,58 @@ $("#invalid-type").hide();
           var password = $('#ed_password').val();
           var role = $('#ed_role').val();
           var type = $('#ed_type').val();
-          $.ajax({
-            url: 'ajax/ajax_request.php?action=userupdation',
-            type: 'POST',
-            dataType: "JSON",
-            data: {
-              'action': "userupdation",
-              'ids': ids,
-              'creationdate': creationdate,
-              'username': username,
-              'password': password,
-              'role': role,
-              'type': type
-            },
-            success: function(response) {
-              console.log(response.data)
-              if (response.msg == "Success") {
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'success',
-                  title: 'User Updated',
-                  showConfirmButton: false,
-                  timer: 2000
-                }).then(function() {
-                  window.location.href = 'user.php';
-                })
-              } else {
-                Swal.fire({
-                  position: 'top-end',
-                  icon: 'error',
-                  title: 'User Update Failed',
-                  showConfirmButton: false,
-                  timer: 2000
-                }).then(function() {
-                  window.location.href = 'user.php';
-                })
+          if (username != "" && password != "") {
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=userupdation',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "userupdation",
+                'ids': ids,
+                'creationdate': creationdate,
+                'username': username,
+                'password': password,
+                'role': role,
+                'type': type
+              },
+              success: function(response) {
+                console.log(response.data)
+                if (response.msg == "Success") {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'User Updated',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'user.php';
+                  })
+                } else {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'User Update Failed',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'user.php';
+                  })
+                }
               }
+            });
+          } else {
+            if (username == '' && password == '') {
+              $("#invalidusername").show();
+              $("#invalidpassword").show();
+
+            } else if (username == '') {
+              $("#invalidusername").show();
+              $("#invalidpassword").hide();
+            } else if (password == '') {
+              $("#invalidusername").hide();
+              $("#invalidpassword").show();
             }
-          });
+          }
         });
-
-    
-
       });
     </script>
