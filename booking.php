@@ -68,7 +68,7 @@ if ($user_name != "") {
                           <div class="card-body">
                             <form class="row g-3 needs-validation" novalidate method="POST">
 
-                              <div class="col-md-3">
+                              <div class="col-md-2">
                                 <label for="validationCustom01" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="creationdate" name="creationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
@@ -76,16 +76,53 @@ if ($user_name != "") {
                                 </div>
                               </div>
                               <div class="col-md-3">
+                                            <label for="validationCustom01" class="form-label">Party Name</label>
+                                            <input list="edparties" class="form-control" name="partyname" id="partyname">
+                                            <datalist id="edparties">
+                                                <?php
+                                                $sqlstate = "select * from party";
+                                                $exestate = $con->prepare($sqlstate);
+                                                $exestate->execute();
+                                                $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                                                foreach ($result as $res) {
+                                                ?>
+
+                                                    <option selected disabled value="">Choose State...</option>
+                                                    <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                                                <?php } ?>
+                                            </datalist>
+
+                                            <div class="invalid-feedback" id="edpartynamem">
+                                                Please provide a valid Party Name.
+                                            </div>
+                                        </div>
+
+                                                                                  <div class="col-md-2">
                                 <label for="validationCustom02" class="form-label">Type</label>
-                                <select name="types" id="types" class="form-control">
-                                  <option disabled selected value="">Select Types</option>
-                                  <option>Air</option>
-                                  <option>Train</option>
-                                </select>
+                                <input list="type_s" class="form-control" name="types" id="types">
+                      <datalist id="type_s">
+                        <option value="" disabled>Select Types</option>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                      </select>
                                 <div class="invalid-feedback" id="booktypes">
                                   Please provide a valid types.
                                 </div>
                               </div>
+
+                              <div class="col-md-2">
+                                            <label for="validationCustom03" class="form-label">Route</label>
+                                            <input list="edroutes" class="form-control" name="route" id="route">
+
+                                            <datalist id="edroutes">
+                                                <option selected disabled value="">Choose Route</option>
+                                                <option value="Vaniyambadi">Vaniyambadi</option>
+                                                <option value="CHENNAI">CHENNAI</option>
+                                                <option value="RANIPET">RANIPET</option>
+                                                <option value="AMBUR">AMBUR</option>
+                                                <option value="Other Place">Other Place</option>
+                                            </datalist>
+                                        </div>
                               <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="states" class="form-control" name="state" id="state">
@@ -113,7 +150,7 @@ if ($user_name != "") {
                                 <input list="origins" class="form-control" name="origin" id="origin">
                                 <datalist id="origins">
                                   <?php
-                                  $sqlcity = "select * from cities";
+                                  $sqlcity = "select * from partyset group by city"; //cities
                                   $execity = $con->prepare($sqlcity);
                                   $execity->execute();
                                   $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
@@ -135,7 +172,7 @@ if ($user_name != "") {
                                 <input list="destinations" class="form-control" name="destination" id="destination">
                                 <datalist id="destinations">
                                   <?php
-                                  $sqlcity = "select * from cities";
+                                  $sqlcity = "select * from partyset group by destinate"; //cities
                                   $execity = $con->prepare($sqlcity);
                                   $execity->execute();
                                   $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
@@ -143,25 +180,15 @@ if ($user_name != "") {
                                   ?>
 
                                     <option selected disabled value="">Choose City...</option>
-                                    <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
+                                    <option value="<?= $resc['destinate'] ?>"><?= $resc['destinate'] ?></option>
                                   <?php } ?>
                                 </datalist>
                                 <div class="invalid-feedback" id="bookdestination">
                                   Please provide a valid Destination.
                                 </div>
                               </div>
-
-                              <div class="col-md-12">
-                                <label for="validationCustom05" class="form-label">Area</label>
-                                <textarea class="form-control" id="area" name="area" required></textarea>
-                                <div class="invalid-feedback" id="bookarea">
-                                  Please provide a valid zip.
-                                </div>
-                              </div>
-
-
-                              <div class="col-md-4">
-                                <label for="validationCustom03" class="form-label">Consignor</label>
+        <div class="col-md-3">
+                                <label for="validationCustom03" class="form-label">From</label>
                                 <input type="text" class="form-control" id="coraddress" name="coraddress" required>
                                 <div class="invalid-feedback" id="bookfromaddress">
                                   Please provide a consignor address.
@@ -198,13 +225,27 @@ if ($user_name != "") {
 
 
 
-                              <div class="col-md-4">
-                                <label for="validationCustom03" class="form-label">Consignee</label>
+                              <div class="col-md-3">
+                                <label for="validationCustom03" class="form-label">To</label>
                                 <input type="text" class="form-control" id="conaddress" name="conaddress" required>
                                 <div class="invalid-feedback" id="booktoaddress">
                                   Please provide a valid consignee address.
                                 </div>
                               </div>
+
+                              
+
+                      
+                              
+                              <div class="col-md-3">
+                                <label for="validationCustom03" class="form-label">POD No</label>
+                                <input type="text" class="form-control" id="pod" name="pod" required>
+                                <div class="invalid-feedback" id="booktoaddress">
+                                  Please provide a valid consignee address.
+                                </div>
+                              </div>
+
+
                               <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="consstate" class="form-control" name="constate" id="constate">
@@ -234,7 +275,23 @@ if ($user_name != "") {
                                 </div>
                               </div> -->
 
-                              <div class="col-md-4" id="validationCustom05">
+                              <div class="col-md-6">
+                                <label for="validationCustom05" class="form-label">Area</label>
+                                <textarea class="form-control" id="area" name="area" required></textarea>
+                                <div class="invalid-feedback" id="bookarea">
+                                  Please provide a valid zip.
+                                </div>
+                              </div>
+
+                              <div class="col-md-3">
+                                <label for="validationCustom03" class="form-label">Train Name</label>
+                                <input type="text" class="form-control" id="trainname" name="trainname" required>
+                                <div class="invalid-feedback" id="booktoaddress">
+                                  Please provide a valid consignee address.
+                                </div>
+                              </div>
+
+                              <div class="col-md-3" id="validationCustom05">
                                 <label for="validationCustom05" class="form-label">Transport</label>
                                 <div class="col-md-12 mt-1">
                                   <input list="transports" class="form-control" name="transport" id="transport">
@@ -340,7 +397,7 @@ if ($user_name != "") {
                                   Please provide a valid Rate.
                                 </div>
                               </div>
-                              <div class="col-md-2" style="text-align:center;">
+                              <div class="col-md-3" style="text-align:center;">
                                 <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Amount</label>
                                 <div class="col-sm-12">
                                   <input class="form-control" type="text" name="amount" id="amount">
@@ -351,7 +408,18 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-3" style="text-align:center;">
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Other Charges</label>
+                                <div class="col-sm-12">
+                                  <input class="form-control" type="text" name="amount" id="amount">
+                                  <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
+                                </div>
+                                <div class="invalid-feedback" id="bookamount">
+                                  Please provide a valid Rate.
+                                </div>
+                              </div>
+
+                              <!-- <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">GST Amount</label>
                                 <div class="col-sm-12">
                                   <input type="text" name="gsts" id="gsts" value="5" class="form-control">
@@ -359,13 +427,7 @@ if ($user_name != "") {
                                 <div class="invalid-feedback" id="bookgst">
                                   Please provide a valid Rate.
                                 </div>
-                              </div>
-                              <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
-                                <input type="checkbox" name="gst" id="gst" value="GST"><span> GST(<span id="gstp">5%</span>)
-                                  <div class="invalid-feedback" id="bookgsts">
-                                    Please provide a valid Rate.
-                                  </div>
-                              </div>
+                              </div> -->
 
                               <div class="col-md-2">
                                 <label for="validationCustom04" class="form-label">Payment Type</label>
@@ -380,17 +442,70 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-9"></div>
-                              <div class="col-md-3" style="text-align:center;">
+                              
+                            
+                              <div class="col-md-3"></div>
+                              <div class="col-md-2">
+                      <label for="validationCustom02" class="form-label">GST Type</label>
+                      <input list="gsttypes" class="form-control" name="gst_types" id="gst_types">
+                      <datalist id="gsttypes">
+                        <option value="" disabled>Select Types</option>
+                        <option value="State">State</option>
+                        <option value="Interstate">Interstate</option>
+                      </datalist>
+                      <div class="invalid-feedback" id="edtypes">
+                        Please provide a valid types.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="states">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="cgst">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="sgst">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
+                    </div>
+
+
+                              <!-- <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
+                                <input type="checkbox" name="gst" id="gst" value="GST"><span> GST(<span id="gstp">5%</span>)
+                                  <div class="invalid-feedback" id="bookgsts">
+                                    Please provide a valid Rate.
+                                  </div>
+                              </div> -->
+
+                          <div class="row col-md-12">   
+                            <div class="col-md-4"></div>
+                              <div class="col-md-4" style="text-align:center;">
                                 <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
-                                <div class="col-sm-12">
                                   <input class="form-control form-control-lg" type="text" name="paid" id="paid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
-                                </div>
                                 <div class="invalid-feedback" id="bookpaid">
                                   Please select a valid Packing.
                                 </div>
                               </div>
-
+                          </div>
                               <div class="col-12 text-center">
                                 <button class="btn btn-primary" type="submit" name="bookcreation" id="bookcreation">Save Booking</button>
                               </div>
@@ -561,15 +676,18 @@ if ($user_name != "") {
                     </div>
                     <div class="col-md-3">
                       <label for="validationCustom02" class="form-label">Type</label>
-                      <select name="ed_types" id="ed_types" class="form-control">
+                      <input list="edtypes" class="form-control" name="ed_types" id="ed_types">
+                      <datalist id="edtypes">
                         <option value="" disabled>Select Types</option>
-                        <option>Air</option>
-                        <option>Train</option>
-                      </select>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                      </datalist>
                       <div class="invalid-feedback" id="edtypes">
                         Please provide a valid types.
                       </div>
                     </div>
+
+                    
                     <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="states" class="form-control" name="state" id="state">
@@ -837,8 +955,21 @@ if ($user_name != "") {
                       </div>
                     </div>
 
-                    <div class="col-md-2">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">GST Amount</label>
+                    <div class="col-md-3">
+                      <label for="validationCustom02" class="form-label">GST Type</label>
+                      <input list="gsttypes" class="form-control" name="gst_types" id="gst_types">
+                      <datalist id="gsttypes">
+                        <option value="" disabled>Select Types</option>
+                        <option value="State">State</option>
+                        <option value="Interstate">Interstate</option>
+                      </datalist>
+                      <div class="invalid-feedback" id="edtypes">
+                        Please provide a valid types.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="edstates">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
                       <div class="col-sm-12">
                         <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
                       </div>
@@ -847,9 +978,31 @@ if ($user_name != "") {
                       </div>
                     </div>
 
-                    <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
-                      <input type="checkbox" name="ed_gst" id="ed_gst" value="GST"><span> GST(<span id="gstp">5%</span>)
+                    <div class="col-md-2" id="edsgst">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
+                      
                     </div>
+
+                    <div class="col-md-2" id="edcgst">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="edgsts">
+                        Please provide a valid GST.
+                      </div>
+                      
+                    </div>
+
+                    <!-- <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
+                      <input type="checkbox" name="ed_gst" id="ed_gst" value="GST"><span> GST(<span id="gstp">5%</span>)
+                    </div> -->
 
                     <div class="col-md-2">
                       <label for="validationCustom04" class="form-label">Payment Type</label>
@@ -902,7 +1055,11 @@ if ($user_name != "") {
       <script>
         $(document).ready(function() {
 
-          $('#types').change(function() {
+          $("#states").hide();
+              $("#sgst").hide();
+            $("#cgst").hide();
+          
+            $('#types').change(function() {
             var types = this.value;
             if (types == "") {
               $("#booktypes").show();
@@ -911,6 +1068,61 @@ if ($user_name != "") {
             }
           });
 
+          $('#gst_types').change(function() {
+            var types = this.value;
+            if (types == "State") {
+              $("#states").show();
+              $("#sgst").hide();
+            $("#cgst").hide();
+            } else if(types=="Interstate") {
+             $("#states").hide();
+              $("#sgst").show();
+            $("#cgst").show();
+           }
+          });
+
+          $('#bookmode').change(function(e) {
+                        e.preventDefault();
+                        var value = $('#partyname').val();
+                        var partyid = $('#edparties [value="' + value + '"]').data('value');
+                        var route = $('#route').val();
+                        var types = $('#types').val();
+
+                        if (partyid != '' && route != '') {
+                            $.ajax({
+                                url: 'ajax/ajax_request.php?action=partydetfetch',
+                                type: 'POST',
+                                dataType: "JSON",
+                                data: {
+                                    'action': "partydetfetch",
+                                    'id': partyid,
+                                    'route': route,
+                                    'bookmode': bookmode
+                                },
+                                success: function(response) {
+                                    $("#partyids").val(response.data.id);
+                                    $("#partymobile").val(response.data.partymobile);
+                                    $("#gst").val(response.data.gst);
+                                    $("#trainprice").val(response.data.trainprice);
+                                    $("#airprice").val(response.data.airprice);
+                                    $("#ed_bookmode").val(response.data.bookmode);
+                                    var booksmode = $("#ed_bookmode").val();
+
+                                    if (booksmode == "Train") {
+                                        $('#train').prop('checked', true);
+                                        $("#trainprices").show();
+                                        $('#air').prop('checked', false);
+                                        $("#airprices").hide();
+                                    } else if (booksmode == "Air") {
+                                        $('#train').prop('checked', false);
+                                        $("#trainprices").hide();
+                                        $('#air').prop('checked', true);
+                                        $("#airprices").show();
+                                    }
+                                }
+                            });
+                        }
+                    });
 
           $("#gsts").keyup(function() {
             var gstv = $("#gsts").val();

@@ -96,15 +96,18 @@ $roles=$_SESSION['role'];
                                 <li class="nav-item">
                                 <a class="nav-link" href="dashboard.php"><i class="ti ti-brand-hipchat menu-icon"></i><span>Dashboard</span></a>
                             </li><!--end nav-item-->
-
+                            <li class="nav-item">
+                                <a class="nav-link" href="party.php"><i class="ti ti-user menu-icon"></i><span>Party Details</span></a>
+                            </li><!--end nav-item-->
+                             <li class="nav-item">
+                                <a class="nav-link" href="partysetup.php"><i class="ti ti-calendar menu-icon"></i><span>Party - Route Setup</span></a>
+                            </li><!--end nav-item-->
+                        
                             <li class="nav-item">
                                 <a class="nav-link" href="booking.php"><i class="ti ti-file-diff menu-icon"></i><span>booking</span></a>
                             </li><!--end nav-item-->
                             <li class="nav-item">
                                 <a class="nav-link" href="bonofied.php"><i class="ti ti-headphones menu-icon"></i><span>Bonofied</span></a>
-                            </li><!--end nav-item-->
-                            <li class="nav-item">
-                                <a class="nav-link" href="party.php"><i class="ti ti-calendar menu-icon"></i><span>Party</span></a>
                             </li><!--end nav-item-->
                             <?php if($roles=="Super Admin") { ?>
                             <li class="nav-item">

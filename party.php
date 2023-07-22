@@ -44,201 +44,13 @@ if ($user_name != "") {
                             <div class="card-header">
                                 <h4 class="card-title">Party Details </h4>
 
-                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
+                                <!-- <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
                                     Add Party
-                                </button>
+                                </button> -->
                                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLargedetails" style="float:right;">
                                     Add Party Details
                                 </button>
                                 <!--Start modal-header-->
-                                <div class="modal fade bd-example-modal-lg" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h6 class="modal-title m-0" id="myLargeModalLabel">Party</h6>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div><!--end modal-header-->
-                                            <div class="modal-body">
-                                                <div class="row">
-
-
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Add Party</h4>
-
-
-                                                    </div><!--end card-header-->
-                                                    <div class="card-body">
-                                                        <form class="row g-3 needs-validation" method="POST" novalidate>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom01" class="form-label">Date</label>
-                                                                <input type="date" value="<?= $dates ?>" class="form-control" id="creationdate" name="creationdate" required>
-                                                                <div class="invalid-feedback" id="partydatem">
-                                                                    Please provide a valid Date.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom01" class="form-label">Party Name</label>
-                                                                <input type="text" class="form-control" id="partyname" name="partyname" required>
-                                                                <div class="invalid-feedback" id="partynamem">
-                                                                    Please provide a valid Party Name.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom03" class="form-label">Mobile</label>
-                                                                <input type="number" class="form-control" id="partymobile" name="partymobile" required>
-                                                                <div class="invalid-feedback" id="partymobilem">
-                                                                    Please provide a valid Mobile.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-12">
-                                                                <label for="validationCustom02" class="form-label">Address</label>
-                                                                <!-- <input type="text" class="form-control" id="validationCustom02"  required> -->
-                                                                <textarea name="partyaddress" id="partyaddress" class="form-control"></textarea>
-                                                                <div class="invalid-feedback" id="partyaddressm">
-                                                                    Please provide a valid Address.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom04" class="form-label">State</label>
-                                                                <input list="states" class="form-control" name="state" id="state">
-
-                                                                <datalist id="states">
-                                                                    <?php
-                                                                    $sqlstate = "select * from states";
-                                                                    $exestate = $con->prepare($sqlstate);
-                                                                    $exestate->execute();
-                                                                    $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
-                                                                    foreach ($result as $res) {
-                                                                    ?>
-
-                                                                        <option selected disabled value="">Choose State...</option>
-                                                                        <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
-                                                                    <?php } ?>
-                                                                </datalist>
-                                                                <div class="invalid-feedback" id="partystatem">
-                                                                    Please provide a valid State.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom04" class="form-label">City</label>
-                                                                <input list="cities" class="form-control" name="city" id="city">
-
-                                                                <datalist id="cities">
-                                                                    <?php
-                                                                    $sqlcity = "select * from cities";
-                                                                    $execity = $con->prepare($sqlcity);
-                                                                    $execity->execute();
-                                                                    $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
-                                                                    foreach ($rescity as $resc) {
-                                                                    ?>
-
-                                                                        <option selected disabled value="">Choose City...</option>
-                                                                        <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
-                                                                    <?php } ?>
-                                                                </datalist>
-                                                                <div class="invalid-feedback" id="partycitym">
-                                                                    Please provide a valid City.
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom05" class="form-label">Zip</label>
-                                                                <input type="number" class="form-control" name="partyzip" id="partyzip" required>
-                                                                <div class="invalid-feedback" id="partyzipm">
-                                                                    Please provide a valid zip.
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3" id="validationCustom05">
-                                                                <label for="validationCustom05" class="form-label">Type of Booking</label>
-                                                                <div class="col-md-12">
-
-                                                                    <?php if ($types == "") { ?>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
-                                                                            <label class="form-check-label" for="inlineCheckbox1">Air</label>
-                                                                        </div>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
-                                                                            <label class="form-check-label" for="inlineCheckbox2">Train</label>
-                                                                        </div>
-                                                                    <?php } else if ($types == "Train") { ?>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
-                                                                            <label class="form-check-label" for="inlineCheckbox2">Train</label>
-                                                                        </div>
-                                                                    <?php } else if ($types == "Air") { ?>
-                                                                        <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
-                                                                            <label class="form-check-label" for="inlineCheckbox1">Air</label>
-                                                                        </div>
-                                                                    <?php } ?>
-                                                                    <div class="invalid-feedback" id="partybookmodem">
-                                                                        Please provide a valid bookmode.
-                                                                    </div>
-                                                                </div>
-
-                                                            </div><!--end row-->
-                                                            <div class="col-md-3" id="airprices">
-                                                                <label for="validationCustom03" class="form-label">Air Price</label>
-                                                                <input type="number" class="form-control" name="airprice" id="airprice" required>
-                                                                <div class="invalid-feedback" id="airpricem">
-                                                                    Please provide a valid Air Price.
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3" id="trainprices">
-                                                                <label for="validationCustom03" class="form-label">Trian Price</label>
-                                                                <input type="number" class="form-control" name="trainprice" id="trainprice" required>
-                                                                <div class="invalid-feedback" id="trainpricem">
-                                                                    Please provide a valid Trian Price.
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-3" id="trainprices">
-                                                                <label for="validationCustom03" class="form-label">GST Number</label>
-                                                                <input type="text" class="form-control" name="gst" id="gst" required>
-                                                                <div class="invalid-feedback" id="partygstm">
-                                                                    Please provide a valid GST.
-                                                                </div>
-                                                            </div>
-
-
-                                                            <div class="col-md-3" id="validationCustom05">
-                                                                <label for="validationCustom05" class="form-label">Destination</label>
-                                                                <div class="col-md-12">
-                                                                    <input list="destinates" class="form-control" name="destination" id="destination">
-                                                                    <datalist id="destinates">
-                                                                        <option value="Delhi">Delhi</option>
-                                                                        <option value="Agra">Agra</option>
-                                                                        <option value="Kaura">Kaura</option>
-                                                                        <option value="Kanpur">Kanpur</option>
-                                                                    </datalist>
-                                                                </div>
-                                                                <div class="invalid-feedback" id="destinationm">
-                                                                    Please provide a valid Destination.
-                                                                </div>
-                                                            </div><!--end row-->
-
-
-
-                                                            <div class="col-12 text-center">
-                                                                <button class="btn btn-primary" type="submit" name="createparty" id="createparty">Create Party</button>
-                                                            </div>
-                                                        </form><!--end form-->
-                                                    </div><!--end card-body-->
-
-
-
-
-                                                </div>
-
-                                            </div><!--end modal-body-->
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                                            </div><!--end modal-footer-->
-                                        </div><!--end modal-content-->
-                                    </div><!--end modal-dialog-->
-                                </div><!--end modal-->
 
                                 <div class="modal fade bd-example-modal-lg" id="exampleModalLargedetails" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg" role="document">
@@ -258,59 +70,85 @@ if ($user_name != "") {
                                                     </div><!--end card-header-->
                                                     <div class="card-body">
                                                         <form class="row g-3 needs-validation" method="POST" novalidate>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label for="validationCustom01" class="form-label">Date</label>
                                                                 <input type="date" value="<?= $dates ?>" class="form-control" id="detcreationdate" name="detcreationdate" required>
                                                                 <div class="invalid-feedback" id="partydatem">
                                                                     Please provide a valid Date.
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label for="validationCustom01" class="form-label">Party Name</label>
                                                                 <input type="text" class="form-control" id="detpartyname" name="detpartyname" required>
                                                                 <div class="invalid-feedback" id="detpartyname">
                                                                     Please provide a valid Party Name.
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4">
+                                                            <div class="col-md-3">
                                                                 <label for="validationCustom03" class="form-label">Mobile</label>
                                                                 <input type="number" class="form-control" id="detpartymobile" name="detpartymobile" required>
                                                                 <div class="invalid-feedback" id="detpartymobile">
                                                                     Please provide a valid Mobile.
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-4">
-                                                                <label for="validationCustom02" class="form-label">Type</label>
-                                                                <!-- <input type="text" class="form-control" id="validationCustom02"  required> -->
-                                                                <input list="dettypes" class="form-control" name="detpartytypes" id="detpartytypes">
-                                                                <datalist id="dettypes">
-                                                                    <option selected disabled value="">Choose Types...</option>
-                                                                    <option value="Air">Air</option>
-                                                                    <option value="Train">Train</option>
-                                                                </datalist>
+                                                            <div class="col-md-3">
+                                            <label for="validationCustom03" class="form-label">Route</label>
+                                            <input list="routes" class="form-control" name="route" id="route">
+
+<datalist id="routes">
+        <option selected disabled value="">Choose Route</option>
+        <option value="Vaniyambadi">Vaniyambadi</option>
+        <option value="CHENNAI">CHENNAI</option>
+        <option value="RANIPET">RANIPET</option>
+        <option value="AMBUR">AMBUR</option>
+        <option value="Other Place">Other Place</option>
+</datalist>
+                                        </div> <div class="col-md-3">
+                                                                <label for="validationCustom05" class="form-label">Type of Booking</label>
+                                                                <div class="col-md-12">
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="air" name="bookmode" value="Air">
+                                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                                    </div>
+                                                                    <div class="form-check form-check-inline">
+                                                                        <input class="form-check-input sample" type="radio" id="train" name="bookmode" value="Train">
+                                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                                    </div>
+                                                                    <div class="invalid-feedback">
+                                                                        Please provide a valid zip.
+                                                                    </div>
+                                                                </div>
                                                                 <div class="invalid-feedback" id="detpartytype">
                                                                     Please provide a valid Types.
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-4" id="detairprices">
-                                                                <label for="validationCustom03" class="form-label">Air Price</label>
-                                                                <input type="number" class="form-control" name="detairprice" id="detairprice" required>
-                                                                <div class="invalid-feedback" id="airpricem">
-                                                                    Please provide a valid Air Price.
+
+                                                            <div class="col-md-3" id="airprices">
+                                                                <label for="validationCustom03" class="form-label">Air Rate</label>
+                                                                <input type="number" class="form-control" name="airprice" id="airprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Air Rate.
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-4" id="dettrainprices">
-                                                                <label for="validationCustom03" class="form-label">Trian Price</label>
-                                                                <input type="number" class="form-control" name="dettrainprice" id="dettrainprice" required>
-                                                                <div class="invalid-feedback" id="trainpricem">
-                                                                    Please provide a valid Trian Price.
+                                                            <div class="col-md-3" id="trainprices">
+                                                                <label for="validationCustom03" class="form-label">Trian Rate</label>
+                                                                <input type="number" class="form-control" name="trainprice" id="trainprice" required>
+                                                                <div class="invalid-feedback">
+                                                                    Please provide a valid Trian Rate.
                                                                 </div>
                                                             </div>
 
+                                                            <div class="col-md-3">
+                                                                <label for="validationCustom03" class="form-label">GST</label>
+                                                                <input type="text" class="form-control" name="detpartygst" id="detpartygst" required>
+                                                                <div class="invalid-feedback" id="detpartygsts">
+                                                                    Please provide a valid GST.
+                                                                </div>
+                                                            </div>
 
-                                                            <div class="col-12 text-center">
+                                                           <div class="col-12 text-center">
                                                                 <button class="btn btn-primary" type="submit" name="createpartydetail" id="createpartydetail">Save Party Details</button>
                                                             </div>
                                                         </form><!--end form-->
@@ -337,11 +175,11 @@ if ($user_name != "") {
                                                 <th>S.No</th>
                                                 <th>Party</th>
                                                 <th>Mobile</th>
-                                                <th>Address</th>
                                                 <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                                                <th>Route</th>
                                                 <th>Book Mode</th>
-                                                <th>Destination</th>
-                                                <th colspan="2">Action</th>
+                                                <th>GST</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -372,30 +210,33 @@ if ($user_name != "") {
                                                     <td><?= $i ?></td>
                                                     <td><?= $party['partyname'] ?></td>
                                                     <td><?= $party['partymobile'] ?></td>
-                                                    <td><?= $party['partyaddress'] ?></td>
+                                                    <!-- <td><?= $party['partyaddress'] ?></td> -->
                                                     <td><?= $party['creationdate'] ?></td>
-                                                    <td><?= $party['bookmode'] ?></td>
-                                                    <td><?= $party['destinate'] ?></td>
-                                                    <td> <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
-                                                            <i class="fa fa-pen"></i>
-                                                        </button>
-                                                    </td>
+                                                    <td><?= $party['route'] ?></td>
+                                                   <td><?= $party['bookmode'] ?></td>
+                                                    <td><?= $party['gst'] ?></td>
                                                     <td>
-                                                        <form method="POST" action="">
-                                                            <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
-                                                            <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" ids="<?= $party['id'] ?>" id="partydeletion">
-                                                                <i class="fa fa-trash"></i>
-                                                            </button>
-                                                        </form>
+                                                        <div class="row col-md-12">
+                                                            <div class="col-md-6">
+                                                                <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
+                                                                    <i class="fa fa-pen"></i>
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                              <form method="POST" action="">
+                                                                    <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
+                                                                    <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" ids="<?= $party['id'] ?>" id="partydeletion">
+                                                                        <i class="fa fa-trash"></i>
+                                                                    </button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
                                                     </td>
+
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
                                     </table>
-                                    <!-- <button type="button" class="btn btn-sm btn-de-primary csv">Export CSV</button>
-                                    <button type="button" class="btn btn-sm btn-de-primary sql">Export SQL</button>
-                                    <button type="button" class="btn btn-sm btn-de-primary txt">Export TXT</button>
-                                    <button type="button" class="btn btn-sm btn-de-primary json">Export JSON</button> -->
                                 </div>
                             </div>
                         </div>
@@ -418,169 +259,85 @@ if ($user_name != "") {
                             <div class="row">
                                 <div class="card-body">
                                     <form class="row g-3 needs-validation" method="POST" novalidate>
-                                        <input type="hidden" name="edpartyid" id="edpartyid" value="<?= $party['id'] ?>" />
-                                        <div class="col-md-4">
+                                        <input type="hidden" name="edpartyid" id="edpartyid"  />
+                                        <div class="col-md-3">
                                             <label for="validationCustom01" class="form-label">Date</label>
                                             <input type="date" value="<?= $dates ?>" class="form-control" id="edcreationdate" name="edcreationdate" required>
                                             <div class="invalid-feedback">
                                                 Please provide a valid Date.
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="validationCustom01" class="form-label">Party Name</label>
                                             <input type="text" class="form-control" id="edpartyname" name="edpartyname" required>
                                             <div class="invalid-feedback" id="edpartynamem">
                                                 Please provide a valid Party Name.
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="validationCustom03" class="form-label">Mobile</label>
                                             <input type="number" class="form-control" id="edpartymobile" name="edpartymobile" required>
                                             <div class="invalid-feedback" id="edpartymobilem">
                                                 Please provide a valid Mobile.
                                             </div>
                                         </div>
-                                        <div class="col-md-12">
-                                            <label for="validationCustom02" class="form-label">Address</label>
-                                            <!-- <input type="text" class="form-control" id="validationCustom02"  required> -->
-                                            <textarea name="edpartyaddress" id="edpartyaddress" class="form-control"></textarea>
-                                            <div class="invalid-feedback" id="edpartyaddressm">
-                                                Please provide a valid Address.
-                                            </div>
+                                        <div class="col-md-3">
+                                            <label for="validationCustom03" class="form-label">Route</label>
+                                            <input list="routes" class="form-control" name="ed_route" id="ed_route">
+
+<datalist id="routes">
+        <option selected disabled value="">Choose Route</option>
+        <option value="Vaniyambadi">Vaniyambadi</option>
+        <option value="CHENNAI">CHENNAI</option>
+        <option value="RANIPET">RANIPET</option>
+        <option value="AMBUR">AMBUR</option>
+        <option value="Other Place">Other Place</option>
+</datalist>
                                         </div>
-                                        <div class="col-md-4">
-                                            <label for="validationCustom04" class="form-label">State</label>
-                                            <input list="states" class="form-control" name="edstate" id="edstate">
-
-                                            <datalist id="states">
-                                                <?php
-                                                $sqlstate = "select * from states";
-                                                $exestate = $con->prepare($sqlstate);
-                                                $exestate->execute();
-                                                $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
-                                                foreach ($result as $res) {
-                                                ?>
-
-                                                    <option selected disabled value="">Choose State...</option>
-                                                    <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
-                                                <?php } ?>
-                                            </datalist>
-                                            <div class="invalid-feedback" id="edpartystatem">
-                                                Please provide a valid State.
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <label for="validationCustom04" class="form-label">City</label>
-                                            <input list="cities" class="form-control" name="edcity" id="edcity">
-
-                                            <datalist id="cities">
-                                                <?php
-                                                $sqlcity = "select * from cities";
-                                                $execity = $con->prepare($sqlcity);
-                                                $execity->execute();
-                                                $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
-                                                foreach ($rescity as $resc) {
-                                                ?>
-
-                                                    <option selected disabled value="">Choose City...</option>
-                                                    <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
-                                                <?php } ?>
-                                            </datalist>
-                                            <div class="invalid-feedback" id="edpartycitym">
-                                                Please provide a valid City.
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="validationCustom05" class="form-label">Zip</label>
-                                            <input type="number" class="form-control" name="edpartyzip" id="edpartyzip" required>
-                                            <div class="invalid-feedback" id="edpartyzipm">
-                                                Please provide a valid zip.
-                                            </div>
-                                        </div>
-
                                         <div class="col-md-3" id="validationCustom05">
                                             <label for="validationCustom05" class="form-label">Type of Booking</label>
                                             <div class="col-md-12">
                                                 <input type="hidden" id="ed_bookmode" name="ed_bookmode" />
-                                                <?php if ($types == "") { ?>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
-                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
-                                                    </div>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input sample" type="radio" id="edtrain" name="edbookmode" value="Train">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
-                                                    </div>
-                                                    <div class="invalid-feedback" id="edpartybookmodem">
-                                                        Please provide a valid Bookmode.
-                                                    </div>
-                                                <?php } else if ($types == "Air") { ?>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
-                                                        <label class="form-check-label" for="inlineCheckbox1">Air</label>
-                                                    </div>
-                                                    <div class="invalid-feedback" id="edpartybookmodem">
-                                                        Please provide a valid Bookmode.
-                                                    </div>
-                                                <?php } else if ($types == "Train") { ?>
-                                                    <div class="form-check form-check-inline">
-                                                        <input class="form-check-input sample" type="radio" id="edtrain" name="edbookmode" value="Train">
-                                                        <label class="form-check-label" for="inlineCheckbox2">Train</label>
-                                                    </div>
-                                                    <div class="invalid-feedback" id="edpartybookmodem">
-                                                        Please provide a valid Bookmode.
-                                                    </div>
-                                                <?php } ?>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input sample" type="radio" id="edair" name="edbookmode" value="Air">
+                                                    <label class="form-check-label" for="inlineCheckbox1">Air</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input sample" type="radio" id="edtrain" name="edbookmode" value="Train">
+                                                    <label class="form-check-label" for="inlineCheckbox2">Train</label>
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Please provide a valid zip.
+                                                </div>
                                             </div>
 
                                         </div><!--end row-->
                                         <div class="col-md-3" id="edairprices">
-                                            <label for="validationCustom03" class="form-label">Air Price</label>
+                                            <label for="validationCustom03" class="form-label">Air Rate</label>
                                             <input type="number" class="form-control " name="edairprice" id="edairprice" required>
-                                            <div class="invalid-feedback" id="edpartyairpricem">
-                                                Please provide a valid Air Price
+                                            <div class="invalid-feedback">
+                                                Please provide a valid Air Rate.
                                             </div>
                                         </div>
 
                                         <div class="col-md-3" id="edtrainprices">
-                                            <label for="validationCustom03" class="form-label">Trian Price</label>
+                                            <label for="validationCustom03" class="form-label">Train Rate</label>
                                             <input type="number" class="form-control " name="edtrainprice" id="edtrainprice" required>
-                                            <div class="invalid-feedback" id="edpartytrainpricem">
-                                                Please provide a valid Trian Price
+                                            <div class="invalid-feedback">
+                                                Please provide a valid Train Rate.
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" id="trainprices">
+
+                                        <div class="col-md-3">
                                             <label for="validationCustom03" class="form-label">GST Number</label>
                                             <input type="text" class="form-control" name="edgst" id="edgst" required>
                                             <div class="invalid-feedback" id="edpartygstm">
                                                 Please provide a valid GST
                                             </div>
                                         </div>
-
-
-                                        <div class="col-md-3" id="validationCustom05">
-                                            <label for="validationCustom05">Destination</label>
-                                            <div class="col-md-12">
-                                                <input list="eddestinates" class="form-control" name="ed_destination" id="ed_destination">
-
-                                                <datalist id="eddestinates">
-                                                    <option value="Delhi">Delhi</option>
-                                                    <option value="Agra">Agra</option>
-                                                    <option value="Kaura">Kaura</option>
-                                                    <option value="Kanpur">Kanpur</option>
-                                                </datalist>
-                                            </div>
-                                            <div class="invalid-feedback" id="edpartydestinationm">
-                                                Please provide a valid Destination
-                                            </div>
-                                        </div><!--end row-->
-
-
-
                                         <div class="col-12 text-center">
-                                            <button class="btn btn-primary" type="submit" name="party_updation" id="party_updation">Update Party</button>
+                                            <button class="btn btn-primary" type="submit" name="partydetupdation" id="partydetupdation">Update Party</button>
                                         </div>
                                     </form><!--end form-->
                                 </div><!--end card-body-->
@@ -610,30 +367,30 @@ if ($user_name != "") {
                     <h6>Account Settings</h6>
                     <div class="p-2 text-start mt-3">
                         <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="settings-switch1">
+                            <input class="form-check-input" type="radio" id="settings-switch1">
                             <label class="form-check-label" for="settings-switch1">Auto updates</label>
                         </div><!--end form-switch-->
                         <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="settings-switch2" checked>
+                            <input class="form-check-input" type="radio" id="settings-switch2" checked>
                             <label class="form-check-label" for="settings-switch2">Location Permission</label>
                         </div><!--end form-switch-->
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="settings-switch3">
+                            <input class="form-check-input" type="radio" id="settings-switch3">
                             <label class="form-check-label" for="settings-switch3">Show offline Contacts</label>
                         </div><!--end form-switch-->
                     </div><!--end /div-->
                     <h6>General Settings</h6>
                     <div class="p-2 text-start mt-3">
                         <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="settings-switch4">
+                            <input class="form-check-input" type="radio" id="settings-switch4">
                             <label class="form-check-label" for="settings-switch4">Show me Online</label>
                         </div><!--end form-switch-->
                         <div class="form-check form-switch mb-2">
-                            <input class="form-check-input" type="checkbox" id="settings-switch5" checked>
+                            <input class="form-check-input" type="radio" id="settings-switch5" checked>
                             <label class="form-check-label" for="settings-switch5">Status visible to all</label>
                         </div><!--end form-switch-->
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="settings-switch6">
+                            <input class="form-check-input" type="radio" id="settings-switch6">
                             <label class="form-check-label" for="settings-switch6">Notifications Popup</label>
                         </div><!--end form-switch-->
                     </div><!--end /div-->
@@ -647,41 +404,73 @@ if ($user_name != "") {
             <script src="assets/pages/datatable.init.js"></script>
             <script>
                 $(document).ready(function() {
-                    $("#detairprices").hide();
-                    $("#dettrainprices").hide();
 
-                    $('#detpartytypes').change(function() {
-                        var detpartytype = this.value;
-                        if (detpartytype == "") {
-                            $("#detpartytype").show();
-                        }
-                        if (detpartytype == "Air") {
-                            $("#detairprices").show();
-                            $("#dettrainprices").hide();
-                        } else if (detpartytype == "Train") {
-                            $("#detairprices").hide();
-                            $("#dettrainprices").show();
+                    $("#trainprices").hide();
+                    $("#airprices").hide();
+                    $("#edtrainprices").hide();
+                    $("#edairprices").hide();
+
+                    $("input[type='radio']").click(function() {
+                        var airs = $("input[id='air']:checked").val();
+                        var trains = $("input[id='train']:checked").val();
+                        //  alert(airs+" - "+trains)
+
+                        if (airs != "Air" && trains != "Train") {
+                            $("#trainprices").hide();
+                            $("#airprices").hide();
+                        } else if (airs == "Air" && trains != "Train") {
+                            $("#trainprices").hide();
+                            $("#airprices").show();
+                        } else if (airs != "Air" && trains == "Train") {
+                            $("#trainprices").show();
+                            $("#airprices").hide();
+                        } else if (airs == "Air" && trains == "Train") {
+                            $("#trainprices").show();
+                            $("#airprices").show();
                         }
                     });
+
+                    $("input[type='radio']").click(function() {
+                        var airs = $("input[id='edair']:checked").val();
+                        var trains = $("input[id='edtrain']:checked").val();
+                        //  alert(airs+" - "+trains)
+
+                        if (airs != "Air" && trains != "Train") {
+                            $("#edtrainprices").hide();
+                            $("#edairprices").hide();
+                        } else if (airs == "Air" && trains != "Train") {
+                            $("#edtrainprices").hide();
+                            $("#edairprices").show();
+                        } else if (airs != "Air" && trains == "Train") {
+                            $("#edtrainprices").show();
+                            $("#edairprices").hide();
+                        } else if (airs == "Air" && trains == "Train") {
+                            $("#edtrainprices").show();
+                            $("#edairprices").show();
+                        }
+                    });
+
+                    
 
                     $("#createpartydetail").click(function(e) {
                         e.preventDefault();
                         var creationdate = $('#detcreationdate').val();
                         var partyname = $('#detpartyname').val();
-                       var mobile = $('#detpartymobile').val();
-                        var types = $('#detpartytypes').val();
+                        var mobile = $('#detpartymobile').val();
                         var gst = $('#detpartygst').val();
-                      if(types=="Air"){
-                        $("#dettrainprice").val(0);
-                       }
-                       if(types=="Train"){
-                        $("#detairprice").val(0);
-                       }
-                       var airp=$("#detairprice").val();
-                       var trainp=$("#dettrainprice").val();
+                        var route = $('#route').val();
 
-                      if (partyname != "" && mobile != "" && types != "") {
-                           $("#invalid-type").hide();
+                        var types = [];
+                        $.each($("input[name='bookmode']:checked"), function() {
+                            types.push($(this).val());
+                        });
+                        bookmode = types.toString();
+
+                        var airp = $("#airprice").val();
+                        var trainp = $("#trainprice").val();
+
+                        if (partyname != "" && mobile != "" && types != "") {
+                            $("#invalid-type").hide();
                             $.ajax({
                                 url: 'ajax/ajax_request.php?action=userpartydetail',
                                 type: 'POST',
@@ -691,10 +480,11 @@ if ($user_name != "") {
                                     'creationdate': creationdate,
                                     'partyname': partyname,
                                     'partymobile': mobile,
-                                    'types': types,
+                                    'types': bookmode,
                                     'gst': gst,
-                                'airprice': airp,
-                                   'trainprice': trainp
+                                    'airprice': airp,
+                                    'trainprice': trainp,
+                                    'route':route
                                 },
                                 success: function(response) {
                                     if (response.msg == "Success") {
@@ -705,7 +495,7 @@ if ($user_name != "") {
                                             showConfirmButton: false,
                                             timer: 3000
                                         }).then(function() {
-                                            window.location.href = 'user.php';
+                                            window.location.href = 'party.php';
                                         })
                                     } else {
                                         Swal.fire({
@@ -715,330 +505,6 @@ if ($user_name != "") {
                                             showConfirmButton: false,
                                             timer: 3000
                                         }).then(function() {
-                                            window.location.href = 'user.php';
-                                        })
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-                    $("#partynamem").hide();
-                    $("#partymobilem").hide();
-                    $("#partystatem").hide();
-                    $("#partystatem").hide();
-                    $("#partycitym").hide();
-                    $("#partyzipm").hide();
-                    $("#partybookmodem").hide();
-                    $("#partygstm").hide();
-                    $("#partydestinationm").hide();
-                    $("#trainprices").hide();
-                    $("#airprices").hide();
-
-                    $("#partynamem").hide();
-                    $("#partymobilem").hide();
-                    $("#partystatem").hide();
-                    $("#partystatem").hide();
-                    $("#partycitym").hide();
-                    $("#partyzipm").hide();
-                    $("#partybookmodem").hide();
-                    $("#partygstm").hide();
-                    $("#partydestinationm").hide();
-
-
-                    $('#partyname').change(function() {
-                        var partyname = this.value;
-                        if (partyname == "") {
-                            $("#partynamem").show();
-                        } else {
-                            $("#partynamem").hide();
-                        }
-                    });
-
-                    $('#edpartyname').change(function() {
-                        var partyname = this.value;
-                        if (partyname == "") {
-                            $("#edpartynamem").show();
-                        } else {
-                            $("#edpartynamem").hide();
-                        }
-                    });
-
-                    $('#partymobile').change(function() {
-                        var partymobile = this.value;
-                        if (partymobile == "") {
-                            $("#partymobilem").show();
-                        } else {
-                            $("#partymobilem").hide();
-                        }
-                    });
-
-                    $('#edpartymobile').change(function() {
-                        var partymobile = this.value;
-                        if (partymobile == "") {
-                            $("#edpartymobilem").show();
-                        } else {
-                            $("#edpartymobilem").hide();
-                        }
-                    });
-
-                    $('#partyaddress').change(function() {
-                        var partyaddress = this.value;
-                        if (partyaddress == "") {
-                            $("#partyaddressm").show();
-                        } else {
-                            $("#partyaddressm").hide();
-                        }
-                    });
-
-                    $('#edpartyaddress').change(function() {
-                        var partyaddress = this.value;
-                        if (partyaddress == "") {
-                            $("#edpartyaddressm").show();
-                        } else {
-                            $("#edpartyaddressm").hide();
-                        }
-                    });
-
-                    $('#state').change(function() {
-                        var state = this.value;
-                        if (state == "") {
-                            $("#partystatem").show();
-                        } else {
-                            $("#partystatem").hide();
-                        }
-                    });
-
-                    $('#edstate').change(function() {
-                        var state = this.value;
-                        if (state == "") {
-                            $("#edpartystatem").show();
-                        } else {
-                            $("#edpartystatem").hide();
-                        }
-                    });
-
-                    $('#city').change(function() {
-                        var city = this.value;
-                        if (city == "") {
-                            $("#partycitym").show();
-                        } else {
-                            $("#partycitym").hide();
-                        }
-                    });
-
-                    $('#edcity').change(function() {
-                        var city = this.value;
-                        if (city == "") {
-                            $("#edpartycitym").show();
-                        } else {
-                            $("#edpartycitym").hide();
-                        }
-                    });
-
-                    $('#partyzip').change(function() {
-                        var zip = this.value;
-                        if (zip == "") {
-                            $("#partyzipm").show();
-                        } else {
-                            $("#partyzipm").hide();
-                        }
-                    });
-
-                    $('#edpartyzip').change(function() {
-                        var zip = this.value;
-                        if (zip == "") {
-                            $("#edpartyzipm").show();
-                        } else {
-                            $("#edpartyzipm").hide();
-                        }
-                    });
-
-                    $('input[type=radio][name=bookmode]').change(function() {
-                        var bookmoding = this.value;
-                        if (bookmoding != '') {
-                            $("#partybookmodem").hide();
-                        }
-                        if (bookmoding == "Air") {
-                            if (airprice == '') {
-                                $("#airpricem").show();
-                            }
-                        }
-                        if (bookmoding == "Train") {
-                            if (trainprice == '') {
-                                $("#trainpricem").show();
-                            }
-                        }
-                    });
-
-
-                    $('#gst').change(function() {
-                        var gst = this.value;
-                        if (gst == "") {
-                            $("#partygstm").show();
-                        } else {
-                            $("#partygstm").hide();
-                        }
-                    });
-
-                    $('#edgst').change(function() {
-                        var gst = this.value;
-                        if (gst == "") {
-                            $("#edpartygstm").show();
-                        } else {
-                            $("#edpartygstm").hide();
-                        }
-                    });
-
-                    $('#destination').change(function() {
-                        var destination = this.value;
-                        if (destination == "") {
-                            $("#destinationm").show();
-                        } else {
-                            $("#destinationm").hide();
-                        }
-                    });
-
-                    $('#ed_destination').change(function() {
-                        var destination = this.value;
-                        if (destination == "") {
-                            $("#edpartydestinationm").show();
-                        } else {
-                            $("#edpartydestinationm").hide();
-                        }
-                    });
-
-                    $("input[type='radio']").click(function() {
-                        var bookmodes = $("input[name='bookmode']:checked").val();
-
-                        if (bookmodes == "Air") {
-                            $("#trainprices").hide();
-                            $("#airprices").show();
-                        } else {
-                            $("#trainprices").show();
-                            $("#airprices").hide();
-                        }
-
-                        var edbookmodes = $("input[name='edbookmode']:checked").val();
-
-                        if (edbookmodes == "Air") {
-                            $("#edtrainprices").hide();
-                            $("#edtrainprice").val(0);
-                            $("#edairprices").show();
-                        } else {
-                            $("#edtrainprices").show();
-                            $("#edairprice").val(0);
-                            $("#edairprices").hide();
-
-
-
-                        }
-                    });
-
-                    $("#createparty").click(function(e) {
-                        e.preventDefault();
-                        var creationdate = $('#creationdate').val();
-                        var partyname = $('#partyname').val();
-                        var partymobile = $('#partymobile').val();
-                        var partyaddress = $('#partyaddress').val();
-                        var state = $('#state').val();
-                        var city = $('#city').val();
-                        var partyzip = $('#partyzip').val();
-
-                        book_mode = $("input[name='bookmode']:checked").val();
-                        var destinate = [];
-                        $.each($("input[name='destination']:checked"), function() {
-                            destinate.push($(this).val());
-                        });
-                        destination = $("#destination").val();
-
-                        var trainprice = $('#trainprice').val();
-                        var airprice = $('#airprice').val();
-                        var gst = $('#gst').val();
-
-                        if (partyname == '') {
-                            $("#partynamem").show();
-                        }
-                        if (partymobile == '') {
-                            $("#partymobilem").show();
-                        }
-                        if (partyaddress == '') {
-                            $("#partyaddressm").show();
-                        }
-                        if (state == '') {
-                            $("#partystatem").show();
-                        }
-                        if (city == '') {
-                            $("#partycitym").show();
-                        }
-                        if (partyzip == '') {
-                            $("#partyzipm").show();
-                        }
-                        if (destination == '') {
-                            $("#partydestinationm").show();
-                        }
-                        if (gst == '') {
-                            $("#partygstm").show();
-                        }
-                        if (book_mode == undefined) {
-                            $("#partybookmodem").show();
-                        }
-
-                        if (book_mode != '') {
-                            if (book_mode == "Air") {
-                                if (airprice == '') {
-                                    $("#airpricem").show();
-                                }
-                            }
-                            if (book_mode == "Train") {
-                                if (trainprice == '') {
-                                    $("#trainpricem").show();
-                                }
-                            }
-                        }
-
-                        if (destination == '') {
-                            $("#destinationm").show();
-                        } else if (creationdate != '' && partyname != '' && partymobile != '' && partyaddress != '' && state != '' & city != '' && zip != '' && book_mode != '' && gst != '') {
-
-                            $.ajax({
-                                url: 'ajax/ajax_request.php?action=partycreation',
-                                type: 'POST',
-                                dataType: "JSON",
-                                data: {
-                                    'action': "partycreation",
-                                    'creationdate': creationdate,
-                                    'partyname': partyname,
-                                    'partymobile': partymobile,
-                                    'partyaddress': partyaddress,
-                                    'state': state,
-                                    'city': city,
-                                    'partyzip': partyzip,
-                                    'bookmode': book_mode,
-                                    'trainprice': trainprice,
-                                    'airprice': airprice,
-                                    'gst': gst,
-                                    'destinate': destination
-                                },
-                                success: function(response) {
-                                    if (response.msg == "Success") {
-                                        Swal.fire({
-                                            position: 'top-end',
-                                            icon: 'success',
-                                            title: 'Party Created',
-                                            showConfirmButton: false,
-                                            timer: 3000
-                                        }).then(function() {
-                                            window.location.href = 'party.php';
-                                        })
-                                    } else {
-                                        Swal.fire({
-                                            position: 'top-end',
-                                            icon: 'error',
-                                            title: 'Party Create Failed',
-                                            showConfirmButton: false,
-                                            timer: 3000
-                                        }).then(function() {
                                             window.location.href = 'party.php';
                                         })
                                     }
@@ -1046,11 +512,10 @@ if ($user_name != "") {
                             });
                         }
                     });
-
                     $(".edit_party").click(function(e) {
                         e.preventDefault();
                         var partyid = $(this).attr("ids");
-                        $("#partyid").val(partyid);
+                        $("#edpartyid").val(partyid);
                         $.ajax({
                             url: 'ajax/ajax_request.php?action=partyfetch',
                             type: 'POST',
@@ -1063,93 +528,61 @@ if ($user_name != "") {
                                 $("#edcreationdate").val(response.data.creationdate);
                                 $("#edpartyname").val(response.data.partyname);
                                 $("#edpartymobile").val(response.data.partymobile);
-                                $("#edstate").val(response.data.state);
-                                $("#edcity").val(response.data.city);
-                                $("#edpartyzip").val(response.data.partyzip);
-                                $("#edpartyaddress").val(response.data.partyaddress);
                                 $("#ed_bookmode").val(response.data.bookmode);
                                 $("#edairprice").val(response.data.airprice);
                                 $("#edtrainprice").val(response.data.trainprice);
-                                $("#edpartyaddress").val(response.data.partyaddress);
-                                $("#edgst").val(response.data.gst);
-                                var booksmode = $("#ed_bookmode").val();
-
+                               $("#ed_route").val(response.data.route);
+                               var booksmode = $("#ed_bookmode").val();
+                           
                                 if (booksmode == "Train") {
-                                    $('#edtrain').prop('checked', true);
+                                    $("#edtrain").prop('checked',true);
                                     $("#edtrainprices").show();
-                                    $('#edair').prop('checked', false);
                                     $("#edairprices").hide();
-                                } else {
-                                    $('#edtrain').prop('checked', false);
-                                    $("#edtrainprices").hide();
-                                    $('#edair').prop('checked', true);
+                                } else if (booksmode == "Air") {
+                                    $("#edair").prop('checked',true);
+                                      $("#edtrainprices").hide();
                                     $("#edairprices").show();
-                                }
-
-                                $("#edairprice").val(response.data.airprice);
-                                $("#edtrainprice").val(response.data.trainprice);
-                                $("#edgst").val(response.data.gst);
-                                $("#ed_destination").val(response.data.destinate);
+                                } 
+                               $("#edgst").val(response.data.gst);
                             }
                         });
                     });
 
-                    $("#party_updation").click(function(e) {
+                    $("#partydetupdation").click(function(e) {
                         e.preventDefault();
                         var ids = $('#edpartyid').val();
                         var creationdate = $("#edcreationdate").val();
                         var partyname = $("#edpartyname").val();
+                        var route = $("#ed_route").val();
                         var partymobile = $("#edpartymobile").val();
-                        var state = $("#edstate").val();
-                        var city = $("#edcity").val();
-                        var partyzip = $("#edpartyzip").val();
-                        var partyaddress = $("#edpartyaddress").val();
-                        var airprice = $("#edairprice").val();
-                        var trainprice = $("#edtrainprice").val();
                         var gst = $("#edgst").val();
+                       var book_mode = $("input[name='edbookmode']:checked").val();
+                     
+                        if(book_mode=="Air"){
+                        $("#edtrainprice").val(0);
+                        }
+                        else if(book_mode=="Train"){
+                           $("#edairprice").val(0);
+                        }
+                       
+                        var airprice = $("#edairprice").val();
+                       var trainprice = $("#edtrainprice").val();
 
-                        book_mode = $("input[name='edbookmode']:checked").val();
-                        if (book_mode == "Air") {
-                            if (airprice == '' && airprice == 0) {
-                                $("#edpartyairpricem").show();
-                            } else {
-                                $("#edpartyairpricem").show();
-                            }
-                        } else if (book_mode == "Train") {
-                            if (trainprice == '' && trainprice == 0) {
-                                $("#edpartytrainpricem").show();
-                            } else {
-                                $("#edpartyairpricem").show();
-                            }
-                        }
-                        destination = $("#ed_destination").val();
-                        if (destination == "") {
-                            $("#edpartydestinationm").show();
-                        }
-                        if (destination != "") {
-                            $("#edpartydestinationm").hide();
-                        }
-
-                        if (creationdate != "" && partyname != "" && partymobile != '' && state != '' && city != '' && partyzip != '' && partyaddress != '' && (airprice != '' || trainprice != '') && gst != '' && destination != '') {
-                            $.ajax({
-                                url: 'ajax/ajax_request.php?action=partyupdation',
+                           $.ajax({
+                                url: 'ajax/ajax_request.php?action=partydetupdation',
                                 type: 'POST',
                                 dataType: "JSON",
                                 data: {
-                                    'action': "partyupdation",
+                                    'action': "partydetupdation",
                                     'ids': ids,
                                     'creationdate': creationdate,
                                     'partyname': partyname,
                                     'partymobile': partymobile,
-                                    'state': state,
-                                    'city': city,
-                                    'partyzip': partyzip,
-                                    'partyaddress': partyaddress,
                                     'airprice': airprice,
                                     'trainprice': trainprice,
                                     'gst': gst,
                                     'bookmode': book_mode,
-                                    'destinate': destination
+                                    'route': route
                                 },
                                 success: function(response) {
                                     console.log(response.data)
@@ -1176,157 +609,6 @@ if ($user_name != "") {
                                     }
                                 }
                             });
-                        }
-                        // else {
-                        // if (creationdate == '' && partyname == '' && partymobile == '' && state == '' && city == '' && partyzip == '' && partyaddress == '' && (airprice == '' || trainprice == '') && gst == '' && book_mode == '' && destination == '') {
-                        //         $("#edpartynamem").show();
-                        //         $("#edpartymobilem").show();
-                        //         $("#edpartyaddressm").show();
-                        //         $("#edpartystatem").show();
-                        //         $("#edpartycitym").show();
-                        //         $("#edpartyzipm").show();
-                        //         $("#edpartybookmodem").show();
-                        //         $("#edpartygstm").show();
-                        //         $("#edpartydestinationm").show();
-                        //         $("#edpartyairpricem").show();
-                        //         $("#edpartytrainpricem").show();
-                        //     }
-                        //     if (partyname == '') {
-
-                        //         $("#edpartynamem").show();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //       }
-                        //     if (partymobile == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").show();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //                }
-
-                        //     if (partyaddress == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").show();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //           }
-                        //     if (state == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").show();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //           }
-                        //     if (city == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").show();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //         }
-                        //     if (partyzip == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").show();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //        }
-
-                        //     if (gst == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").show();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //         }
-
-                        //     if (book_mode == '') {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").show();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").hide();
-                        //         }
-
-                        //     if (airprice == '' || airprice == 0) {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").show();
-                        //         $("#edpartytrainpricem").hide();
-                        //           }
-                        //     if (trainprice == '' || trainprice == 0) {
-                        //         $("#edpartynamem").hide();
-                        //         $("#edpartymobilem").hide();
-                        //         $("#edpartyaddressm").hide();
-                        //         $("#edpartystatem").hide();
-                        //         $("#edpartycitym").hide();
-                        //         $("#edpartyzipm").hide();
-                        //         $("#edpartybookmodem").hide();
-                        //         $("#edpartygstm").hide();
-                        //         $("#edpartydestinationm").hide();
-                        //         $("#edpartyairpricem").hide();
-                        //         $("#edpartytrainpricem").show();
-                        //     }
-                        // }
                     });
 
                     $(".partydeletion").click(function(e) {

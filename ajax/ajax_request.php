@@ -123,14 +123,40 @@ if ($action == "userpartydetail") {
   $trainprice = isset($_POST['trainprice']) ? $_POST['trainprice'] : "";
   $airprice = isset($_POST['airprice']) ? $_POST['airprice'] : "";
   $gst = isset($_POST['gst']) ? $_POST['gst'] : "";
+  $route = isset($_POST['route']) ? $_POST['route'] : "";
 
-  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $types != "" && $trainprice != "" && $airprice != "" && $gst != "") {
-    $query = "insert into party(creationdate,partyname,partymobile,bookmode,trainprice,airprice,gst) values(:creationdate,:partyname,:partymobile,:bookmode,:trainprice,:airprice,:gst)";
-    $exe = $con->prepare($query);
-    $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':bookmode' => $types, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst];
-    // print_r($data);die();
+  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $types != "" && ($trainprice != "" || $airprice != "") && $gst != "" && $route!="") {
+   $query = "insert into party(creationdate,partyname,partymobile,bookmode,trainprice,airprice,gst,route) values(:creationdate,:partyname,:partymobile,:bookmode,:trainprice,:airprice,:gst,:route)";
+      $exe = $con->prepare($query);
+    $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':bookmode' => $types, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst,':route'=>$route];
     $query_execute = $exe->execute($data);
     if ($query_execute) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } 
+  else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  echo json_encode($data);
+}
+
+if ($action == "partydetfetch") {
+  $id = isset($_POST['id']) ? $_POST['id'] : "";  
+  $route = isset($_POST['route']) ? $_POST['route'] : "";
+  $bookmode = isset($_POST['bookmode']) ? $_POST['bookmode'] : "";
+
+  if ($id != "") {
+    $query = "select * from party where id=:id and route=:route and bookmode=:bookmode";
+    // print_r($query);die();
+    $exe = $con->prepare($query);
+    $data = [':id' => $id,'route'=>$route,':bookmode'=>$bookmode];
+    $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
       $msg = "Success";
     } else {
       $msg = "Failure";
@@ -140,11 +166,67 @@ if ($action == "userpartydetail") {
   }
   $data = [];
   $data['msg'] = $msg;
+  $data['data'] = $result;
   echo json_encode($data);
 }
 
+if ($action == "partydetsfetch") {
+  $id = isset($_POST['id']) ? $_POST['id'] : "";
+
+ if ($id != "") {
+    $query = "select * from partyset where id=:id";
+    // print_r($query);die();
+    $exe = $con->prepare($query);
+    $data = [':id' => $id];
+    $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  $data['data'] = $result;
+  echo json_encode($data);
+}
+
+
+if ($action == "partydetupdation") {
+  $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
+
+  $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
+  $partyname = isset($_POST['partyname']) ? $_POST['partyname'] : "";
+  $partymobile = isset($_POST['partymobile']) ? $_POST['partymobile'] : "";
+  $bookmode = isset($_POST['bookmode']) ? $_POST['bookmode'] : "";
+  $trainprice = isset($_POST['trainprice']) ? $_POST['trainprice'] : "";
+  $airprice = isset($_POST['airprice']) ? $_POST['airprice'] : "";
+  $gst = isset($_POST['gst']) ? $_POST['gst'] : "";
+  $route = isset($_POST['route']) ? $_POST['route'] : "";
+ 
+  $query = "update party set creationdate=:creationdate,partyname=:partyname,partymobile=:partymobile,bookmode=:bookmode,trainprice=:trainprice,airprice=:airprice,gst=:gst,route=:route where id=:ids";
+  $exe = $con->prepare($query);
+  $data = ['ids' => $ids, ':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst,':route'=>$route];
+  // print_r($data);die();
+  $query_execute = $exe->execute($data);
+  if ($query_execute) {
+    $msg = "Success";
+  } else {
+    $msg = "Failure";
+  }
+
+  $data = [];
+  $data['msg'] = $msg;
+  echo json_encode($data);
+}
+
+
 if ($action == "partycreation") {
   $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
+  $partyids = isset($_POST['partyids']) ? $_POST['partyids'] : "";
   $partyname = isset($_POST['partyname']) ? $_POST['partyname'] : "";
   $partymobile = isset($_POST['partymobile']) ? $_POST['partymobile'] : "";
   $partyaddress = isset($_POST['partyaddress']) ? $_POST['partyaddress'] : "";
@@ -156,11 +238,12 @@ if ($action == "partycreation") {
   $airprice = isset($_POST['airprice']) ? $_POST['airprice'] : "";
   $gst = isset($_POST['gst']) ? $_POST['gst'] : "";
   $destinate = isset($_POST['destinate']) ? $_POST['destinate'] : "";
+  $route = isset($_POST['route']) ? $_POST['route'] : "";
 
-  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $partyaddress != "" && $state != "" && $city != "" && $partyzip != "" && $bookmode != "" && ($trainprice != 0 || $airprice != 0) && $gst != "" && $destinate != "") {
-    $query = "insert into party(creationdate,partyname,partymobile,partyaddress,state,city,partyzip,bookmode,trainprice,airprice,gst,destinate) values(:creationdate,:partyname,:partymobile,:partyaddress,:state,:city,:partyzip,:bookmode,:trainprice,:airprice,:gst,:destinate)";
+  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $partyaddress != "" && $state != "" && $city != "" && $partyzip != "" && $bookmode != "" && ($trainprice != 0 || $airprice != 0) && $gst != "" && $destinate != "" && $route!='') {
+    $query = "insert into partyset(creationdate,partyname,partymobile,partyaddress,state,city,partyzip,bookmode,trainprice,airprice,gst,destinate,partyid,route) values(:creationdate,:partyname,:partymobile,:partyaddress,:state,:city,:partyzip,:bookmode,:trainprice,:airprice,:gst,:destinate,:partyid,:route)";
     $exe = $con->prepare($query);
-    $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':partyaddress' => $partyaddress, ':state' => $state, ':city' => $city, ':partyzip' => $partyzip, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst, ':destinate' => $destinate];
+    $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':partyaddress' => $partyaddress, ':state' => $state, ':city' => $city, ':partyzip' => $partyzip, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst, ':destinate' => $destinate,':partyid'=>$partyids,':route'=>$route];
     // print_r($data);die();
     $query_execute = $exe->execute($data);
     if ($query_execute) {
@@ -199,26 +282,51 @@ if ($action == "partyfetch") {
   echo json_encode($data);
 }
 
+if ($action == "partyratefetch") {
+  $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
+  $partyid = isset($_POST['partyid']) ? $_POST['partyid'] : "";
+
+  if ($ids != "") {
+    $query = "select * from partyset where id=:ids and partyid=:partyid";
+    $exe = $con->prepare($query);
+    $data = [':ids' => $ids,':partyid'=>$partyid];
+    $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  $data['data'] = $result;
+  echo json_encode($data);
+}
+
 if ($action == "partyupdation") {
   $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
 
   $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
   $partyname = isset($_POST['partyname']) ? $_POST['partyname'] : "";
   $partymobile = isset($_POST['partymobile']) ? $_POST['partymobile'] : "";
-  $partyaddress = isset($_POST['partyaddress']) ? $_POST['partyaddress'] : "";
-  $state = isset($_POST['state']) ? $_POST['state'] : "";
-  $city = isset($_POST['city']) ? $_POST['city'] : "";
-  $partyzip = isset($_POST['partyzip']) ? $_POST['partyzip'] : "";
   $bookmode = isset($_POST['bookmode']) ? $_POST['bookmode'] : "";
   $trainprice = isset($_POST['trainprice']) ? $_POST['trainprice'] : "";
+  $address = isset($_POST['partyaddress']) ? $_POST['partyaddress'] : "";
   $airprice = isset($_POST['airprice']) ? $_POST['airprice'] : "";
   $gst = isset($_POST['gst']) ? $_POST['gst'] : "";
-  $destinate = isset($_POST['destinate']) ? $_POST['destinate'] : "";
-
-  $query = "update party set creationdate=:creationdate,partyname=:partyname,partymobile=:partymobile,partyaddress=:partyaddress,state=:state,city=:city,partyzip=:partyzip,bookmode=:bookmode,trainprice=:trainprice,airprice=:airprice,gst=:gst,destinate=:destinate where id=:ids";
+  $route = isset($_POST['route']) ? $_POST['route'] : "";
+  $destination = isset($_POST['destination']) ? $_POST['destination'] : "";
+  $city = isset($_POST['city']) ? $_POST['city'] : "";
+  $state = isset($_POST['state']) ? $_POST['state'] : "";
+  $zip = isset($_POST['zip']) ? $_POST['zip'] : "";
+ 
+  $query = "update partyset set creationdate=:creationdate,partyname=:partyname,partymobile=:partymobile,bookmode=:bookmode,trainprice=:trainprice,airprice=:airprice,partyaddress=:partyaddress,gst=:gst,route=:route,destinate=:destinate,city=:city,state=:state,partyzip=:partyzip where id=:ids";
   $exe = $con->prepare($query);
-  $data = ['ids' => $ids, ':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':partyaddress' => $partyaddress, ':state' => $state, ':city' => $city, ':partyzip' => $partyzip, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst, ':destinate' => $destinate];
-  // print_r($data);die();
+  $data = ['ids' => $ids, ':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice,':partyaddress'=>$address,':gst' => $gst,':route'=>$route,':destinate'=>$destination,':city'=>$city,'state'=>$state,':partyzip'=>$zip];
+// print_r($data);die();
   $query_execute = $exe->execute($data);
   if ($query_execute) {
     $msg = "Success";
@@ -226,6 +334,27 @@ if ($action == "partyupdation") {
     $msg = "Failure";
   }
 
+  $data = [];
+  $data['msg'] = $msg;
+  echo json_encode($data);
+}
+
+
+if ($action == "partysetdeletion") {
+  $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
+  if ($ids != "") {
+    $query = "delete from partyset where id=:ids";
+    $exe = $con->prepare($query);
+    $data = [':ids' => $ids];
+    $query_execute = $exe->execute($data);
+    if ($query_execute) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
   $data = [];
   $data['msg'] = $msg;
   echo json_encode($data);
