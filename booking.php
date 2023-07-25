@@ -76,53 +76,53 @@ if ($user_name != "") {
                                 </div>
                               </div>
                               <div class="col-md-3">
-                                            <label for="validationCustom01" class="form-label">Party Name</label>
-                                            <input list="edparties" class="form-control" name="partyname" id="partyname">
-                                            <datalist id="edparties">
-                                                <?php
-                                                $sqlstate = "select * from party";
-                                                $exestate = $con->prepare($sqlstate);
-                                                $exestate->execute();
-                                                $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
-                                                foreach ($result as $res) {
-                                                ?>
+                                <label for="validationCustom01" class="form-label">Party Name</label>
+                                <input list="edparties" class="form-control" name="partyname" id="partyname">
+                                <datalist id="edparties">
+                                  <?php
+                                  $sqlstate = "select * from party";
+                                  $exestate = $con->prepare($sqlstate);
+                                  $exestate->execute();
+                                  $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                                  foreach ($result as $res) {
+                                  ?>
 
-                                                    <option selected disabled value="">Choose State...</option>
-                                                    <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
-                                                <?php } ?>
-                                            </datalist>
+                                    <option selected disabled value="">Choose State...</option>
+                                    <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                                  <?php } ?>
+                                </datalist>
 
-                                            <div class="invalid-feedback" id="edpartynamem">
-                                                Please provide a valid Party Name.
-                                            </div>
-                                        </div>
-
-                                                                                  <div class="col-md-2">
-                                <label for="validationCustom02" class="form-label">Type</label>
-                                <input list="type_s" class="form-control" name="types" id="types">
-                      <datalist id="type_s">
-                        <option value="" disabled>Select Types</option>
-                        <option value="Air">Air</option>
-                        <option value="Train">Train</option>
-                      </select>
-                                <div class="invalid-feedback" id="booktypes">
-                                  Please provide a valid types.
+                                <div class="invalid-feedback" id="edpartynamem">
+                                  Please provide a valid Party Name.
                                 </div>
                               </div>
 
                               <div class="col-md-2">
-                                            <label for="validationCustom03" class="form-label">Route</label>
-                                            <input list="edroutes" class="form-control" name="route" id="route">
+                                <label for="validationCustom02" class="form-label">Type</label>
+                                <input list="type_s" class="form-control" name="types" id="types">
+                                <datalist id="type_s">
+                                  <option value="" disabled>Select Types</option>
+                                  <option value="Air">Air</option>
+                                  <option value="Train">Train</option>
+                                  </select>
+                                  <div class="invalid-feedback" id="booktypes">
+                                    Please provide a valid types.
+                                  </div>
+                              </div>
 
-                                            <datalist id="edroutes">
-                                                <option selected disabled value="">Choose Route</option>
-                                                <option value="Vaniyambadi">Vaniyambadi</option>
-                                                <option value="CHENNAI">CHENNAI</option>
-                                                <option value="RANIPET">RANIPET</option>
-                                                <option value="AMBUR">AMBUR</option>
-                                                <option value="Other Place">Other Place</option>
-                                            </datalist>
-                                        </div>
+                              <div class="col-md-2">
+                                <label for="validationCustom03" class="form-label">Route</label>
+                                <input list="edroutes" class="form-control" name="route" id="route">
+
+                                <datalist id="edroutes">
+                                  <option selected disabled value="">Choose Route</option>
+                                  <option value="Vaniyambadi">Vaniyambadi</option>
+                                  <option value="CHENNAI">CHENNAI</option>
+                                  <option value="RANIPET">RANIPET</option>
+                                  <option value="AMBUR">AMBUR</option>
+                                  <option value="Other Place">Other Place</option>
+                                </datalist>
+                              </div>
                               <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="states" class="form-control" name="state" id="state">
@@ -187,7 +187,7 @@ if ($user_name != "") {
                                   Please provide a valid Destination.
                                 </div>
                               </div>
-        <div class="col-md-3">
+                              <div class="col-md-3">
                                 <label for="validationCustom03" class="form-label">From</label>
                                 <input type="text" class="form-control" id="coraddress" name="coraddress" required>
                                 <div class="invalid-feedback" id="bookfromaddress">
@@ -233,10 +233,10 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              
 
-                      
-                              
+
+
+
                               <div class="col-md-3">
                                 <label for="validationCustom03" class="form-label">POD No</label>
                                 <input type="text" class="form-control" id="pod" name="pod" required>
@@ -411,7 +411,7 @@ if ($user_name != "") {
                               <div class="col-md-3" style="text-align:center;">
                                 <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Other Charges</label>
                                 <div class="col-sm-12">
-                                  <input class="form-control" type="text" name="amount" id="amount">
+                                  <input class="form-control" type="text" name="otherchg" id="otherchg">
                                   <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
                                 </div>
                                 <div class="invalid-feedback" id="bookamount">
@@ -442,51 +442,51 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              
-                            
+
+
                               <div class="col-md-3"></div>
                               <div class="col-md-2">
-                      <label for="validationCustom02" class="form-label">GST Type</label>
-                      <input list="gsttypes" class="form-control" name="gst_types" id="gst_types">
-                      <datalist id="gsttypes">
-                        <option value="" disabled>Select Types</option>
-                        <option value="State">State</option>
-                        <option value="Interstate">Interstate</option>
-                      </datalist>
-                      <div class="invalid-feedback" id="edtypes">
-                        Please provide a valid types.
-                      </div>
-                    </div>
+                                <label for="validationCustom02" class="form-label">GST Type</label>
+                                <input list="gsttypes" class="form-control" name="gst_types" id="gst_types">
+                                <datalist id="gsttypes">
+                                  <option value="" disabled>Select Types</option>
+                                  <option value="State">State</option>
+                                  <option value="Interstate">Interstate</option>
+                                </datalist>
+                                <div class="invalid-feedback" id="edtype_s">
+                                  Please provide a valid types.
+                                </div>
+                              </div>
 
-                    <div class="col-md-2" id="states">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
-                      <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
-                      </div>
-                      <div class="invalid-feedback" id="edgsts">
-                        Please provide a valid GST.
-                      </div>
-                    </div>
+                              <div class="col-md-2" id="states">
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
+                                <div class="col-sm-12">
+                                  <input type="text" name="igstamt" id="igstamt" value="5" class="form-control">
+                                </div>
+                                <div class="invalid-feedback" id="igsts">
+                                  Please provide a valid GST.
+                                </div>
+                              </div>
 
-                    <div class="col-md-2" id="cgst">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
-                      <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
-                      </div>
-                      <div class="invalid-feedback" id="edgsts">
-                        Please provide a valid GST.
-                      </div>
-                    </div>
+                              <div class="col-md-2" id="cgst">
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                                <div class="col-sm-12">
+                                  <input type="text" name="cgstamt" id="cgstamt" value="2.5" class="form-control">
+                                </div>
+                                <div class="invalid-feedback" id="edgsts">
+                                  Please provide a valid GST.
+                                </div>
+                              </div>
 
-                    <div class="col-md-2" id="sgst">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
-                      <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
-                      </div>
-                      <div class="invalid-feedback" id="edgsts">
-                        Please provide a valid GST.
-                      </div>
-                    </div>
+                              <div class="col-md-2" id="sgst">
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
+                                <div class="col-sm-12">
+                                  <input type="text" name="sgstamt" id="sgstamt" value="2.5" class="form-control">
+                                </div>
+                                <div class="invalid-feedback" id="edgsts">
+                                  Please provide a valid GST.
+                                </div>
+                              </div>
 
 
                               <!-- <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
@@ -496,16 +496,16 @@ if ($user_name != "") {
                                   </div>
                               </div> -->
 
-                          <div class="row col-md-12">   
-                            <div class="col-md-4"></div>
-                              <div class="col-md-4" style="text-align:center;">
-                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
+                              <div class="row col-md-12">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4" style="text-align:center;">
+                                  <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
                                   <input class="form-control form-control-lg" type="text" name="paid" id="paid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
-                                <div class="invalid-feedback" id="bookpaid">
-                                  Please select a valid Packing.
+                                  <div class="invalid-feedback" id="bookpaid">
+                                    Please select a valid Packing.
+                                  </div>
                                 </div>
                               </div>
-                          </div>
                               <div class="col-12 text-center">
                                 <button class="btn btn-primary" type="submit" name="bookcreation" id="bookcreation">Save Booking</button>
                               </div>
@@ -532,34 +532,29 @@ if ($user_name != "") {
                     <thead class="thead-light">
                       <tr>
                         <th>S.No</th>
+                        <th>M.No</th>
                         <th data-type="date" data-format="YYYY/DD/MM">Date</th>
                         <th>Type</th>
-                        <th>Origin</th>
-                        <th>Destination</th>
-                        <th>Consignor Address</th>
-                        <th>Consignee Address</th>
+                       <th>From - To</th>
+                        <th>Origin - Destination</th>
                         <th>Transport</th>
-                        <th>Amount</th>
+                        <th>Train</th>
+                        <th>POD</th>
+                      <th>Amount</th>
                         <th>GST</th>
                         <th>Payment</th>
-                        <th colspan="2">Action</th>
+                        <th colspan="3">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       $i = 0;
-                      if ($roles == "Super Admin" && $types == "") {
+                      if ($types == "Admin") {
                         $sqlbook = "select * from booking";
                         $exebook = $con->prepare($sqlbook);
                         $exebook->execute();
                         $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                      } else if ($roles == "Admin" && ($types == "Air" || $types == "Train")) {
-                        $sqlbook = "select * from booking where type=:types";
-                        $exebook = $con->prepare($sqlbook);
-                        $data = [':types' => $types];
-                        $exebook->execute($data);
-                        $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                      } else if ($roles == "Admin" && $types == "Train") {
+                      } else if ($types == "Air" || $types == "Train") {
                         $sqlbook = "select * from booking where type=:types";
                         $exebook = $con->prepare($sqlbook);
                         $data = [':types' => $types];
@@ -571,19 +566,25 @@ if ($user_name != "") {
                       ?>
                         <tr>
                           <td><?= $i ?></td>
+                          <td><?= $book['mno'] ?></td>
                           <td><?= $book['creationdate'] ?></td>
                           <td><?= $book['type'] ?></td>
-                          <td><?= $book['origin'] ?></td>
-                          <td><?= $book['destination'] ?></td>
-                          <td><?= $book['coraddress'] ?></td>
-                          <td><?= $book['conaddress'] ?></td>
+                          <td><?= $book['coraddress']." - ".$book['conaddress'] ?></td>
+                          <td><?= $book['origin']." - ".$book['destination'] ?></td>
                           <td><?= $book['transport'] ?></td>
+                           <td><?= $book['trainname'] ?></td>
+                           <td><?= $book['pod'] ?></td>
                           <td><?= $book['amount'] ?></td>
                           <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
                           <td><?= $book['paid'] ?></td>
                           <td>
                             <button type="button" class="btn btn-primary btn-sm edit_book" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
                               <i class="fa fa-pen"></i>
+                            </button>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-primary btn-sm edit_mno" data-bs-toggle="modal" data-bs-target="#editmno" idss="<?= $book['id'] ?>">
+                              <i class="fa fa-file"></i>
                             </button>
                           </td>
                           <td>
@@ -654,40 +655,81 @@ if ($user_name != "") {
       </div>
       <!--end Rightbar/offcanvas-->
       <!--end Rightbar-->
-      <div class="modal fade bd-example-modal-lg" id="editbooking" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
+      <!--Start modal-header-->
+      <div class="modal fade bd-example-modal-xl" id="editbooking" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h6 class="modal-title m-0" id="myLargeModalLabel">Edit Booking</h6>
+              <h6 class="modal-title m-0" id="myLargeModalLabel">Booking</h6>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div><!--end modal-header-->
             <div class="modal-body">
               <div class="row">
 
+
+                <div class="card-header">
+                  <h4 class="card-title" style="color:#22b783;">Booking Details</h4>
+                </div><!--end card-header-->
+
+
                 <div class="card-body">
                   <form class="row g-3 needs-validation" novalidate method="POST">
                     <input type="hidden" name="ed_bookid" id="ed_bookid" />
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>
-                      <input type="date" class="form-control" id="ed_creationdate" name="ed_creationdate" value="<?= $dates ?>" required>
+                      <input type="date" class="form-control" id="edcreationdate" name="edcreationdate" value="<?= $dates ?>" required>
                       <div class="invalid-feedback">
                         Please provide a valid Date.
                       </div>
                     </div>
                     <div class="col-md-3">
-                      <label for="validationCustom02" class="form-label">Type</label>
-                      <input list="edtypes" class="form-control" name="ed_types" id="ed_types">
-                      <datalist id="edtypes">
-                        <option value="" disabled>Select Types</option>
-                        <option value="Air">Air</option>
-                        <option value="Train">Train</option>
+                      <label for="validationCustom01" class="form-label">Party Name</label>
+                      <input list="ed_parties" class="form-control" name="edpartyname" id="edpartyname">
+                      <datalist id="ed_parties">
+                        <?php
+                        $sqlstate = "select * from party";
+                        $exestate = $con->prepare($sqlstate);
+                        $exestate->execute();
+                        $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $res) {
+                        ?>
+
+                          <option selected disabled value="">Choose State...</option>
+                          <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                        <?php } ?>
                       </datalist>
-                      <div class="invalid-feedback" id="edtypes">
-                        Please provide a valid types.
+
+                      <div class="invalid-feedback" id="edpartynamem">
+                        Please provide a valid Party Name.
                       </div>
                     </div>
 
-                    
+                    <div class="col-md-2">
+                      <label for="validationCustom02" class="form-label">Type</label>
+                      <input list="type_s" class="form-control" name="edtypes" id="edtypes">
+                      <datalist id="type_s">
+                        <option value="" disabled>Select Types</option>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                        </select>
+                        <div class="invalid-feedback" id="booktypes">
+                          Please provide a valid types.
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <label for="validationCustom03" class="form-label">Route</label>
+                      <input list="e_droutes" class="form-control" name="edroute" id="edroute">
+
+                      <datalist id="e_droutes">
+                        <option selected disabled value="">Choose Route</option>
+                        <option value="Vaniyambadi">Vaniyambadi</option>
+                        <option value="CHENNAI">CHENNAI</option>
+                        <option value="RANIPET">RANIPET</option>
+                        <option value="AMBUR">AMBUR</option>
+                        <option value="Other Place">Other Place</option>
+                      </datalist>
+                    </div>
                     <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="states" class="form-control" name="state" id="state">
@@ -712,10 +754,10 @@ if ($user_name != "") {
 
                     <div class="col-md-3">
                       <label for="validationCustom01" class="form-label">Orgin</label>
-                      <input list="origins" class="form-control" name="ed_origin" id="ed_origin">
+                      <input list="origins" class="form-control" name="edorigin" id="edorigin">
                       <datalist id="origins">
                         <?php
-                        $sqlcity = "select * from cities";
+                        $sqlcity = "select * from partyset group by city"; //cities
                         $execity = $con->prepare($sqlcity);
                         $execity->execute();
                         $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
@@ -727,45 +769,36 @@ if ($user_name != "") {
                         <?php } ?>
                       </datalist>
 
-                      <div class="invalid-feedback" id="edorigin">
+                      <div class="invalid-feedback" id="bookorigin">
                         Please provide a valid Orgin.
                       </div>
                     </div>
 
                     <div class="col-md-3">
                       <label for="validationCustom02" class="form-label">Destination</label>
-                      <input list="edorigins" class="form-control" name="ed_destination" id="ed_destination">
-                      <datalist id="edorigins">
+                      <input list="destination_s" class="form-control" name="eddestination" id="eddestination">
+                      <datalist id="destination_s">
                         <?php
-                        $sqlstate = "select * from states";
-                        $exestate = $con->prepare($sqlstate);
-                        $exestate->execute();
-                        $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
-                        foreach ($result as $res) {
+                        $sqlcity = "select * from partyset group by destinate"; //cities
+                        $execity = $con->prepare($sqlcity);
+                        $execity->execute();
+                        $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($rescity as $resc) {
                         ?>
-                          <option selected disabled value="">Choose State...</option>
-                          <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
+
+                          <option selected disabled value="">Choose City...</option>
+                          <option value="<?= $resc['destinate'] ?>"><?= $resc['destinate'] ?></option>
                         <?php } ?>
                       </datalist>
-                      <div class="invalid-feedback" id="eddestination">
+                      <div class="invalid-feedback" id="bookdestination">
                         Please provide a valid Destination.
                       </div>
                     </div>
-
-                    <div class="col-md-12">
-                      <label for="validationCustom05" class="form-label">Area</label>
-                      <textarea class="form-control" id="ed_area" name="ed_area" required></textarea>
-                      <div class="invalid-feedback" id="edarea">
-                        Please provide a valid Area.
-                      </div>
-                    </div>
-
-
                     <div class="col-md-3">
-                      <label for="validationCustom03" class="form-label">Consignor</label>
-                      <input type="text" class="form-control" id="ed_coraddress" name="ed_coraddress" required>
-                      <div class="invalid-feedback" id="edcoraddress">
-                        Please provide a valid Consignor.
+                      <label for="validationCustom03" class="form-label">From</label>
+                      <input type="text" class="form-control" id="edcoraddress" name="edcoraddress" required>
+                      <div class="invalid-feedback" id="bookfromaddress">
+                        Please provide a consignor address.
                       </div>
                     </div>
                     <!-- <div class="col-md-3">
@@ -799,14 +832,27 @@ if ($user_name != "") {
 
 
 
-                    <div class="col
-                    -md-3">
-                      <label for="validationCustom03" class="form-label">Consignee</label>
-                      <input type="text" class="form-control" id="ed_conaddress" name="ed_conaddress" required>
-                      <div class="invalid-feedback" id="edconaddress">
-                        Please provide a valid Consignee.
+                    <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">To</label>
+                      <input type="text" class="form-control" id="edconaddress" name="edconaddress" required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
                       </div>
                     </div>
+
+
+
+
+
+                    <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">POD No</label>
+                      <input type="text" class="form-control" id="edpod" name="edpod" required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
+                      </div>
+                    </div>
+
+
                     <!-- <div class="col-md-3">
                                 <label for="validationCustom04" class="form-label">State</label>
                                 <input list="consstate" class="form-control" name="constate" id="constate">
@@ -836,42 +882,56 @@ if ($user_name != "") {
                                 </div>
                               </div> -->
 
-                    <div class="col-md-6" id="validationCustom05">
+                    <div class="col-md-6">
+                      <label for="validationCustom05" class="form-label">Area</label>
+                      <textarea class="form-control" id="edarea" name="edarea" required></textarea>
+                      <div class="invalid-feedback" id="bookarea">
+                        Please provide a valid zip.
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">Train Name</label>
+                      <input type="text" class="form-control" id="edtrainname" name="edtrainname" required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
+                      </div>
+                    </div>
+
+                    <div class="col-md-3" id="validationCustom05">
                       <label for="validationCustom05" class="form-label">Transport</label>
                       <div class="col-md-12 mt-1">
-                        <input list="edtransports" class="form-control" name="edtransport" id="edtransport">
-                        <datalist id="edtransports">
+                        <input list="transport_s" class="form-control" name="edtransport" id="edtransport">
+                        <datalist id="transport_s">
                           <option selected disabled value="">Choose Transport</option>
                           <option value="MAR">MAR</option>
                           <option value="SAR">SAR</option>
                           <option value="AMT">AMT</option>
                           <option value="Others">Others</option>
                         </datalist>
-                        <!-- <input type="hidden" id="edtransports" name="edtransports" value="">
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input sample" type="checkbox" id="mar" name="edtransport" value="MAR">
-                          <label class="form-check-label" for="inlineCheckbox1">MAR</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input sample" type="checkbox" id="sar" name="edtransport" value="SAR">
-                          <label class="form-check-label" for="inlineCheckbox2">SAR</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input sample" type="checkbox" id="amt" name="edtransport" value="AMT">
-                          <label class="form-check-label" for="inlineCheckbox3">AMT</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input sample" type="checkbox" id="others" name="edtransport" value="Others">
-                          <label class="form-check-label" for="inlineCheckbox4">Others</label>
-                        </div> -->
-                        <div class="invalid-feedback" id="ed_transports">
+
+                        <!-- <div class="form-check form-check-inline">
+                                    <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="MAR">
+                                    <label class="form-check-label" for="inlineCheckbox1">MAR</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="SAR">
+                                    <label class="form-check-label" for="inlineCheckbox2">SAR</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="AMT">
+                                    <label class="form-check-label" for="inlineCheckbox3">AMT</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input sample" type="checkbox" id="transport" name="transport" value="Others">
+                                    <label class="form-check-label" for="inlineCheckbox4">Others</label>
+                                  </div> -->
+                        <div class="invalid-feedback" id="booktransport">
                           Please provide a valid Transport.
                         </div>
                       </div>
 
                     </div><!--end row-->
-
-
 
                     <div class="card-header">
                       <h4 class="card-title" style="color:#ff9f43;">Package Details</h4>
@@ -883,87 +943,124 @@ if ($user_name != "") {
                                         <option selected disabled value="">Choose...</option>
                                         <option>...</option>
                                       </select> -->
-                      <input class="form-control" list="pack" name="ed_packs" id="ed_packs">
+                      <input class="form-control" list="pack_s" name="edpacks" id="edpacks">
 
-                      <datalist id="pack">
+                      <datalist id="pack_s">
                         <option>G/B</option>
                         <option>P/B</option>
                         <option>Box</option>
                       </datalist>
-                      <div class="invalid-feedback" id="edpack">
+                      <div class="invalid-feedback" id="bookpack">
                         Please select a valid Packing.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom03" class="form-label">Party Invice No</label>
-                      <input type="text" class="form-control" id="ed_invoiceno" name="ed_invoiceno" required>
-                      <div class="invalid-feedback" id="edinvno">
+                      <input type="text" class="form-control" id="edinvoiceno" name="edinvoiceno" required>
+                      <div class="invalid-feedback" id="bookinvno">
                         Please provide a valid Party Invice No.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Said to Content</label>
-                      <input type="text" class="form-control" id="ed_describe" name="ed_describe" required>
-                      <div class="invalid-feedback" id="eddescribe">
+                      <input type="text" class="form-control" id="eddescribe" name="eddescribe" required>
+                      <div class="invalid-feedback" id="bookdescribe">
                         Please provide a valid Said to Content.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Quantity</label>
-                      <input type="text" class="form-control" id="ed_quantity" name="ed_quantity" required>
-                      <div class="invalid-feedback" id="edquantity">
+                      <input type="text" class="form-control" id="edquantity" name="edquantity" required>
+                      <div class="invalid-feedback" id="bookquantity">
                         Please provide a valid Quantity.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Gross Weight</label>
-                      <input type="text" class="form-control" id="ed_gross" name="ed_gross" required>
-                      <div class="invalid-feedback" id="edgross">
+                      <input type="text" class="form-control" id="edgross" name="edgross" required>
+                      <div class="invalid-feedback" id="bookgross">
                         Please provide a valid Gross Weight.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Charged Weight</label>
-                      <input type="text" class="form-control" id="ed_weight" name="ed_weight" required>
-                      <div class="invalid-feedback" id="edweight">
+                      <input type="text" class="form-control" id="edweight" name="edweight" required>
+                      <div class="invalid-feedback" id="bookweight">
                         Please provide a valid Charged Weight.
                       </div>
                     </div>
 
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Doc Charge</label>
-                      <input type="text" class="form-control" id="ed_docs" name="ed_docs" required value="50">
-                      <div class="invalid-feedback" id="eddoc">
-                        Please provide a valid Doc Charge.
+                      <input type="text" class="form-control" id="eddocs" name="eddocs" required value="50">
+                      <div class="invalid-feedback" id="bookdocs">
+                        Please provide a valid Rate.
                       </div>
                     </div>
                     <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Rate</label>
-                      <input type="text" class="form-control" id="ed_rate" name="ed_rate" required>
-                      <div class="invalid-feedback" id="edrate">
+                      <input type="text" class="form-control" id="edrate" name="edrate" required>
+                      <div class="invalid-feedback" id="bookrate">
                         Please provide a valid Rate.
                       </div>
                     </div>
-                    <div class="col-md-2" style="text-align:center;">
+                    <div class="col-md-3" style="text-align:center;">
                       <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Amount</label>
                       <div class="col-sm-12">
-                        <input class="form-control" type="text" name="ed_amount" id="ed_amount">
+                        <input class="form-control" type="text" name="edamount" id="edamount">
                         <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
                       </div>
-                      <div class="invalid-feedback" id="edamount">
-                        Please provide a valid Amount.
+                      <div class="invalid-feedback" id="bookamount">
+                        Please provide a valid Rate.
                       </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="text-align:center;">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Other Charges</label>
+                      <div class="col-sm-12">
+                        <input class="form-control" type="text" name="edotherchg" id="edotherchg">
+                        <!-- placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;"  form-control-lg-->
+                      </div>
+                      <div class="invalid-feedback" id="bookamount">
+                        Please provide a valid Rate.
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-md-2">
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">GST Amount</label>
+                                <div class="col-sm-12">
+                                  <input type="text" name="gsts" id="gsts" value="5" class="form-control">
+                                </div>
+                                <div class="invalid-feedback" id="bookgst">
+                                  Please provide a valid Rate.
+                                </div>
+                              </div> -->
+
+                    <div class="col-md-2">
+                      <label for="validationCustom04" class="form-label">Payment Type</label>
+                      <select class="form-select" id="edpaymentmode" name="edpaymentmode" required style="position: relative;top:5px!important">
+                        <option selected disabled value="">Choose...</option>
+                        <option value="Bill">Bill</option>
+                        <option value="Cash">Cash</option>
+                        <option value="To Pay">To Pay</option>
+                      </select>
+                      <div class="invalid-feedback" id="bookpayment">
+                        Please select a valid Packing.
+                      </div>
+                    </div>
+
+
+
+                    <div class="col-md-3"></div>
+                    <div class="col-md-2">
                       <label for="validationCustom02" class="form-label">GST Type</label>
-                      <input list="gsttypes" class="form-control" name="gst_types" id="gst_types">
-                      <datalist id="gsttypes">
+                      <input list="gst_types" class="form-control" name="edgst_types" id="edgst_types">
+                      <datalist id="gst_types">
                         <option value="" disabled>Select Types</option>
                         <option value="State">State</option>
                         <option value="Interstate">Interstate</option>
                       </datalist>
-                      <div class="invalid-feedback" id="edtypes">
+                      <div class="invalid-feedback" id="ed_types">
                         Please provide a valid types.
                       </div>
                     </div>
@@ -971,7 +1068,17 @@ if ($user_name != "") {
                     <div class="col-md-2" id="edstates">
                       <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
                       <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                        <input type="text" name="edigstamt" id="edigstamt" value="5" class="form-control">
+                      </div>
+                      <div class="invalid-feedback" id="igsts">
+                        Please provide a valid GST.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="edcgst">
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                      <div class="col-sm-12">
+                        <input type="text" name="edcgstamt" id="edcgstamt" value="2.5" class="form-control">
                       </div>
                       <div class="invalid-feedback" id="edgsts">
                         Please provide a valid GST.
@@ -981,58 +1088,40 @@ if ($user_name != "") {
                     <div class="col-md-2" id="edsgst">
                       <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
                       <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
+                        <input type="text" name="edsgstamt" id="edsgstamt" value="2.5" class="form-control">
                       </div>
                       <div class="invalid-feedback" id="edgsts">
                         Please provide a valid GST.
                       </div>
-                      
                     </div>
 
-                    <div class="col-md-2" id="edcgst">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
-                      <div class="col-sm-12">
-                        <input type="text" name="ed_gsts" id="ed_gsts" value="5" class="form-control">
-                      </div>
-                      <div class="invalid-feedback" id="edgsts">
-                        Please provide a valid GST.
-                      </div>
-                      
-                    </div>
 
                     <!-- <div class="col-md-2" style="text-align:center;position: relative;top:35px !important">
-                      <input type="checkbox" name="ed_gst" id="ed_gst" value="GST"><span> GST(<span id="gstp">5%</span>)
-                    </div> -->
+                                <input type="checkbox" name="gst" id="gst" value="GST"><span> GST(<span id="gstp">5%</span>)
+                                  <div class="invalid-feedback" id="bookgsts">
+                                    Please provide a valid Rate.
+                                  </div>
+                              </div> -->
 
-                    <div class="col-md-2">
-                      <label for="validationCustom04" class="form-label">Payment Type</label>
-                      <select class="form-select" id="ed_paymentmode" name="ed_paymentmode" required style="position: relative;top:5px!important">
-                        <option selected disabled value="">Choose...</option>
-                        <option value="Bill">Bill</option>
-                        <option value="Cash">Cash</option>
-                        <option value="To Pay">To Pay</option>
-                      </select>
-                      <div class="invalid-feedback" id="edpaymentmode">
-                        Please select a valid Payment Mode.
+                    <div class="row col-md-12">
+                      <div class="col-md-4"></div>
+                      <div class="col-md-4" style="text-align:center;">
+                        <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
+                        <input class="form-control form-control-lg" type="text" name="edpaid" id="edpaid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
+                        <div class="invalid-feedback" id="bookpaid">
+                          Please select a valid Packing.
+                        </div>
                       </div>
                     </div>
-
-                    <div class="col-md-9"></div>
-                    <div class="col-md-3" style="text-align:center;">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Payment</label>
-                      <div class="col-sm-12">
-                        <input class="form-control form-control-lg" type="text" name="ed_paid" id="ed_paid" placeholder="0.00" style="text-align:center;font-weight: 800;font-size: 2.5rem;">
-                      </div>
-                      <div class="invalid-feedback" id="edpaid">
-                        Please select a valid Paid.
-                      </div>
-                    </div>
-
                     <div class="col-12 text-center">
                       <button class="btn btn-primary" type="submit" name="bookupdation" id="bookupdation">Update Booking</button>
                     </div>
                   </form><!--end form-->
                 </div><!--end card-body-->
+
+
+
+
               </div>
 
             </div><!--end modal-body-->
@@ -1043,8 +1132,204 @@ if ($user_name != "") {
         </div><!--end modal-dialog-->
       </div><!--end modal-->
 
+      
+      <div class="modal fade bd-example-modal-xl" id="editmno" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title m-0" id="myLargeModalLabel">Booking</h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div><!--end modal-header-->
+            <div class="modal-body">
+              <div class="row">
 
-      <script src="assets/pages/form-validation.js"></script>
+
+                <div class="card-header">
+                  <h4 class="card-title" style="color:#22b783;">M No Updation</h4>
+                </div><!--end card-header-->
+
+
+                <div class="card-body">
+                  <form class="row g-3 needs-validation" novalidate method="POST">
+                    <input type="hidden" name="edmbookid" id="edmbookid" />
+                    <div class="col-md-2">
+                      <label for="validationCustom01" class="form-label">Date</label>
+                      <input type="date" class="form-control" id="mcreationdate" readonly name="mcreationdate" value="<?= $dates ?>" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Date.
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="validationCustom01" class="form-label">Party Name</label>
+                      <input list="ed_parties" class="form-control" name="mpartyname" readonly id="mpartyname">
+                      <datalist id="ed_parties">
+                        <?php
+                        $sqlstate = "select * from party";
+                        $exestate = $con->prepare($sqlstate);
+                        $exestate->execute();
+                        $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $res) {
+                        ?>
+
+                          <option selected disabled value="">Choose State...</option>
+                          <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                        <?php } ?>
+                      </datalist>
+
+                      <div class="invalid-feedback" id="edpartynamem">
+                        Please provide a valid Party Name.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <label for="validationCustom02" class="form-label">Type</label>
+                      <input list="type_s" class="form-control" name="mtypes" id="mtypes" readonly>
+                      <datalist id="type_s">
+                        <option value="" disabled>Select Types</option>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                        </select>
+                        <div class="invalid-feedback" id="booktypes">
+                          Please provide a valid types.
+                        </div>
+                    </div>
+
+                    <div class="col-md-2">
+                      <label for="validationCustom03" class="form-label">Route</label>
+                      <input list="e_droutes" class="form-control" name="mroute" id="mroute" readonly>
+
+                      <datalist id="e_droutes">
+                        <option selected disabled value="">Choose Route</option>
+                        <option value="Vaniyambadi">Vaniyambadi</option>
+                        <option value="CHENNAI">CHENNAI</option>
+                        <option value="RANIPET">RANIPET</option>
+                        <option value="AMBUR">AMBUR</option>
+                        <option value="Other Place">Other Place</option>
+                      </datalist>
+                    </div>
+                    <!-- <div class="col-md-3">
+                                <label for="validationCustom04" class="form-label">State</label>
+                                <input list="states" class="form-control" name="state" id="state">
+
+                                <datalist id="states">
+                                  <?php
+                                  $sqlstate = "select * from states";
+                                  $exestate = $con->prepare($sqlstate);
+                                  $exestate->execute();
+                                  $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                                  foreach ($result as $res) {
+                                  ?>
+
+                                    <option selected disabled value="">Choose State...</option>
+                                    <option value="<?= $res['name'] ?>"><?= $res['name'] ?></option>
+                                  <?php } ?>
+                                </datalist>
+                                <div class="invalid-feedback">
+                                  Please select a valid state.
+                                </div>
+                              </div> -->
+
+                    <div class="col-md-3">
+                      <label for="validationCustom01" class="form-label">Orgin</label>
+                      <input list="origins" class="form-control" name="morigin" id="morigin" readonly>
+                      <datalist id="origins">
+                        <?php
+                        $sqlcity = "select * from partyset group by city"; //cities
+                        $execity = $con->prepare($sqlcity);
+                        $execity->execute();
+                        $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($rescity as $resc) {
+                        ?>
+
+                          <option selected disabled value="">Choose City...</option>
+                          <option value="<?= $resc['city'] ?>"><?= $resc['city'] ?></option>
+                        <?php } ?>
+                      </datalist>
+
+                      <div class="invalid-feedback" id="bookorigin">
+                        Please provide a valid Orgin.
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <label for="validationCustom02" class="form-label">Destination</label>
+                      <input list="destination_s" class="form-control" name="mdestination" id="mdestination" readonly>
+                      <datalist id="destination_s">
+                        <?php
+                        $sqlcity = "select * from partyset group by destinate"; //cities
+                        $execity = $con->prepare($sqlcity);
+                        $execity->execute();
+                        $rescity = $execity->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($rescity as $resc) {
+                        ?>
+
+                          <option selected disabled value="">Choose City...</option>
+                          <option value="<?= $resc['destinate'] ?>"><?= $resc['destinate'] ?></option>
+                        <?php } ?>
+                      </datalist>
+                      <div class="invalid-feedback" id="bookdestination">
+                        Please provide a valid Destination.
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">From</label>
+                      <input type="text" class="form-control" id="mcoraddress" name="mcoraddress" readonly required>
+                      <div class="invalid-feedback" id="bookfromaddress">
+                        Please provide a consignor address.
+                      </div>
+                    </div>
+                                      <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">To</label>
+                      <input type="text" class="form-control" id="mconaddress" readonly name="mconaddress" required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
+                      </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-md-3">
+                      <label for="validationCustom03" class="form-label">POD No</label>
+                      <input type="text" class="form-control" id="mpod" name="mpod" readonly required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
+                      </div>
+                    </div>
+
+                    <div class="col-md-4">
+                    </div>
+                    
+                    <div class="col-md-4">
+                      <label for="validationCustom03" class="form-label">M.No</label>
+                      <input type="text" class="form-control" id="mno" name="mno" required>
+                      <div class="invalid-feedback" id="booktoaddress">
+                        Please provide a valid consignee address.
+                      </div>
+                    </div>
+
+              
+                    <div class="col-12 text-center">
+                      <button class="btn btn-primary" type="submit" name="bookupdationmno" id="bookupdationmno">Update MNo</button>
+                    </div>
+                  </form><!--end form-->
+                </div><!--end card-body-->
+
+
+
+
+              </div>
+
+            </div><!--end modal-body-->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-de-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+            </div><!--end modal-footer-->
+          </div><!--end modal-content-->
+        </div><!--end modal-dialog-->
+      </div><!--end modal-->
+
+<script src="assets/pages/form-validation.js"></script>
       <!-- App js -->
       <script src="assets/js/app.js"></script>
       <script src="assets/plugins/datatables/simple-datatables.js"></script>
@@ -1056,309 +1341,452 @@ if ($user_name != "") {
         $(document).ready(function() {
 
           $("#states").hide();
-              $("#sgst").hide();
-            $("#cgst").hide();
-          
-            $('#types').change(function() {
-            var types = this.value;
-            if (types == "") {
-              $("#booktypes").show();
-            } else {
-              $("#booktypes").hide();
+          $("#sgst").hide();
+          $("#cgst").hide();
+
+          $('#destination').change(function(e) {
+            e.preventDefault();
+            var value = $('#partyname').val();
+            var partyid = $('#edparties [value="' + value + '"]').data('value');
+            var route = $('#route').val();
+            var types = $('#types').val();
+            var city = $('#origin').val();
+            var destinate = $('#destination').val();
+
+            if (partyid != '' && route != '' && types != '' && city != '' && destinate != '') {
+              $.ajax({
+                url: 'ajax/ajax_request.php?action=partybookfetch',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "partybookfetch",
+                  'id': partyid,
+                  'route': route,
+                  'bookmode': types,
+                  'city': city,
+                  'destinate': destinate
+                },
+                success: function(response) {
+                  $("#rate").val(response.data.airprice);
+
+                }
+              });
             }
           });
 
-          $('#gst_types').change(function() {
-            var types = this.value;
-            if (types == "State") {
+          $(".edit_mno").click(function(e) {
+            e.preventDefault();
+            var bookeid = $(this).attr("idss");
+            $("#edmbookid").val(bookeid);
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=bookfetch',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "bookfetch",
+                'ids': bookeid
+              },
+              success: function(response) {
+                $('#mcreationdate').val(response.data.creationdate);
+                $('#mpartyname').val(response.data.party.partyname);
+                $('#mtypes').val(response.data.type);
+                $('#mroute').val(response.data.route);
+                $('#morigin').val(response.data.origin);
+                $('#mdestination').val(response.data.destination);
+                $('#mcoraddress').val(response.data.coraddress);
+                $('#mconaddress').val(response.data.conaddress);
+                $('#mpod').val(response.data.pod);
+                $('#mno').val(response.data.mno);
+           }
+            });
+          });
+
+          $('#eddestination').change(function(e) {
+            e.preventDefault();
+            var value = $('#edpartyname').val();
+            var partyid = $('#ed_parties [value="' + value + '"]').data('value');
+            var route = $('#edroute').val();
+            var types = $('#edtypes').val();
+            var city = $('#edorigin').val();
+            var destinate = $('#eddestination').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            if (partyid != '' && route != '' && types != '' && city != '' && destinate != '') {
+              $.ajax({
+                url: 'ajax/ajax_request.php?action=partybookfetch',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "partybookfetch",
+                  'id': partyid,
+                  'route': route,
+                  'bookmode': types,
+                  'city': city,
+                  'destinate': destinate
+                },
+                success: function(response) {
+                  $("#edrate").val(response.data.airprice);
+                  
+                  var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#edamount").val(tots);
+          
+            var gst =  $("#edgst_types").val();
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gsttot1 = ((gtamts * cgst) / 100);
+              var gsttot2 = ((gtamts * sgst) / 100);
+              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+                }
+              });
+            }
+          });
+
+
+          $("#gst_types").change(function() {
+            var gst = this.value;
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            var amount = $("#amount").val();
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gstamts = parseFloat(amount) + parseFloat(others);
+              var gsttot1 = ((gstamts * cgst) / 100);
+              var gsttot2 = ((gstamts * sgst) / 100);
+              var gstamt = parseFloat(gstamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
               $("#states").show();
               $("#sgst").hide();
-            $("#cgst").hide();
-            } else if(types=="Interstate") {
-             $("#states").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#amount").val(tots);
+          });
+
+          $("#edgst_types").change(function() {
+            var gst = this.value;
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+               
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#edamount").val(tots);
+          
+            var gst =  $("#edgst_types").val();
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gsttot1 = ((gtamts * cgst) / 100);
+              var gsttot2 = ((gtamts * sgst) / 100);
+              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+              });
+
+
+          $("#docs").change(function() {
+            var gst = this.value;
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            var amount = $("#amount").val();
+
+            if (gst == 'State') {
+              $("#states").hide();
               $("#sgst").show();
-            $("#cgst").show();
-           }
-          });
+              $("#cgst").show();
 
-          $('#bookmode').change(function(e) {
-                        e.preventDefault();
-                        var value = $('#partyname').val();
-                        var partyid = $('#edparties [value="' + value + '"]').data('value');
-                        var route = $('#route').val();
-                        var types = $('#types').val();
+              var gsts = parseFloat(amount) + parseFloat(others);
+              var gsttot1 = ((gsts * cgst) / 100);
+              var gsttot2 = ((gsts * sgst) / 100);
+              var gstamt = parseFloat(gsts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
 
-                        if (partyid != '' && route != '') {
-                            $.ajax({
-                                url: 'ajax/ajax_request.php?action=partydetfetch',
-                                type: 'POST',
-                                dataType: "JSON",
-                                data: {
-                                    'action': "partydetfetch",
-                                    'id': partyid,
-                                    'route': route,
-                                    'bookmode': bookmode
-                                },
-                                success: function(response) {
-                                    $("#partyids").val(response.data.id);
-                                    $("#partymobile").val(response.data.partymobile);
-                                    $("#gst").val(response.data.gst);
-                                    $("#trainprice").val(response.data.trainprice);
-                                    $("#airprice").val(response.data.airprice);
-                                    $("#ed_bookmode").val(response.data.bookmode);
-                                    var booksmode = $("#ed_bookmode").val();
-
-                                    if (booksmode == "Train") {
-                                        $('#train').prop('checked', true);
-                                        $("#trainprices").show();
-                                        $('#air').prop('checked', false);
-                                        $("#airprices").hide();
-                                    } else if (booksmode == "Air") {
-                                        $('#train').prop('checked', false);
-                                        $("#trainprices").hide();
-                                        $('#air').prop('checked', true);
-                                        $("#airprices").show();
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-          $("#gsts").keyup(function() {
-            var gstv = $("#gsts").val();
-            $("#gstp").text(gstv + "%");
-
-            var gst = $("input[id='gst']:checked").val();
-            if (gst != '') {
-              var gsts = $("#gsts").val();
-              if (gst == "GST") {
-                var amount = $("#amount").val();
-                var gsttot = ((amount * gsts) / 100);
-                var gstamt = parseFloat(amount) + parseFloat(gsttot);
-                $("#paid").val(gstamt);
-              } else {
-                var amount = $("#amount").val();
-                $("#paid").val(amount);
-              }
-
-              var rates = $("#rate").val();
-              var weights = $("#weight").val();
-              var tot = rates * weights;
-              // alert(tot)
-              var doc = $("#docs").val();
-              var tots = parseFloat(tot) + parseFloat(doc);
-              $("#amount").val(tots);
-            }
-          });
-
-
-          $("#ed_gsts").keyup(function() {
-            var gstv = $("#ed_gsts").val();
-            $("#ed_gstp").text(gstv + "%");
-
-            var gst = $("input[id='ed_gst']:checked").val();
-            if (gst != '') {
-              var gsts = $("#ed_gsts").val();
-              if (gst == "GST") {
-                var amount = $("#ed_amount").val();
-                var gsttot = ((amount * gsts) / 100);
-                var gstamt = parseFloat(amount) + parseFloat(gsttot);
-                $("#ed_paid").val(gstamt);
-              } else {
-                var amount = $("#ed_amount").val();
-                $("#ed_paid").val(amount);
-              }
-
-              var rates = $("#ed_rate").val();
-              var weights = $("#ed_weight").val();
-              var tot = rates * weights;
-              // alert(tot)
-              var doc = $("#ed_docs").val();
-              var tots = parseFloat(tot) + parseFloat(doc);
-              $("#ed_amount").val(tots);
-            }
-          });
-
-          $("#docs").keyup(function() {
-            var gstv = $("#gsts").val();
-            $("#gstp").text(gstv + "%");
-
-            var gst = $("input[id='gst']:checked").val();
-            if (gst != '') {
-              var gsts = $("#gsts").val();
-              if (gst == "GST") {
-                var amount = $("#amount").val();
-                var gsttot = ((amount * gsts) / 100);
-                var gstamt = parseFloat(amount) + parseFloat(gsttot);
-                $("#paid").val(gstamt);
-              } else {
-                var amount = $("#amount").val();
-                $("#paid").val(amount);
-              }
-
-              var rates = $("#rate").val();
-              var weights = $("#weight").val();
-              var tot = rates * weights;
-              // alert(tot)
-              var doc = $("#docs").val();
-              var tots = parseFloat(tot) + parseFloat(doc);
-              $("#amount").val(tots);
-            }
-          });
-
-          $("#ed_docs").keyup(function() {
-            var gstv = $("#ed_gsts").val();
-            $("#ed_gstp").text(gstv + "%");
-
-            var gst = $("input[id='ed_gst']:checked").val();
-            if (gst != '') {
-              var gsts = $("#ed_gsts").val();
-              if (gst == "GST") {
-                var amount = $("#ed_amount").val();
-                var gsttot = ((amount * gsts) / 100);
-                var gstamt = parseFloat(amount) + parseFloat(gsttot);
-                $("#ed_paid").val(gstamt);
-              } else {
-                var amount = $("#ed_amount").val();
-                $("#ed_paid").val(amount);
-              }
-
-              var rates = $("#ed_rate").val();
-              var weights = $("#ed_weight").val();
-              var tot = rates * weights;
-              // alert(tot)
-              var doc = $("#ed_docs").val();
-              var tots = parseFloat(tot) + parseFloat(doc);
-              $("#ed_amount").val(tots);
-            }
-          });
-
-          $("input[type='checkbox']").click(function() {
-            var gst = $("input[id='gst']:checked").val();
-            var gsts = $("#gsts").val();
-            if (gst == "GST") {
-              var amount = $("#amount").val();
-              var gsttot = ((amount * gsts) / 100);
-              var gstamt = parseFloat(amount) + parseFloat(gsttot);
+              var gsttot1 = parseFloat(amount) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
               $("#paid").val(gstamt);
             } else {
               var amount = $("#amount").val();
               $("#paid").val(amount);
             }
 
-
-            var edgst = $("input[id='gst']:checked").val();
-            var gsts = $("#gsts").val();
-            if (edgst == "GST") {
-              var edamount = $("#amount").val();
-              var edgsttot = ((edamount * gsts) / 100);
-              var edgstamt = parseFloat(edamount) + parseFloat(edgsttot);
-              $("#paid").val(edgstamt);
-            } else {
-              var edamount = $("#amount").val();
-              $("#paid").val(edamount);
-            }
-
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#amount").val(tots);
           });
 
-          $("input[type='checkbox']").click(function() {
-            var gst = $("input[id='ed_gst']:checked").val();
-            var gsts = $("#ed_gsts").val();
-            if (gst == "GST") {
-              var amount = $("#ed_amount").val();
-              var gsttot = ((amount * gsts) / 100);
-              var gstamt = parseFloat(amount) + parseFloat(gsttot);
-              $("#ed_paid").val(gstamt);
+          $("#eddocs").change(function() {
+            var gst = this.value;
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+           
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
             } else {
-              var amount = $("#ed_amount").val();
-              $("#ed_paid").val(amount);
+              others = 0;
             }
+            
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#edamount").val(tots);
+          
+            var gst =  $("#edgst_types").val();
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gsttot1 = ((gtamts * cgst) / 100);
+              var gsttot2 = ((gtamts * sgst) / 100);
+              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
 
-
-            var edgst = $("input[id='ed_gst']:checked").val();
-            var gsts = $("#ed_gsts").val();
-            if (edgst == "GST") {
-              var edamount = $("#ed_amount").val();
-              var edgsttot = ((edamount * gsts) / 100);
-              var edgstamt = parseFloat(edamount) + parseFloat(edgsttot);
-              $("#ed_paid").val(edgstamt);
+              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#edpaid").val(gstamt);
             } else {
-              var edamount = $("#ed_amount").val();
-              $("#ed_paid").val(edamount);
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            } 
+                   });
+
+
+          $("#weight").change(function() {
+            var gst = this.value;
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
             }
+            var amount = $("#amount").val();
 
-          });
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
 
-          $("#amount").keyup(function() {
-            var gst = $("input[id='gst']:checked").val();
-            var gsts = $("#gsts").val();
-            if (gst == "GST") {
-              var amount = $("#amount").val();
-              var gsttot = (amount * gsts) / 100;
-              var gstamt = parseFloat(amount) + parseFloat(gsttot);
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2) + parseFloat(others);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
               $("#paid").val(gstamt);
             } else {
               var amount = $("#amount").val();
               $("#paid").val(amount);
             }
+
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#amount").val(tots);
           });
 
-          $("#ed_amount").keyup(function() {
-            var gst = $("input[id='ed_gst']:checked").val();
-            var gsts = $("#ed_gsts").val();
-            if (gst == "GST") {
-              var amount = $("#ed_amount").val();
-              var gsttot = (amount * gsts) / 100;
-              var gstamt = parseFloat(amount) + parseFloat(gsttot);
-              $("#ed_paid").val(gstamt);
+          $("#edweight").change(function() {
+            var gst = this.value;
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+               
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
             } else {
-              var amount = $("#ed_amount").val();
-              $("#ed_paid").val(amount);
+              others = 0;
+            }
+            
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#edamount").val(tots);
+          
+            var gst =  $("#edgst_types").val();
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gsttot1 = ((gtamts * cgst) / 100);
+              var gsttot2 = ((gtamts * sgst) / 100);
+              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
             }
           });
 
-          $("#weight").keyup(function() {
-            var rates = $("#rate").val();
-            var weights = $("#weight").val();
-            var tot = rates * weights;
-            var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#amount").val(tots);
-          });
 
-          $("#ed_weight").keyup(function() {
-            var rates = $("#ed_rate").val();
-            var weights = $("#ed_weight").val();
-            var tot = rates * weights;
-            var doc = $("#ed_docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#ed_amount").val(tots);
+          $("#rate").change(function() {
+            var gst = this.value;
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
 
-            var gst = $("input[id='ed_gst']:checked").val();
-            if (gst != '') {
-              var gsts = $("#ed_gsts").val();
-              if (gst == "GST") {
-                var amount = $("#ed_amount").val();
-                var gsttot = ((amount * gsts) / 100);
-                var gstamt = parseFloat(amount) + parseFloat(gsttot);
-                $("#ed_paid").val(gstamt);
-              } else {
-                var amount = $("#ed_amount").val();
-                $("#ed_paid").val(amount);
-              }
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            var amount = $("#amount").val();
 
-              var rates = $("#ed_rate").val();
-              var weights = $("#ed_weight").val();
-              var tot = rates * weights;
-              // alert(tot)
-              var doc = $("#ed_docs").val();
-              var tots = parseFloat(tot) + parseFloat(doc);
-              $("#ed_amount").val(tots);
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gstamts = parseFloat(amount) + parseFloat(others);
+              var gsttot1 = ((gstamts * cgst) / 100);
+              var gsttot2 = ((gstamts * sgst) / 100);
+              var gstamt = parseFloat(gstamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((amount * igst) / 100);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
             }
 
-          });
-
-          $("#docs").keyup(function() {
             var rates = $("#rate").val();
             var weights = $("#weight").val();
             var tot = rates * weights;
@@ -1367,51 +1795,105 @@ if ($user_name != "") {
             $("#amount").val(tots);
           });
 
-          $("#ed_docs").keyup(function() {
-            var rates = $("#ed_rate").val();
-            var weights = $("#ed_weight").val();
+          $("#edrate").change(function() {
+            var gst = this.value;
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+              
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
             var tot = rates * weights;
-            var doc = $("#ed_docs").val();
+            var doc = $("#eddocs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
-            $("#ed_amount").val(tots);
+            $("#edamount").val(tots);
+          
+            var gst =  $("#edgst_types").val();
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gsttot1 = ((gtamts * cgst) / 100);
+              var gsttot2 = ((gtamts * sgst) / 100);
+              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
           });
 
-          $("#rate").keyup(function() {
-            var rates = $("#rate").val();
-            var weights = $("#weight").val();
-            var tot = rates * weights;
-            // alert(tot)
-            var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#amount").val(tots);
-          });
-
-          $("#ed_rate").keyup(function() {
-            var rates = $("#ed_rate").val();
-            var weights = $("#ed_weight").val();
-            var tot = rates * weights;
-            // alert(tot)
-            var doc = $("#ed_docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#ed_amount").val(tots);
-          });
-
+         $("#bookupdationmno").click(function(e) {
+            e.preventDefault();
+            var bookmid = $('#edmbookid').val();
+            var mno=$("#mno").val();
+            $.ajax({
+                url: 'ajax/ajax_request.php?action=mnoupdation',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "mnoupdation",
+                  'bookmid': bookmid,
+                  'mno':mno
+                },
+                success: function(response) {
+                  if (response.msg == "Success") {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'success',
+                      title: 'Booking MNO Updated',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  } else {
+                    Swal.fire({
+                      position: 'top-end',
+                      icon: 'error',
+                      title: 'Booking MNO Update Failure',
+                      showConfirmButton: false,
+                      timer: 3000
+                    }).then(function() {
+                      window.location.href = 'booking.php';
+                    })
+                  }
+                }
+        });
+      });
 
           $("#bookcreation").click(function(e) {
             e.preventDefault();
             var creationdate = $('#creationdate').val();
+            var value = $('#partyname').val();
+            var partyid = $('#edparties [value="' + value + '"]').data('value');
             var type = $('#types').val();
+            var route = $('#route').val();
             var origin = $('#origin').val();
             var destination = $('#destination').val();
-            var area = $('#area').val();
             var coraddress = $('#coraddress').val();
             var conaddress = $('#conaddress').val();
-
-            // var transport = [];
-            // $.each($("input[name='transport']:checked"), function() {
-            //   transport.push($(this).val());
-            // });
-            // transports = transport.toString();
+            var pod = $('#pod').val();
+            var area = $('#area').val();
+            var trainname = $('#trainname').val();
 
             var transports = $('#transport').val();
 
@@ -1424,12 +1906,26 @@ if ($user_name != "") {
             var docs = $('#docs').val();
             var rate = $('#rate').val();
             var amount = $('#amount').val();
-            var gsts = $('#gsts').val();
-            var gst = $('#gst').val();
+            var othercharge = $('#otherchg').val();
             var paymentmode = $('#paymentmode').val();
+            var otherchrg = $('#otherchg').val();
+            var gst_types = $('#gst_types').val();
+            if (gst_types == "State") {
+              $("#igstamt").val(0);
+              $("#cgstamt").val();
+              $("#sgstamt").val();
+            } else if (gst_types == "Interstate") {
+              $("#igstamt").val();
+              $("#cgstamt").val(0);
+              $("#sgstamt").val(0);
+            }
+            var igstamt = $("#igstamt").val();
+            var cgstamt = $("#cgstamt").val();
+            var sgstamt = $("#sgstamt").val();
+
             var paid = $('#paid').val();
 
-            if (creationdate != '' && type != '' && origin != '' && destination != '' && area != '' && area != '' && coraddress != '' && conaddress != '' && transport != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gsts != '' && gst != '' && paymentmode != '' && paid != '') {
+            if (creationdate != '' && type != '' && origin != '' && destination != '' && area != '' && area != '' && coraddress != '' && conaddress != '' && transport != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gst_types != '' && paymentmode != '' && paid != '') {
               $.ajax({
                 url: 'ajax/ajax_request.php?action=bookcreation',
                 type: 'POST',
@@ -1437,12 +1933,16 @@ if ($user_name != "") {
                 data: {
                   'action': "bookcreation",
                   'creationdate': creationdate,
+                  'partyid': partyid,
                   'type': type,
+                  'route': route,
                   'origin': origin,
                   'destination': destination,
                   'area': area,
                   'coraddress': coraddress,
                   'conaddress': conaddress,
+                  'pod': pod,
+                  'trainname': trainname,
                   'transport': transports,
                   'pack': packs,
                   'invoiceno': invoiceno,
@@ -1453,8 +1953,11 @@ if ($user_name != "") {
                   'docs': docs,
                   'rate': rate,
                   'amount': amount,
-                  'gsts': gsts,
-                  'gst': gst,
+                  'othercharge': othercharge,
+                  'gst_types': gst_types,
+                  'igst': igstamt,
+                  'sgst': sgstamt,
+                  'cgst': cgstamt,
                   'paymentmode': paymentmode,
                   'paid': paid
                 },
@@ -1561,7 +2064,6 @@ if ($user_name != "") {
           $(".bookingdeletion").click(function(e) {
             e.preventDefault();
             var bookdid = $(this).attr('ids');
-            //  alert(userdid)
             $.ajax({
               url: 'ajax/ajax_request.php?action=bookingdeletion',
               type: 'POST',
@@ -1602,7 +2104,6 @@ if ($user_name != "") {
           $(".edit_book").click(function(e) {
             e.preventDefault();
             var bookeid = $(this).attr("ids");
-            // alert(bookeid)
             $("#ed_bookid").val(bookeid);
             $.ajax({
               url: 'ajax/ajax_request.php?action=bookfetch',
@@ -1614,43 +2115,40 @@ if ($user_name != "") {
               },
               success: function(response) {
                 $('#creationdate').val(response.data.creationdate);
-                $('#ed_types').val(response.data.type);
-                $('#ed_origin').val(response.data.origin);
-                $('#ed_destination').val(response.data.destination);
-                $('#ed_coraddress').val(response.data.coraddress);
-                $('#ed_conaddress').val(response.data.conaddress);
-                $('#ed_area').val(response.data.area);
+                $('#edpartyname').val(response.data.party.partyname);
+                $('#edtypes').val(response.data.type);
+                $('#edorigin').val(response.data.origin);
+                $('#eddestination').val(response.data.destination);
+                $('#edcoraddress').val(response.data.coraddress);
+                $('#edconaddress').val(response.data.conaddress);
+                $('#edarea').val(response.data.area);
+                $('#edroute').val(response.data.route);
+                $("#edpod").val(response.data.pod);
+                $("#edtrainname").val(response.data.trainname);
 
                 $("#edtransport").val(response.data.transport);
-                // var transport = $("#edtransports").val();
-                // var commas = transport.split(',');
-                // var desti = [];
-                // for (var i = 0; i < commas.length; i++) {
-                //   desti.push(commas[i]);
-                // }
 
-                // $.each(desti, function(index, value) {
-                //   // alert( index + ": " + value );
-                //   let val = value.toLowerCase();
-                //   $('#' + val).prop('checked', true);
-                // });
-
-
-                $('#ed_packs').val(response.data.pack);
-                $('#ed_rate').val(response.data.rate);
-                $('#ed_invoiceno').val(response.data.invoiceno);
-                $('#ed_describe').val(response.data.description);
-                $('#ed_quantity').val(response.data.quantity);
-                $('#ed_gross').val(response.data.gross);
-                $('#ed_weight').val(response.data.weight);
-                $('#ed_amount').val(response.data.amount);
-                if (response.data.gst == "GST") {
-                  $('#ed_gst').prop('checked', true);
-                } else {
-                  $('#ed_gst').prop('checked', false);
-                }
-                $('#ed_paymentmode').val(response.data.paymentmode);
-                $('#ed_paid').val(response.data.paid);
+                $('#edpacks').val(response.data.pack);
+                $('#edrate').val(response.data.rate);
+                $('#edinvoiceno').val(response.data.invoiceno);
+                $('#eddescribe').val(response.data.description);
+                $('#edquantity').val(response.data.quantity);
+                $('#edgross').val(response.data.gross);
+                $('#edweight').val(response.data.weight);
+                $('#edamount').val(response.data.amount);
+                $('#edotherchg').val(response.data.othercharge);
+                $('#edgst_types').val(response.data.gst);
+                if (response.data.gst == "State") {
+                  $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+ } else {
+  $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+  }
+                $('#edpaymentmode').val(response.data.paymentmode);
+                $('#edpaid').val(response.data.paid);
 
               }
             });
@@ -1659,42 +2157,47 @@ if ($user_name != "") {
           $("#bookupdation").click(function(e) {
             e.preventDefault();
             var ids = $('#ed_bookid').val();
-            var creationdate = $('#ed_creationdate').val();
-            var type = $('#ed_types').val();
-            var origin = $('#ed_origin').val();
-            var destination = $('#ed_destination').val();
-            var coraddress = $('#ed_coraddress').val();
-            var conaddress = $('#ed_conaddress').val();
-            var area = $('#ed_area').val();
+            var creationdate = $('#edcreationdate').val();
+            var value = $('#edpartyname').val();
+            var partyid = $('#ed_parties [value="' + value + '"]').data('value');
+            var type = $('#edtypes').val();
+            var route = $('#edroute').val();
+            var origin = $('#edorigin').val();
+            var destination = $('#eddestination').val();
+            var coraddress = $('#edcoraddress').val();
+            var conaddress = $('#edconaddress').val();
+            var pod = $('#edpod').val();
+            var area = $('#edarea').val();
+            var trainname = $('#edtrainname').val();
 
-            // var transport = [];
-            // $.each($("input[name='edtransport']:checked"), function() {
-            //   transport.push($(this).val());
-            // });
-            // transports = transport.toString();
-            transports = $("#edtransport").val();
+            var transports = $('#edtransport').val();
 
-            var packs = $('#ed_packs').val();
-            var invoiceno = $('#ed_invoiceno').val();
-            var describe = $('#ed_describe').val();
-            var quantity = $('#ed_quantity').val();
-            var gross = $('#ed_gross').val();
-            var weight = $('#ed_weight').val();
-            var docs = $('#ed_docs').val();
-            var rate = $('#ed_rate').val();
-            var amount = $('#ed_amount').val();
-            var gsts = $('#ed_gsts').val();
-            var paymentmode = $('#ed_paymentmode').val();
-            var paid = $('#ed_paid').val();
-
-            var edgst = $("input[id='ed_gst']:checked").val();
-            if (edgst == "GST") {
-              gst = "GST";
-            } else {
-              gst = "";
+            var packs = $('#edpacks').val();
+            var invoiceno = $('#edinvoiceno').val();
+            var describe = $('#eddescribe').val();
+            var quantity = $('#edquantity').val();
+            var gross = $('#edgross').val();
+            var weight = $('#edweight').val();
+            var docs = $('#eddocs').val();
+            var rate = $('#edrate').val();
+            var amount = $('#edamount').val();
+            var othercharge = $('#edotherchg').val();
+            var paymentmode = $('#edpaymentmode').val();
+            var gst_types = $('#edgst_types').val();
+            if (gst_types == "State") {
+              $("#edigstamt").val(0);
+              $("#edcgstamt").val();
+              $("#edsgstamt").val();
+            } else if (gst_types == "Interstate") {
+              $("#edigstamt").val();
+              $("#edcgstamt").val(0);
+              $("#edsgstamt").val(0);
             }
+            var igstamt = $("#edigstamt").val();
+            var cgstamt = $("#edcgstamt").val();
+            var sgstamt = $("#edsgstamt").val();
 
-            if (creationdate != '' && type != '' && origin != '' && destination != '' && coraddress != '' && conaddress != '' && area != '' && transports != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gsts != '' && paymentmode != '' && paid != '') {
+            var paid = $('#edpaid').val();
               $.ajax({
                 url: 'ajax/ajax_request.php?action=bookupdation',
                 type: 'POST',
@@ -1703,12 +2206,16 @@ if ($user_name != "") {
                   'action': "bookupdation",
                   'ids': ids,
                   'creationdate': creationdate,
+                  'partyid': partyid,
                   'type': type,
+                  'route': route,
                   'origin': origin,
                   'destination': destination,
                   'area': area,
                   'coraddress': coraddress,
                   'conaddress': conaddress,
+                  'pod': pod,
+                  'trainname': trainname,
                   'transport': transports,
                   'pack': packs,
                   'invoiceno': invoiceno,
@@ -1719,8 +2226,11 @@ if ($user_name != "") {
                   'docs': docs,
                   'rate': rate,
                   'amount': amount,
-                  'gsts': gsts,
-                  'gst': gst,
+                  'othercharge': othercharge,
+                  'gst_types': gst_types,
+                  'igst': igstamt,
+                  'sgst': sgstamt,
+                  'cgst': cgstamt,
                   'paymentmode': paymentmode,
                   'paid': paid
                 },
@@ -1749,91 +2259,7 @@ if ($user_name != "") {
                   }
                 }
               });
-            } else {
-              if (type == '') {
-                $("#ed_types").show();
-              }
-
-              if (origin == '') {
-                $("#edorigin").show();
-              }
-
-
-              if (area == '') {
-                $("#edarea").show();
-              }
-
-              if (destination == '') {
-                $("#eddestination").show();
-              }
-
-              if (coraddress == '') {
-                $("#edcoraddress").show();
-              }
-
-              if (conaddress == '') {
-                $("#edconaddress").show();
-              }
-
-              if(transports==''){
-                $("#ed_transports").show();
-              }
-
-              if(packs==''){
-                $("#edpack").show();
-              }
-
-              if(packs==''){
-                $("#edpack").show();
-              }
-
-              if(invoiceno==''){
-                $("#edinvno").show();
-              }
-
-              if(describe==''){
-                $("#eddescribe").show();
-              }
-
-              if(quantity==''){
-                $("#edquantity").show();
-              }
-
-              if(gross==''){
-                $("#edgross").show();
-              }
-
-              if(weight==''){
-                $("#edweight").show();
-              }
-
-              if(docs==''){
-                $("#eddoc").show();
-              }
-
-              if(rate==''){
-                $("#edrate").show();
-              }
-
-              if(amount==''){
-                $("#edamount").show();
-              }
-
-              if(gsts==''){
-                $("#edgsts").show();
-              }
-
-              var edgst = $("input[id='ed_gst']:checked").val();
-            if (edgst == "GST") {
-              $("#edgst").show();
-             }
-
-             if(paid==''){
-                $("#edpaid").show();
-              }
-
-
-            }
+          
           });
 
 

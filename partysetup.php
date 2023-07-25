@@ -273,18 +273,12 @@ if ($user_name != "") {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            if ($roles == "Super Admin" && $types == "") {
+                                            if ($types == "Admin") {
                                                 $sqlparty = "select * from partyset";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $exeparty->execute();
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($roles == "Admin" && $types == "Air") {
-                                                $sqlparty = "select * from party where bookmode=:bookmode";
-                                                $exeparty = $con->prepare($sqlparty);
-                                                $data = [':bookmode' => $types];
-                                                $exeparty->execute($data);
-                                                $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($roles == "Admin" && $types == "Train") {
+                                            } else if ($types == "Air" || $types == "Train") {
                                                 $sqlparty = "select * from party where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
@@ -301,30 +295,16 @@ if ($user_name != "") {
                                                     <td><?= $party['partymobile'] ?></td>
                                                     <td><?= $party['partyaddress'] ?></td>
                                                     <td><?= $party['creationdate'] ?></td>
-                                                    <?php
-                                                    $bmode = explode(",", $party['bookmode']);
-                                                    foreach ($bmode as $air) {
-                                                        if ($air == "Air") {
-                                                    ?>
-                                                            <td><?= "Air - " . $party['airprice']; ?> </td>
-                                                        <?php } else {
-                                                        ?> <td>-</td>
-                                                    <?php
-                                                        }
-                                                    }
-                                                    ?>
-                                                    <?php
-                                                    $bmodes = explode(",", $party['bookmode']);
-                                                    foreach ($bmodes as $train) {
-                                                        if ($train == "Train") {
-                                                    ?>
-                                                            <td><?= "Train - " . $party['trainprice']; ?> </td>
-                                                        <?php } else {
-                                                        ?> <td>-</td>
-                                                    <?php
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <?php if($types=="Air") { ?>
+                                                    <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                    <?php } 
+                                                    else { echo "-"; }
+                                                    if($types=="Train") { ?>
+                                                    <td><?= "Train - " . $party['trainprice']; ?> </td>
+                                                    <?php } else { echo "-"; }  if($types=="Air") {  ?>
+                                                        <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                        <td><?= "Train - " . $party['trainprice']; ?> </td>
+                                                        <?php } ?>
                                                     <td><?= $party['city'] ?></td>
                                                     <td><?= $party['destinate'] ?></td>
                                                     <td> <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
@@ -630,8 +610,8 @@ if ($user_name != "") {
                                     $("#gst").val(response.data.gst);
                                     $("#trainprice").val(response.data.trainprice);
                                     $("#airprice").val(response.data.airprice);
-                                    $("#ed_bookmode").val(response.data.bookmode);
-                                    var booksmode = $("#ed_bookmode").val();
+                                    $("#bookmode").val(response.data.bookmode);
+                                    var booksmode = $("#bookmode").val();
 
                                     if (booksmode == "Train") {
                                         $('#train').prop('checked', true);
@@ -656,7 +636,7 @@ if ($user_name != "") {
                         $('#edtrainprice').val('');
                         $('#edgst').val('');
                         $('#edpartymobile').val('');
-                        });
+                    });
 
                     $('#edbookmode').change(function(e) {
                         e.preventDefault();
@@ -833,7 +813,7 @@ if ($user_name != "") {
                         var bookmode = $("#edbookmode").val();
                         var partymobile = $("#edpartymobile").val();
                         var airprice = $("#edairprice").val();
-                         var state = $("#edstate").val();
+                        var state = $("#edstate").val();
                         var city = $("#edcity").val();
                         var partyzip = $("#edpartyzip").val();
                         var partyaddress = $("#edpartyaddress").val();

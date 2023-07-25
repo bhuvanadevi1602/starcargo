@@ -9,7 +9,7 @@ if ($user_name != "") {
     include('header.php');
     $types = $_SESSION['types'];
     $roles = $_SESSION['role'];
-?>
+ ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -32,6 +32,7 @@ if ($user_name != "") {
                                 </ol>
                             </div>
                             <h4 class="page-title">Party Datatables</h4>
+                            <input type="hidden" name="typ" id="typ" value="<?=$types?>" />
                         </div>
                         <!--end page-title-box-->
                     </div>
@@ -92,18 +93,20 @@ if ($user_name != "") {
                                                                 </div>
                                                             </div>
                                                             <div class="col-md-3">
-                                            <label for="validationCustom03" class="form-label">Route</label>
-                                            <input list="routes" class="form-control" name="route" id="route">
+                                                                <label for="validationCustom03" class="form-label">Route</label>
+                                                                <input list="routes" class="form-control" name="route" id="route">
 
-<datalist id="routes">
-        <option selected disabled value="">Choose Route</option>
-        <option value="Vaniyambadi">Vaniyambadi</option>
-        <option value="CHENNAI">CHENNAI</option>
-        <option value="RANIPET">RANIPET</option>
-        <option value="AMBUR">AMBUR</option>
-        <option value="Other Place">Other Place</option>
-</datalist>
-                                        </div> <div class="col-md-3">
+                                                                <datalist id="routes">
+                                                                    <option selected disabled value="">Choose Route</option>
+                                                                    <option value="Vaniyambadi">Vaniyambadi</option>
+                                                                    <option value="CHENNAI">CHENNAI</option>
+                                                                    <option value="RANIPET">RANIPET</option>
+                                                                    <option value="AMBUR">AMBUR</option>
+                                                                    <option value="Other Place">Other Place</option>
+                                                                </datalist>
+                                                            </div>
+                                                      
+                                                            <div class="col-md-3">
                                                                 <label for="validationCustom05" class="form-label">Type of Booking</label>
                                                                 <div class="col-md-12">
                                                                     <div class="form-check form-check-inline">
@@ -122,7 +125,6 @@ if ($user_name != "") {
                                                                     Please provide a valid Types.
                                                                 </div>
                                                             </div>
-
 
                                                             <div class="col-md-3" id="airprices">
                                                                 <label for="validationCustom03" class="form-label">Air Rate</label>
@@ -148,7 +150,7 @@ if ($user_name != "") {
                                                                 </div>
                                                             </div>
 
-                                                           <div class="col-12 text-center">
+                                                            <div class="col-12 text-center">
                                                                 <button class="btn btn-primary" type="submit" name="createpartydetail" id="createpartydetail">Save Party Details</button>
                                                             </div>
                                                         </form><!--end form-->
@@ -184,18 +186,18 @@ if ($user_name != "") {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            if ($roles == "Super Admin" && $types == "") {
+                                            if ($types == "Admin") {
                                                 $sqlparty = "select * from party";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $exeparty->execute();
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($roles == "Admin" && $types == "Air") {
+                                            } else if ($types == "Air") {
                                                 $sqlparty = "select * from party where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
                                                 $exeparty->execute($data);
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($roles == "Admin" && $types == "Train") {
+                                            } else if ($types == "Train") {
                                                 $sqlparty = "select * from party where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
@@ -213,7 +215,7 @@ if ($user_name != "") {
                                                     <!-- <td><?= $party['partyaddress'] ?></td> -->
                                                     <td><?= $party['creationdate'] ?></td>
                                                     <td><?= $party['route'] ?></td>
-                                                   <td><?= $party['bookmode'] ?></td>
+                                                    <td><?= $party['bookmode'] ?></td>
                                                     <td><?= $party['gst'] ?></td>
                                                     <td>
                                                         <div class="row col-md-12">
@@ -223,7 +225,7 @@ if ($user_name != "") {
                                                                 </button>
                                                             </div>
                                                             <div class="col-md-6">
-                                                              <form method="POST" action="">
+                                                                <form method="POST" action="">
                                                                     <!-- <input type="submit" class="btn btn-danger btn-sm userdeletion" name="userdeletion" id="userdeletion" value="Delete"> -->
                                                                     <button type="submit" class="btn btn-danger btn-sm partydeletion" name="partydeletion" ids="<?= $party['id'] ?>" id="partydeletion">
                                                                         <i class="fa fa-trash"></i>
@@ -259,7 +261,7 @@ if ($user_name != "") {
                             <div class="row">
                                 <div class="card-body">
                                     <form class="row g-3 needs-validation" method="POST" novalidate>
-                                        <input type="hidden" name="edpartyid" id="edpartyid"  />
+                                        <input type="hidden" name="edpartyid" id="edpartyid" />
                                         <div class="col-md-3">
                                             <label for="validationCustom01" class="form-label">Date</label>
                                             <input type="date" value="<?= $dates ?>" class="form-control" id="edcreationdate" name="edcreationdate" required>
@@ -285,14 +287,14 @@ if ($user_name != "") {
                                             <label for="validationCustom03" class="form-label">Route</label>
                                             <input list="routes" class="form-control" name="ed_route" id="ed_route">
 
-<datalist id="routes">
-        <option selected disabled value="">Choose Route</option>
-        <option value="Vaniyambadi">Vaniyambadi</option>
-        <option value="CHENNAI">CHENNAI</option>
-        <option value="RANIPET">RANIPET</option>
-        <option value="AMBUR">AMBUR</option>
-        <option value="Other Place">Other Place</option>
-</datalist>
+                                            <datalist id="routes">
+                                                <option selected disabled value="">Choose Route</option>
+                                                <option value="Vaniyambadi">Vaniyambadi</option>
+                                                <option value="CHENNAI">CHENNAI</option>
+                                                <option value="RANIPET">RANIPET</option>
+                                                <option value="AMBUR">AMBUR</option>
+                                                <option value="Other Place">Other Place</option>
+                                            </datalist>
                                         </div>
                                         <div class="col-md-3" id="validationCustom05">
                                             <label for="validationCustom05" class="form-label">Type of Booking</label>
@@ -404,12 +406,30 @@ if ($user_name != "") {
             <script src="assets/pages/datatable.init.js"></script>
             <script>
                 $(document).ready(function() {
-
-                    $("#trainprices").hide();
+                    var ty=$("#typ").val();
+                  
+                    if(ty=="Admin") {
+    $("#trainprices").hide();
                     $("#airprices").hide();
                     $("#edtrainprices").hide();
                     $("#edairprices").hide();
-
+                    }
+                   else if(ty=="Air") {
+                    $("#air").prop('checked',true);
+                        $("#trainprices").hide();
+                    $("#airprices").show();
+                    $("#edtrainprices").hide();
+                    $("#edairprices").show();
+          }
+          else if(ty=="Train") {
+            $("#train").prop('checked',true);
+                       $("#trainprices").show();
+                    $("#airprices").hide();
+                    $("#edtrainprices").show();
+                    $("#edairprices").hide();
+         }
+                    
+                    
                     $("input[type='radio']").click(function() {
                         var airs = $("input[id='air']:checked").val();
                         var trains = $("input[id='train']:checked").val();
@@ -450,7 +470,7 @@ if ($user_name != "") {
                         }
                     });
 
-                    
+
 
                     $("#createpartydetail").click(function(e) {
                         e.preventDefault();
@@ -484,7 +504,7 @@ if ($user_name != "") {
                                     'gst': gst,
                                     'airprice': airp,
                                     'trainprice': trainp,
-                                    'route':route
+                                    'route': route
                                 },
                                 success: function(response) {
                                     if (response.msg == "Success") {
@@ -531,19 +551,19 @@ if ($user_name != "") {
                                 $("#ed_bookmode").val(response.data.bookmode);
                                 $("#edairprice").val(response.data.airprice);
                                 $("#edtrainprice").val(response.data.trainprice);
-                               $("#ed_route").val(response.data.route);
-                               var booksmode = $("#ed_bookmode").val();
-                           
+                                $("#ed_route").val(response.data.route);
+                                var booksmode = $("#ed_bookmode").val();
+
                                 if (booksmode == "Train") {
-                                    $("#edtrain").prop('checked',true);
+                                    $("#edtrain").prop('checked', true);
                                     $("#edtrainprices").show();
                                     $("#edairprices").hide();
                                 } else if (booksmode == "Air") {
-                                    $("#edair").prop('checked',true);
-                                      $("#edtrainprices").hide();
+                                    $("#edair").prop('checked', true);
+                                    $("#edtrainprices").hide();
                                     $("#edairprices").show();
-                                } 
-                               $("#edgst").val(response.data.gst);
+                                }
+                                $("#edgst").val(response.data.gst);
                             }
                         });
                     });
@@ -556,59 +576,58 @@ if ($user_name != "") {
                         var route = $("#ed_route").val();
                         var partymobile = $("#edpartymobile").val();
                         var gst = $("#edgst").val();
-                       var book_mode = $("input[name='edbookmode']:checked").val();
-                     
-                        if(book_mode=="Air"){
-                        $("#edtrainprice").val(0);
-                        }
-                        else if(book_mode=="Train"){
-                           $("#edairprice").val(0);
-                        }
-                       
-                        var airprice = $("#edairprice").val();
-                       var trainprice = $("#edtrainprice").val();
+                        var book_mode = $("input[name='edbookmode']:checked").val();
 
-                           $.ajax({
-                                url: 'ajax/ajax_request.php?action=partydetupdation',
-                                type: 'POST',
-                                dataType: "JSON",
-                                data: {
-                                    'action': "partydetupdation",
-                                    'ids': ids,
-                                    'creationdate': creationdate,
-                                    'partyname': partyname,
-                                    'partymobile': partymobile,
-                                    'airprice': airprice,
-                                    'trainprice': trainprice,
-                                    'gst': gst,
-                                    'bookmode': book_mode,
-                                    'route': route
-                                },
-                                success: function(response) {
-                                    console.log(response.data)
-                                    if (response.msg == "Success") {
-                                        Swal.fire({
-                                            position: 'top-end',
-                                            icon: 'success',
-                                            title: 'Party Updated',
-                                            showConfirmButton: false,
-                                            timer: 3000
-                                        }).then(function() {
-                                            window.location.href = 'party.php';
-                                        })
-                                    } else {
-                                        Swal.fire({
-                                            position: 'top-end',
-                                            icon: 'error',
-                                            title: 'Party Update Failed',
-                                            showConfirmButton: false,
-                                            timer: 3000
-                                        }).then(function() {
-                                            window.location.href = 'party.php';
-                                        })
-                                    }
+                        if (book_mode == "Air") {
+                            $("#edtrainprice").val(0);
+                        } else if (book_mode == "Train") {
+                            $("#edairprice").val(0);
+                        }
+
+                        var airprice = $("#edairprice").val();
+                        var trainprice = $("#edtrainprice").val();
+
+                        $.ajax({
+                            url: 'ajax/ajax_request.php?action=partydetupdation',
+                            type: 'POST',
+                            dataType: "JSON",
+                            data: {
+                                'action': "partydetupdation",
+                                'ids': ids,
+                                'creationdate': creationdate,
+                                'partyname': partyname,
+                                'partymobile': partymobile,
+                                'airprice': airprice,
+                                'trainprice': trainprice,
+                                'gst': gst,
+                                'bookmode': book_mode,
+                                'route': route
+                            },
+                            success: function(response) {
+                                console.log(response.data)
+                                if (response.msg == "Success") {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'Party Updated',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    }).then(function() {
+                                        window.location.href = 'party.php';
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'error',
+                                        title: 'Party Update Failed',
+                                        showConfirmButton: false,
+                                        timer: 3000
+                                    }).then(function() {
+                                        window.location.href = 'party.php';
+                                    })
                                 }
-                            });
+                            }
+                        });
                     });
 
                     $(".partydeletion").click(function(e) {
