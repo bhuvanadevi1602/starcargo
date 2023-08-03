@@ -9,6 +9,7 @@ if ($user_name != "") {
   include('header.php');
   $types = $_SESSION['types'];
   $roles = $_SESSION['role'];
+  // print_r($_SESSION);die();
 ?>
   <!DOCTYPE html>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -48,6 +49,101 @@ if ($user_name != "") {
                 <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalLarge" style="float:right">
                   Add Booking
                 </button>
+
+                <div class="row col-md-12">
+                  <div class="col-md-3 text-center">
+                    <?php
+                    $fromdate = isset($_POST['fromdate']) ? $_POST['fromdate'] : "-";
+                    $todate = isset($_POST['todate']) ? $_POST['todate'] : "-";
+                    $partytypes = isset($_POST['partytypes']) ? $_POST['partytypes'] : "-";
+
+
+                    $pid = $_POST['partynamess'];
+                    $query1 = "select * from party where id=:pid";
+                    $exe = $con->prepare($query1);
+                    $data = [':pid' => $pid];
+                    $exe->execute($data);
+                    $result = $exe->fetch(PDO::FETCH_ASSOC);
+
+                    $partynames = isset($result['partyname']) ? $result['partyname'] : "-";
+                    ?>
+                    <h5>From Date : <?= $fromdate ?></h5>
+                  </div>
+                  <div class="col-md-3 text-center">
+                    <h5>To Date : <?= $todate ?></h5>
+                  </div>
+                  <div class="col-md-3 text-center">
+                    <h5>Type : <?= $partytypes ?></h5>
+                  </div>
+                  <div class="col-md-3 text-center">
+                    <?php
+
+                    ?>
+
+                    <h5>Party Name : <?= $partynames ?></h5>
+                  </div>
+                </div>
+                <form method="POST" autocomplete="off">
+                  <div class="row col-md-12 mt-4">
+                    <div class="col-md-2">
+                      <input type="date" name="fromdate" to="fromdate" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                      <input type="date" name="todate" to="todate" class="form-control" />
+                    </div>
+                    <div class="col-md-2">
+                      <?php if($types=="Air" || $types=="Train") { ?>
+                      <input list="partytypess" class="form-control" name="partytypes" id="partytypes" value="<?= $types ?>">
+                      <datalist id="partytypess">
+                        <option selected disabled value="">Choose Type...</option>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                      </datalist>
+                      <?php } else { ?>
+                        <input list="partytypess" class="form-control" name="partytypes" id="partytypes">
+                      <datalist id="partytypess">
+                        <option selected disabled value="">Choose Type...</option>
+                        <option value="Air">Air</option>
+                        <option value="Train">Train</option>
+                      </datalist>
+                        <?php } ?>
+                    </div>
+
+                    <div class="col-md-2">
+                      <input list="partiess" class="form-control" name="partynamess" id="partynamess">
+                      <datalist id="partiess">
+                        <?php
+                        $sqlstate = "select * from party";
+                        $exestate = $con->prepare($sqlstate);
+                        $exestate->execute();
+                        $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
+                        foreach ($result as $res) {
+                        ?>
+
+                          <option selected disabled value="">Choose State...</option>
+                          <option data-value="<?= $res['id'] ?>" value="<?= $res['id'] ?>"><?= $res['partyname'] ?></option>
+                        <?php } ?>
+                      </datalist>
+
+
+                    </div>
+
+                    <div class="col-md-2">
+                      <input type="submit" name="search" id="search" class="btn btn-sm btn-de-primary csv p-2" value="Search" />
+                      <?php
+                      if ($partytypes == "Air") {
+                      ?>
+                        <a href="exportair.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Export CSV</a>
+                      <?php } else if ($partytypes == "Train") { ?>
+                        <a href="exporttrain.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Export CSV</a>
+                      <?php } else { ?>
+                        <a href="#" class="btn btn-sm btn-de-primary csv p-2">Export CSV</a>
+               
+                        <?php } ?>
+                    </div>
+
+                  </div>
+                </form>
                 <!--Start modal-header-->
                 <div class="modal fade bd-example-modal-xl" id="exampleModalLarge" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                   <div class="modal-dialog modal-xl" role="document">
@@ -535,12 +631,12 @@ if ($user_name != "") {
                         <th>M.No</th>
                         <th data-type="date" data-format="YYYY/DD/MM">Date</th>
                         <th>Type</th>
-                       <th>From - To</th>
+                        <th>From - To</th>
                         <th>Origin - Destination</th>
                         <th>Transport</th>
                         <th>Train</th>
                         <th>POD</th>
-                      <th>Amount</th>
+                        <th>Amount</th>
                         <th>GST</th>
                         <th>Payment</th>
                         <th colspan="3">Action</th>
@@ -549,51 +645,68 @@ if ($user_name != "") {
                     <tbody>
                       <?php
                       $i = 0;
-                      if ($types == "Admin") {
-                        $sqlbook = "select * from booking";
+
+                      if (isset($_POST['search'])) {
+
+                        $sqlbook = "SELECT * from booking where type='$partytypes' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$pid'  ORDER BY id ASC";
                         $exebook = $con->prepare($sqlbook);
                         $exebook->execute();
                         $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                      } else if ($types == "Air" || $types == "Train") {
-                        $sqlbook = "select * from booking where type=:types";
-                        $exebook = $con->prepare($sqlbook);
-                        $data = [':types' => $types];
-                        $exebook->execute($data);
-                        $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                      } else {
+                        if ($types == "Admin") {
+                          $sqlbook = "select * from booking";
+                          $exebook = $con->prepare($sqlbook);
+                          $exebook->execute();
+                          $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                        } else if ($types == "Air" || $types == "Train") {
+                          $sqlbook = "select * from booking where type=:types";
+                          $exebook = $con->prepare($sqlbook);
+                          $data = [':types' => $types];
+                          $exebook->execute($data);
+                          $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
+                        }
                       }
-                      foreach ($resultbook as $book) {
-                        $i++;
+
+                      if ($resultbook != "") {
+                        foreach ($resultbook as $book) {
+                          $i++;
                       ?>
-                        <tr>
-                          <td><?= $i ?></td>
-                          <td><?= $book['mno'] ?></td>
-                          <td><?= $book['creationdate'] ?></td>
-                          <td><?= $book['type'] ?></td>
-                          <td><?= $book['coraddress']." - ".$book['conaddress'] ?></td>
-                          <td><?= $book['origin']." - ".$book['destination'] ?></td>
-                          <td><?= $book['transport'] ?></td>
-                           <td><?= $book['trainname'] ?></td>
-                           <td><?= $book['pod'] ?></td>
-                          <td><?= $book['amount'] ?></td>
-                          <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
-                          <td><?= $book['paid'] ?></td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm edit_book" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
-                              <i class="fa fa-pen"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-primary btn-sm edit_mno" data-bs-toggle="modal" data-bs-target="#editmno" idss="<?= $book['id'] ?>">
-                              <i class="fa fa-file"></i>
-                            </button>
-                          </td>
-                          <td>
-                            <form method="POST" action="">
-                              <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>" name="bookingdeletion" id="bookingdeletion">
-                                <i class="fa fa-trash"></i>
+                          <tr>
+                            <td><?= $i ?></td>
+                            <td><?= $book['mno'] ?></td>
+                            <td><?= $book['creationdate'] ?></td>
+                            <td><?= $book['type'] ?></td>
+                            <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
+                            <td><?= $book['origin'] . " - " . $book['destination'] ?></td>
+                            <td><?= $book['transport'] ?></td>
+                            <td><?= $book['trainname'] ?></td>
+                            <td><?= $book['pod'] ?></td>
+                            <td><?= $book['amount'] ?></td>
+                            <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
+                            <td><?= $book['paid'] ?></td>
+                            <td>
+                              <button type="button" class="btn btn-primary btn-sm edit_book" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
+                                <i class="fa fa-pen"></i>
                               </button>
-                            </form>
-                          </td>
+                            </td>
+                            <td>
+                              <button type="button" class="btn btn-primary btn-sm edit_mno" data-bs-toggle="modal" data-bs-target="#editmno" idss="<?= $book['id'] ?>">
+                                <i class="fa fa-file"></i>
+                              </button>
+                            </td>
+                            <td>
+                              <form method="POST" action="">
+                                <button type="submit" class="btn btn-danger btn-sm bookingdeletion" ids="<?= $book['id'] ?>" name="bookingdeletion" id="bookingdeletion">
+                                  <i class="fa fa-trash"></i>
+                                </button>
+                              </form>
+                            </td>
+                          </tr>
+                        <?php }
+                      } else {
+                        ?>
+                        <tr>
+                          <td>No Data Found</td>
                         </tr>
                       <?php } ?>
                     </tbody>
@@ -672,9 +785,11 @@ if ($user_name != "") {
                 </div><!--end card-header-->
 
 
+
                 <div class="card-body">
                   <form class="row g-3 needs-validation" novalidate method="POST">
                     <input type="hidden" name="ed_bookid" id="ed_bookid" />
+                    <input type="text" name="role" id="role" value="<?= $types ?>" />
                     <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>
                       <input type="date" class="form-control" id="edcreationdate" name="edcreationdate" value="<?= $dates ?>" required>
@@ -1132,7 +1247,7 @@ if ($user_name != "") {
         </div><!--end modal-dialog-->
       </div><!--end modal-->
 
-      
+
       <div class="modal fade bd-example-modal-xl" id="editmno" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
           <div class="modal-content">
@@ -1278,7 +1393,7 @@ if ($user_name != "") {
                         Please provide a consignor address.
                       </div>
                     </div>
-                                      <div class="col-md-3">
+                    <div class="col-md-3">
                       <label for="validationCustom03" class="form-label">To</label>
                       <input type="text" class="form-control" id="mconaddress" readonly name="mconaddress" required>
                       <div class="invalid-feedback" id="booktoaddress">
@@ -1300,7 +1415,7 @@ if ($user_name != "") {
 
                     <div class="col-md-4">
                     </div>
-                    
+
                     <div class="col-md-4">
                       <label for="validationCustom03" class="form-label">M.No</label>
                       <input type="text" class="form-control" id="mno" name="mno" required>
@@ -1309,7 +1424,7 @@ if ($user_name != "") {
                       </div>
                     </div>
 
-              
+
                     <div class="col-12 text-center">
                       <button class="btn btn-primary" type="submit" name="bookupdationmno" id="bookupdationmno">Update MNo</button>
                     </div>
@@ -1329,7 +1444,7 @@ if ($user_name != "") {
         </div><!--end modal-dialog-->
       </div><!--end modal-->
 
-<script src="assets/pages/form-validation.js"></script>
+      <script src="assets/pages/form-validation.js"></script>
       <!-- App js -->
       <script src="assets/js/app.js"></script>
       <script src="assets/plugins/datatables/simple-datatables.js"></script>
@@ -1344,6 +1459,15 @@ if ($user_name != "") {
           $("#sgst").hide();
           $("#cgst").hide();
 
+          var ty = $("#role").val();
+          if (ty == "Air") {
+            $("#types").val("Air");
+          } else if (ty == "Train") {
+            $("#types").val("Train");
+          } else if (ty == "Admin") {
+            $("#types").val("");
+          }
+
           $('#destination').change(function(e) {
             e.preventDefault();
             var value = $('#partyname').val();
@@ -1352,7 +1476,8 @@ if ($user_name != "") {
             var types = $('#types').val();
             var city = $('#origin').val();
             var destinate = $('#destination').val();
-
+            var typ = "<?= $types ?>";
+            // alert(typ)
             if (partyid != '' && route != '' && types != '' && city != '' && destinate != '') {
               $.ajax({
                 url: 'ajax/ajax_request.php?action=partybookfetch',
@@ -1367,8 +1492,11 @@ if ($user_name != "") {
                   'destinate': destinate
                 },
                 success: function(response) {
-                  $("#rate").val(response.data.airprice);
-
+                  if (typ == "Air") {
+                    $("#rate").val(response.data.airprice);
+                  } else if (typ == "Train") {
+                    $("#rate").val(response.data.trainprice);
+                  }
                 }
               });
             }
@@ -1397,7 +1525,7 @@ if ($user_name != "") {
                 $('#mconaddress').val(response.data.conaddress);
                 $('#mpod').val(response.data.pod);
                 $('#mno').val(response.data.mno);
-           }
+              }
             });
           });
 
@@ -1428,43 +1556,43 @@ if ($user_name != "") {
                 },
                 success: function(response) {
                   $("#edrate").val(response.data.airprice);
-                  
-                  var other = $("#edotherchg").val();
-            if (other != '') {
-              others = other;
-            } else {
-              others = 0;
-            }
-            
-            var rates = $("#edrate").val();
-            var weights = $("#edweight").val();
-            var tot = rates * weights;
-            var doc = $("#eddocs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#edamount").val(tots);
-          
-            var gst =  $("#edgst_types").val();
-            if (gst == 'State') {
-              $("#edstates").hide();
-              $("#edsgst").show();
-              $("#edcgst").show();
-              var gtamts = parseFloat(tots) + parseFloat(others);
-              var gsttot1 = ((gtamts * cgst) / 100);
-              var gsttot2 = ((gtamts * sgst) / 100);
-              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
-              $("#edpaid").val(gstamt);
-            } else if (gst == 'Interstate') {
-              $("#edstates").show();
-              $("#edsgst").hide();
-              $("#edcgst").hide();
 
-              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
-              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
-              $("#edpaid").val(gstamt);
-            } else {
-              var amount = $("#edamount").val();
-              $("#edpaid").val(amount);
-            }
+                  var other = $("#edotherchg").val();
+                  if (other != '') {
+                    others = other;
+                  } else {
+                    others = 0;
+                  }
+
+                  var rates = $("#edrate").val();
+                  var weights = $("#edweight").val();
+                  var tot = rates * weights;
+                  var doc = $("#eddocs").val();
+                  var tots = parseFloat(tot) + parseFloat(doc);
+                  $("#edamount").val(tots);
+
+                  var gst = $("#edgst_types").val();
+                  if (gst == 'State') {
+                    $("#edstates").hide();
+                    $("#edsgst").show();
+                    $("#edcgst").show();
+                    var gtamts = parseFloat(tots) + parseFloat(others);
+                    var gsttot1 = ((gtamts * cgst) / 100);
+                    var gsttot2 = ((gtamts * sgst) / 100);
+                    var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+                    $("#edpaid").val(gstamt);
+                  } else if (gst == 'Interstate') {
+                    $("#edstates").show();
+                    $("#edsgst").hide();
+                    $("#edcgst").hide();
+
+                    var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+                    var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+                    $("#edpaid").val(gstamt);
+                  } else {
+                    var amount = $("#edamount").val();
+                    $("#edpaid").val(amount);
+                  }
                 }
               });
             }
@@ -1518,33 +1646,33 @@ if ($user_name != "") {
           });
 
           $("#edgst_types").change(function() {
-            var gst = this.value;
+            var gst = $('#gst_types').val();
             var sgst = $("#edsgstamt").val();
             var cgst = $("#edcgstamt").val();
             var igst = $("#edigstamt").val();
 
             var docs = $("#eddocs").val();
-               
+
             var other = $("#edotherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            
+
             var rates = $("#edrate").val();
             var weights = $("#edweight").val();
             var tot = rates * weights;
             var doc = $("#eddocs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
             $("#edamount").val(tots);
-          
-            var gst =  $("#edgst_types").val();
+
+            var gst = $("#edgst_types").val();
             if (gst == 'State') {
               $("#edstates").hide();
               $("#edsgst").show();
               $("#edcgst").show();
-              var gtamts = parseFloat(tots) + parseFloat(others);
+              var gstamts = parseFloat(amount) + parseFloat(others);
               var gsttot1 = ((gtamts * cgst) / 100);
               var gsttot2 = ((gtamts * sgst) / 100);
               var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
@@ -1561,11 +1689,11 @@ if ($user_name != "") {
               var amount = $("#edamount").val();
               $("#edpaid").val(amount);
             }
-              });
+          });
 
 
           $("#docs").change(function() {
-            var gst = this.value;
+            var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
             var igst = $("#igstamt").val();
@@ -1611,28 +1739,28 @@ if ($user_name != "") {
           });
 
           $("#eddocs").change(function() {
-            var gst = this.value;
+            var gst = $('#gst_types').val();
             var sgst = $("#edsgstamt").val();
             var cgst = $("#edcgstamt").val();
             var igst = $("#edigstamt").val();
 
             var docs = $("#eddocs").val();
-           
+
             var other = $("#edotherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            
+
             var rates = $("#edrate").val();
             var weights = $("#edweight").val();
             var tot = rates * weights;
             var doc = $("#eddocs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
             $("#edamount").val(tots);
-          
-            var gst =  $("#edgst_types").val();
+
+            var gst = $("#edgst_types").val();
             if (gst == 'State') {
               $("#edstates").hide();
               $("#edsgst").show();
@@ -1653,12 +1781,12 @@ if ($user_name != "") {
             } else {
               var amount = $("#edamount").val();
               $("#edpaid").val(amount);
-            } 
-                   });
+            }
+          });
 
 
           $("#weight").change(function() {
-            var gst = this.value;
+            var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
             var igst = $("#igstamt").val();
@@ -1670,7 +1798,11 @@ if ($user_name != "") {
             } else {
               others = 0;
             }
+            var amounts = $("#amount").val();
+            var amountss = parseFloat(amounts) + parseFloat(others);
+            $("#amount").val(amountss);
             var amount = $("#amount").val();
+
 
             if (gst == 'State') {
               $("#states").hide();
@@ -1679,7 +1811,8 @@ if ($user_name != "") {
 
               var gsttot1 = ((amount * cgst) / 100);
               var gsttot2 = ((amount * sgst) / 100);
-              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2) + parseFloat(others);
+              var gsta
+              mt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
               $("#paid").val(gstamt);
             } else if (gst == 'Interstate') {
               $("#states").show();
@@ -1687,7 +1820,7 @@ if ($user_name != "") {
               $("#cgst").hide();
 
               var gsttot1 = ((amount * igst) / 100);
-              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
               $("#paid").val(gstamt);
             } else {
               var amount = $("#amount").val();
@@ -1702,6 +1835,58 @@ if ($user_name != "") {
             $("#amount").val(tots);
           });
 
+
+          $("#otherchg").on("keyup change", function() {
+            var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#amount").val(tots);
+
+            // alert(tots)
+
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var amounts = $("#amount").val();
+            var amountss = parseFloat(amounts) + parseFloat(others);
+            $("#amount").val(amountss);
+            var amount = $("#amount").val();
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+
+          });
+
           $("#edweight").change(function() {
             var gst = this.value;
             var sgst = $("#edsgstamt").val();
@@ -1709,22 +1894,22 @@ if ($user_name != "") {
             var igst = $("#edigstamt").val();
 
             var docs = $("#eddocs").val();
-               
+
             var other = $("#edotherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            
+
             var rates = $("#edrate").val();
             var weights = $("#edweight").val();
             var tot = rates * weights;
             var doc = $("#eddocs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
             $("#edamount").val(tots);
-          
-            var gst =  $("#edgst_types").val();
+
+            var gst = $("#edgst_types").val();
             if (gst == 'State') {
               $("#edstates").hide();
               $("#edsgst").show();
@@ -1802,22 +1987,22 @@ if ($user_name != "") {
             var igst = $("#edigstamt").val();
 
             var docs = $("#eddocs").val();
-              
+
             var other = $("#edotherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            
+
             var rates = $("#edrate").val();
             var weights = $("#edweight").val();
             var tot = rates * weights;
             var doc = $("#eddocs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
             $("#edamount").val(tots);
-          
-            var gst =  $("#edgst_types").val();
+
+            var gst = $("#edgst_types").val();
             if (gst == 'State') {
               $("#edstates").hide();
               $("#edsgst").show();
@@ -1841,91 +2026,91 @@ if ($user_name != "") {
             }
           });
 
-         $("#bookupdationmno").click(function(e) {
+          $("#bookupdationmno").click(function(e) {
             e.preventDefault();
             var bookmid = $('#edmbookid').val();
-            var mno=$("#mno").val();
+            var mno = $("#mno").val();
             $.ajax({
-                url: 'ajax/ajax_request.php?action=mnoupdation',
-                type: 'POST',
-                dataType: "JSON",
-                data: {
-                  'action': "mnoupdation",
-                  'bookmid': bookmid,
-                  'mno':mno
-                },
-                success: function(response) {
-                  if (response.msg == "Success") {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title: 'Booking MNO Updated',
-                      showConfirmButton: false,
-                      timer: 3000
-                    }).then(function() {
-                      window.location.href = 'booking.php';
-                    })
-                  } else {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'error',
-                      title: 'Booking MNO Update Failure',
-                      showConfirmButton: false,
-                      timer: 3000
-                    }).then(function() {
-                      window.location.href = 'booking.php';
-                    })
-                  }
+              url: 'ajax/ajax_request.php?action=mnoupdation',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "mnoupdation",
+                'bookmid': bookmid,
+                'mno': mno
+              },
+              success: function(response) {
+                if (response.msg == "Success") {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: 'Booking MNO Updated',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'booking.php';
+                  })
+                } else {
+                  Swal.fire({
+                    position: 'top-end',
+                    icon: 'error',
+                    title: 'Booking MNO Update Failure',
+                    showConfirmButton: false,
+                    timer: 3000
+                  }).then(function() {
+                    window.location.href = 'booking.php';
+                  })
                 }
-        });
-      });
+              }
+            });
+          });
 
           $("#bookcreation").click(function(e) {
-            e.preventDefault();
-            var creationdate = $('#creationdate').val();
-            var value = $('#partyname').val();
-            var partyid = $('#edparties [value="' + value + '"]').data('value');
-            var type = $('#types').val();
-            var route = $('#route').val();
-            var origin = $('#origin').val();
-            var destination = $('#destination').val();
-            var coraddress = $('#coraddress').val();
-            var conaddress = $('#conaddress').val();
-            var pod = $('#pod').val();
-            var area = $('#area').val();
-            var trainname = $('#trainname').val();
+              e.preventDefault();
+              var creationdate = $('#creationdate').val();
+              var value = $('#partyname').val();
+              var partyid = $('#edparties [value="' + value + '"]').data('value');
+              var type = $('#types').val();
+              var route = $('#route').val();
+              var origin = $('#origin').val();
+              var destination = $('#destination').val();
+              var coraddress = $('#coraddress').val();
+              var conaddress = $('#conaddress').val();
+              var pod = $('#pod').val();
+              var area = $('#area').val();
+              var trainname = $('#trainname').val();
 
-            var transports = $('#transport').val();
+              var transports = $('#transport').val();
 
-            var packs = $('#packs').val();
-            var invoiceno = $('#invoiceno').val();
-            var describe = $('#describe').val();
-            var quantity = $('#quantity').val();
-            var gross = $('#gross').val();
-            var weight = $('#weight').val();
-            var docs = $('#docs').val();
-            var rate = $('#rate').val();
-            var amount = $('#amount').val();
-            var othercharge = $('#otherchg').val();
-            var paymentmode = $('#paymentmode').val();
-            var otherchrg = $('#otherchg').val();
-            var gst_types = $('#gst_types').val();
-            if (gst_types == "State") {
-              $("#igstamt").val(0);
-              $("#cgstamt").val();
-              $("#sgstamt").val();
-            } else if (gst_types == "Interstate") {
-              $("#igstamt").val();
-              $("#cgstamt").val(0);
-              $("#sgstamt").val(0);
-            }
-            var igstamt = $("#igstamt").val();
-            var cgstamt = $("#cgstamt").val();
-            var sgstamt = $("#sgstamt").val();
+              var packs = $('#packs').val();
+              var invoiceno = $('#invoiceno').val();
+              var describe = $('#describe').val();
+              var quantity = $('#quantity').val();
+              var gross = $('#gross').val();
+              var weight = $('#weight').val();
+              var docs = $('#docs').val();
+              var rate = $('#rate').val();
+              var amount = $('#amount').val();
+              var othercharge = $('#otherchg').val();
+              var paymentmode = $('#paymentmode').val();
+              var otherchrg = $('#otherchg').val();
+              var gst_types = $('#gst_types').val();
+              if (gst_types == "State") {
+                $("#igstamt").val(0);
+                $("#cgstamt").val();
+                $("#sgstamt").val();
+              } else if (gst_types == "Interstate") {
+                $("#igstamt").val();
+                $("#cgstamt").val(0);
+                $("#sgstamt").val(0);
+              }
+              var igstamt = $("#igstamt").val();
+              var cgstamt = $("#cgstamt").val();
+              var sgstamt = $("#sgstamt").val();
 
-            var paid = $('#paid').val();
+              var paid = $('#paid').val();
 
-            if (creationdate != '' && type != '' && origin != '' && destination != '' && area != '' && area != '' && coraddress != '' && conaddress != '' && transport != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gst_types != '' && paymentmode != '' && paid != '') {
+              // if (creationdate != '' && type != '' && origin != '' && destination != '' && area != '' && area != '' && coraddress != '' && conaddress != '' && transport != '' && packs != '' && invoiceno != '' && describe != '' && quantity != '' && gross != '' && weight != '' && docs != '' && rate != '' && amount != '' && gst_types != '' && paymentmode != '' && paid != '') {
               $.ajax({
                 url: 'ajax/ajax_request.php?action=bookcreation',
                 type: 'POST',
@@ -1985,282 +2170,284 @@ if ($user_name != "") {
                   }
                 }
               });
-            } else {
-              if (type == '' || type == null) {
-                $("#booktypes").show();
-              }
+            // } 
+            // else {
+            //   if (type == '' || type == null) {
+            //     $("#booktypes").show();
+            //   }
 
-              if (origin == '') {
-                $("#bookorigin").show();
-              }
+            //   if (origin == '') {
+            //     $("#bookorigin").show();
+            //   }
 
-              if (destination == '') {
-                $("#bookdestination").show();
-              }
+            //   if (destination == '') {
+            //     $("#bookdestination").show();
+            //   }
 
-              if (area == '') {
-                $("#bookarea").show();
-              }
+            //   if (area == '') {
+            //     $("#bookarea").show();
+            //   }
 
-              if (coraddress == '') {
-                $("#bookfromaddress").show();
-              }
+            //   if (coraddress == '') {
+            //     $("#bookfromaddress").show();
+            //   }
 
-              if (conaddress == '') {
-                $("#booktoaddress").show();
-              }
+            //   if (conaddress == '') {
+            //     $("#booktoaddress").show();
+            //   }
 
-              if (transports == '') {
-                $("#booktransport").show();
-              }
+            //   if (transports == '') {
+            //     $("#booktransport").show();
+            //   }
 
-              if (packs == '') {
-                $("#bookpack").show();
-              }
+            //   if (packs == '') {
+            //     $("#bookpack").show();
+            //   }
 
-              if (invoiceno == '') {
-                $("#bookinvno").show();
-              }
+            //   if (invoiceno == '') {
+            //     $("#bookinvno").show();
+            //   }
 
-              if (describe == '') {
-                $("#bookdescribe").show();
-              }
+            //   if (describe == '') {
+            //     $("#bookdescribe").show();
+            //   }
 
-              if (quantity == '') {
-                $("#bookquantity").show();
-              }
+            //   if (quantity == '') {
+            //     $("#bookquantity").show();
+            //   }
 
-              if (gross == '') {
-                $("#bookgross").show();
-              }
+            //   if (gross == '') {
+            //     $("#bookgross").show();
+            //   }
 
-              if (weight == '') {
-                $("#bookweights").show();
-              }
+            //   if (weight == '') {
+            //     $("#bookweights").show();
+            //   }
 
-              if (rate == '') {
-                $("#bookrate").show();
-              }
+            //   if (rate == '') {
+            //     $("#bookrate").show();
+            //   }
 
-              if (amount == '') {
-                $("#bookamount").show();
-              }
+            //   if (amount == '') {
+            //     $("#bookamount").show();
+            //   }
 
-              if (amount == '') {
-                $("#bookamount").show();
-              }
+            //   if (amount == '') {
+            //     $("#bookamount").show();
+            //   }
 
-              if (paymentmode == '' || paymentmode == null) {
-                $("#bookpayment").show();
-              }
+            //   if (paymentmode == '' || paymentmode == null) {
+            //     $("#bookpayment").show();
+            //   }
 
-              if (paid == '') {
-                $("#bookpaid").show();
-              }
+            //   if (paid == '') {
+            //     $("#bookpaid").show();
+            //   }
 
-            }
+            // }
 
-          });
-          $(".bookingdeletion").click(function(e) {
-            e.preventDefault();
-            var bookdid = $(this).attr('ids');
-            $.ajax({
-              url: 'ajax/ajax_request.php?action=bookingdeletion',
-              type: 'POST',
-              dataType: "JSON",
-              data: {
-                'action': "bookingdeletion",
-                'ids': bookdid
-              },
-              success: function(response) {
-                console.log(response.data)
-                if (response.msg == "Success") {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Booking Deleted',
-                    showConfirmButton: false,
-                    timer: 3000
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
-                } else {
-                  Swal.fire({
-                    position: 'top-end',
-                    icon: 'error',
-                    title: 'Booking Delete Failed',
-                    showConfirmButton: false,
-                    timer: 3000
-                  }).then(function() {
-                    window.location.href = 'booking.php';
-                  })
-                }
-              }
-            });
-          });
-
-
-
-          $(".edit_book").click(function(e) {
-            e.preventDefault();
-            var bookeid = $(this).attr("ids");
-            $("#ed_bookid").val(bookeid);
-            $.ajax({
-              url: 'ajax/ajax_request.php?action=bookfetch',
-              type: 'POST',
-              dataType: "JSON",
-              data: {
-                'action': "bookfetch",
-                'ids': bookeid
-              },
-              success: function(response) {
-                $('#creationdate').val(response.data.creationdate);
-                $('#edpartyname').val(response.data.party.partyname);
-                $('#edtypes').val(response.data.type);
-                $('#edorigin').val(response.data.origin);
-                $('#eddestination').val(response.data.destination);
-                $('#edcoraddress').val(response.data.coraddress);
-                $('#edconaddress').val(response.data.conaddress);
-                $('#edarea').val(response.data.area);
-                $('#edroute').val(response.data.route);
-                $("#edpod").val(response.data.pod);
-                $("#edtrainname").val(response.data.trainname);
-
-                $("#edtransport").val(response.data.transport);
-
-                $('#edpacks').val(response.data.pack);
-                $('#edrate').val(response.data.rate);
-                $('#edinvoiceno').val(response.data.invoiceno);
-                $('#eddescribe').val(response.data.description);
-                $('#edquantity').val(response.data.quantity);
-                $('#edgross').val(response.data.gross);
-                $('#edweight').val(response.data.weight);
-                $('#edamount').val(response.data.amount);
-                $('#edotherchg').val(response.data.othercharge);
-                $('#edgst_types').val(response.data.gst);
-                if (response.data.gst == "State") {
-                  $("#edstates").hide();
-              $("#edsgst").show();
-              $("#edcgst").show();
- } else {
-  $("#edstates").show();
-              $("#edsgst").hide();
-              $("#edcgst").hide();
-  }
-                $('#edpaymentmode').val(response.data.paymentmode);
-                $('#edpaid').val(response.data.paid);
-
-              }
-            });
-          });
-
-          $("#bookupdation").click(function(e) {
-            e.preventDefault();
-            var ids = $('#ed_bookid').val();
-            var creationdate = $('#edcreationdate').val();
-            var value = $('#edpartyname').val();
-            var partyid = $('#ed_parties [value="' + value + '"]').data('value');
-            var type = $('#edtypes').val();
-            var route = $('#edroute').val();
-            var origin = $('#edorigin').val();
-            var destination = $('#eddestination').val();
-            var coraddress = $('#edcoraddress').val();
-            var conaddress = $('#edconaddress').val();
-            var pod = $('#edpod').val();
-            var area = $('#edarea').val();
-            var trainname = $('#edtrainname').val();
-
-            var transports = $('#edtransport').val();
-
-            var packs = $('#edpacks').val();
-            var invoiceno = $('#edinvoiceno').val();
-            var describe = $('#eddescribe').val();
-            var quantity = $('#edquantity').val();
-            var gross = $('#edgross').val();
-            var weight = $('#edweight').val();
-            var docs = $('#eddocs').val();
-            var rate = $('#edrate').val();
-            var amount = $('#edamount').val();
-            var othercharge = $('#edotherchg').val();
-            var paymentmode = $('#edpaymentmode').val();
-            var gst_types = $('#edgst_types').val();
-            if (gst_types == "State") {
-              $("#edigstamt").val(0);
-              $("#edcgstamt").val();
-              $("#edsgstamt").val();
-            } else if (gst_types == "Interstate") {
-              $("#edigstamt").val();
-              $("#edcgstamt").val(0);
-              $("#edsgstamt").val(0);
-            }
-            var igstamt = $("#edigstamt").val();
-            var cgstamt = $("#edcgstamt").val();
-            var sgstamt = $("#edsgstamt").val();
-
-            var paid = $('#edpaid').val();
-              $.ajax({
-                url: 'ajax/ajax_request.php?action=bookupdation',
-                type: 'POST',
-                dataType: "JSON",
-                data: {
-                  'action': "bookupdation",
-                  'ids': ids,
-                  'creationdate': creationdate,
-                  'partyid': partyid,
-                  'type': type,
-                  'route': route,
-                  'origin': origin,
-                  'destination': destination,
-                  'area': area,
-                  'coraddress': coraddress,
-                  'conaddress': conaddress,
-                  'pod': pod,
-                  'trainname': trainname,
-                  'transport': transports,
-                  'pack': packs,
-                  'invoiceno': invoiceno,
-                  'describe': describe,
-                  'quantity': quantity,
-                  'gross': gross,
-                  'weight': weight,
-                  'docs': docs,
-                  'rate': rate,
-                  'amount': amount,
-                  'othercharge': othercharge,
-                  'gst_types': gst_types,
-                  'igst': igstamt,
-                  'sgst': sgstamt,
-                  'cgst': cgstamt,
-                  'paymentmode': paymentmode,
-                  'paid': paid
-                },
-                success: function(response) {
-                  console.log(response.data)
-                  if (response.msg == "Success") {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'success',
-                      title: 'User Updated',
-                      showConfirmButton: false,
-                      timer: 3000
-                    }).then(function() {
-                      window.location.href = 'booking.php';
-                    })
-                  } else {
-                    Swal.fire({
-                      position: 'top-end',
-                      icon: 'error',
-                      title: 'User Update Failed',
-                      showConfirmButton: false,
-                      timer: 3000
-                    }).then(function() {
-                      window.location.href = 'booking.php';
-                    })
-                  }
-                }
-              });
+          }); 
           
+          $(".bookingdeletion").click(function(e) {
+          e.preventDefault();
+          var bookdid = $(this).attr('ids');
+          $.ajax({
+            url: 'ajax/ajax_request.php?action=bookingdeletion',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "bookingdeletion",
+              'ids': bookdid
+            },
+            success: function(response) {
+              console.log(response.data)
+              if (response.msg == "Success") {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Booking Deleted',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'booking.php';
+                })
+              } else {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'Booking Delete Failed',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'booking.php';
+                })
+              }
+            }
           });
+        });
+
+
+
+        $(".edit_book").click(function(e) {
+          e.preventDefault();
+          var bookeid = $(this).attr("ids");
+          $("#ed_bookid").val(bookeid);
+          $.ajax({
+            url: 'ajax/ajax_request.php?action=bookfetch',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "bookfetch",
+              'ids': bookeid
+            },
+            success: function(response) {
+              $('#creationdate').val(response.data.creationdate);
+              $('#edpartyname').val(response.data.party.partyname);
+              $('#edtypes').val(response.data.type);
+              $('#edorigin').val(response.data.origin);
+              $('#eddestination').val(response.data.destination);
+              $('#edcoraddress').val(response.data.coraddress);
+              $('#edconaddress').val(response.data.conaddress);
+              $('#edarea').val(response.data.area);
+              $('#edroute').val(response.data.route);
+              $("#edpod").val(response.data.pod);
+              $("#edtrainname").val(response.data.trainname);
+
+              $("#edtransport").val(response.data.transport);
+
+              $('#edpacks').val(response.data.pack);
+              $('#edrate').val(response.data.rate);
+              $('#edinvoiceno').val(response.data.invoiceno);
+              $('#eddescribe').val(response.data.description);
+              $('#edquantity').val(response.data.quantity);
+              $('#edgross').val(response.data.gross);
+              $('#edweight').val(response.data.weight);
+              $('#edamount').val(response.data.amount);
+              $('#edotherchg').val(response.data.othercharge);
+              $('#edgst_types').val(response.data.gst);
+              if (response.data.gst == "State") {
+                $("#edstates").hide();
+                $("#edsgst").show();
+                $("#edcgst").show();
+              } else {
+                $("#edstates").show();
+                $("#edsgst").hide();
+                $("#edcgst").hide();
+              }
+              $('#edpaymentmode').val(response.data.paymentmode);
+              $('#edpaid').val(response.data.paid);
+
+            }
+          });
+        });
+
+        $("#bookupdation").click(function(e) {
+          e.preventDefault();
+          var ids = $('#ed_bookid').val();
+          var creationdate = $('#edcreationdate').val();
+          var value = $('#edpartyname').val();
+          var partyid = $('#ed_parties [value="' + value + '"]').data('value');
+          var type = $('#edtypes').val();
+          var route = $('#edroute').val();
+          var origin = $('#edorigin').val();
+          var destination = $('#eddestination').val();
+          var coraddress = $('#edcoraddress').val();
+          var conaddress = $('#edconaddress').val();
+          var pod = $('#edpod').val();
+          var area = $('#edarea').val();
+          var trainname = $('#edtrainname').val();
+
+          var transports = $('#edtransport').val();
+
+          var packs = $('#edpacks').val();
+          var invoiceno = $('#edinvoiceno').val();
+          var describe = $('#eddescribe').val();
+          var quantity = $('#edquantity').val();
+          var gross = $('#edgross').val();
+          var weight = $('#edweight').val();
+          var docs = $('#eddocs').val();
+          var rate = $('#edrate').val();
+          var amount = $('#edamount').val();
+          var othercharge = $('#edotherchg').val();
+          var paymentmode = $('#edpaymentmode').val();
+          var gst_types = $('#edgst_types').val();
+          if (gst_types == "State") {
+            $("#edigstamt").val(0);
+            $("#edcgstamt").val();
+            $("#edsgstamt").val();
+          } else if (gst_types == "Interstate") {
+            $("#edigstamt").val();
+            $("#edcgstamt").val(0);
+            $("#edsgstamt").val(0);
+          }
+          var igstamt = $("#edigstamt").val();
+          var cgstamt = $("#edcgstamt").val();
+          var sgstamt = $("#edsgstamt").val();
+
+          var paid = $('#edpaid').val();
+          $.ajax({
+            url: 'ajax/ajax_request.php?action=bookupdation',
+            type: 'POST',
+            dataType: "JSON",
+            data: {
+              'action': "bookupdation",
+              'ids': ids,
+              'creationdate': creationdate,
+              'partyid': partyid,
+              'type': type,
+              'route': route,
+              'origin': origin,
+              'destination': destination,
+              'area': area,
+              'coraddress': coraddress,
+              'conaddress': conaddress,
+              'pod': pod,
+              'trainname': trainname,
+              'transport': transports,
+              'pack': packs,
+              'invoiceno': invoiceno,
+              'describe': describe,
+              'quantity': quantity,
+              'gross': gross,
+              'weight': weight,
+              'docs': docs,
+              'rate': rate,
+              'amount': amount,
+              'othercharge': othercharge,
+              'gst_types': gst_types,
+              'igst': igstamt,
+              'sgst': sgstamt,
+              'cgst': cgstamt,
+              'paymentmode': paymentmode,
+              'paid': paid
+            },
+            success: function(response) {
+              console.log(response.data)
+              if (response.msg == "Success") {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'User Updated',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'booking.php';
+                })
+              } else {
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'error',
+                  title: 'User Update Failed',
+                  showConfirmButton: false,
+                  timer: 3000
+                }).then(function() {
+                  window.location.href = 'booking.php';
+                })
+              }
+            }
+          });
+
+        });
 
 
 

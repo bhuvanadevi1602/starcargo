@@ -9,6 +9,7 @@ if ($user_name != "") {
     include('header.php');
     $types = $_SESSION['types'];
     $roles = $_SESSION['role'];
+    // print_r($_SESSION);die();
 ?>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -66,7 +67,8 @@ if ($user_name != "") {
                                                     </div><!--end card-header-->
                                                     <div class="card-body">
                                                         <form class="row g-3 needs-validation" method="POST" novalidate>
-                                                            <div class="col-md-4">
+                                                      <input type="hidden" id="role" name="role" value="<?=$types?>" />
+                                                        <div class="col-md-4">
                                                                 <label for="validationCustom01" class="form-label">Date</label>
                                                                 <input type="hidden" id="partyids" name="partyids" />
                                                                 <input type="date" value="<?= $dates ?>" class="form-control" id="creationdate" name="creationdate" required>
@@ -260,11 +262,11 @@ if ($user_name != "") {
                                         <thead class="thead-light">
                                             <tr>
                                                 <th>S.No</th>
-                                                <th>Party</th>
+                                                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                                                  <th>Party</th>
                                                 <th>Mobile</th>
                                                 <th>Address</th>
-                                                <th data-type="date" data-format="YYYY/DD/MM">Date</th>
-                                                <th>Air - Rs</th>
+                                               <th>Air - Rs</th>
                                                 <th>Train - Rs</th>
                                                 <th>City</th>
                                                 <th>Destination</th>
@@ -279,7 +281,7 @@ if ($user_name != "") {
                                                 $exeparty->execute();
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
                                             } else if ($types == "Air" || $types == "Train") {
-                                                $sqlparty = "select * from party where bookmode=:bookmode";
+                                                $sqlparty = "select * from partyset where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
                                                 $exeparty->execute($data);
@@ -287,24 +289,35 @@ if ($user_name != "") {
                                             }
                                             $i = 0;
                                             foreach ($resultparty as $party) {
-                                                $i += 1;
+                                               $i += 1;
                                             ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
+                                                    <td><?= $party['creationdate'] ?></td>
                                                     <td><?= $party['partyname'] ?></td>
                                                     <td><?= $party['partymobile'] ?></td>
                                                     <td><?= $party['partyaddress'] ?></td>
-                                                    <td><?= $party['creationdate'] ?></td>
-                                                    <?php if($types=="Air") { ?>
+                                                     <?php if($types=="Air") { ?>
                                                     <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                    <td>-</td>
                                                     <?php } 
-                                                    else { echo "-"; }
-                                                    if($types=="Train") { ?>
-                                                    <td><?= "Train - " . $party['trainprice']; ?> </td>
-                                                    <?php } else { echo "-"; }  if($types=="Air") {  ?>
-                                                        <td><?= "Air - " . $party['airprice']; ?> </td>
-                                                        <td><?= "Train - " . $party['trainprice']; ?> </td>
-                                                        <?php } ?>
+                                                      if($types=="Train") { ?>
+                                                     <td>-</td>
+                                                   <td><?= "Train - " . $party['trainprice']; ?> </td>
+                                                 <?php } else { 
+                                                    if($party['bookmode']=="Air" && $types=="Admin") {
+                                                        ?>
+                                                    <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                    <td>-</td>
+                                                    <?php
+                                                    }
+                                                    if($party['bookmode']=="Train"  && $types=="Admin") {
+                                                        ?>
+                                                       <td>-</td>
+                                                 <td><?= "Train - " . $party['trainprice']; ?> </td>
+                                                     <?php
+                                                    }
+                                                  } ?>
                                                     <td><?= $party['city'] ?></td>
                                                     <td><?= $party['destinate'] ?></td>
                                                     <td> <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
@@ -583,8 +596,24 @@ if ($user_name != "") {
             <script src="assets/pages/datatable.init.js"></script>
             <script>
                 $(document).ready(function() {
-                    $("#airprices").hide();
+                   
+                    var ty=$("#role").val();
+                    if(ty=="Admin")
+{
+    $("#airprices").hide();
                     $("#trainprices").hide();
+}
+else if(ty=="Air"){
+    $("#bookmode").val("Air");
+    $("#airprices").show();
+                    $("#trainprices").hide();
+}
+else if(ty=="Train"){
+    $("#bookmode").val("Train");
+    $("#airprices").hide();
+                    $("#trainprices").show();
+}
+
 
                     $('#bookmode').change(function(e) {
                         e.preventDefault();
