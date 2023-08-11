@@ -24,7 +24,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
    $output = "";
          
         $output .= '<table class="table table-bordered" border="1">  
-        <tr rowspan="12" align="center"><td colspan="3"><img src="http://localhost/star_cargo/assets/images/Star-cargo-logo.png" style="width=50px !important;height: 50px !important;"/></td>
+        <tr rowspan="12" align="center"><td colspan="3"><img src="https://udhaarsudhaar.net/star_cargo/assets/images/Star-cargo-logo.png" style="width=10% !important;height: 10% !important;"/></td>
         <td colspan="9">
      STAR CARGO SYSTEM<br/>
      (An ultimate name in cargo services)<br/>
@@ -92,7 +92,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
                           <th scope="col">Total</th>
                     </tr>';
              
-   $sql = "SELECT * from booking where type='$partytype' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$partyid'  ORDER BY id ASC";
+   $sql = "SELECT * from booking where type='Train' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$partyid'  ORDER BY id ASC";
    $stmt = $con->prepare($sql);
    $stmt->execute();
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);   

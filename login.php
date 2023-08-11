@@ -49,7 +49,7 @@ include('include/config.php');
                                     </div>
                                 </div>
                                 <div class="card-body pt-0">                                    
-                                    <form class="my-4" action="" method="POST">            
+                                    <form class="my-4" action="" method="POST" autocomplete="off">            
                                         <div class="form-group mb-2">
                                             <label class="form-label" for="username">Username</label>
                                             <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">                               

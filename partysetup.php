@@ -66,7 +66,7 @@ if ($user_name != "") {
 
                                                     </div><!--end card-header-->
                                                     <div class="card-body">
-                                                        <form class="row g-3 needs-validation" method="POST" novalidate>
+                                                        <form class="row g-3 needs-validation" method="POST" novalidate autocomplete="off">
                                                       <input type="hidden" id="role" name="role" value="<?=$types?>" />
                                                         <div class="col-md-4">
                                                                 <label for="validationCustom01" class="form-label">Date</label>
@@ -361,7 +361,7 @@ if ($user_name != "") {
                         <div class="modal-body">
                             <div class="row">
                                 <div class="card-body">
-                                    <form class="row g-3 needs-validation" method="POST" novalidate>
+                                    <form class="row g-3 needs-validation" method="POST" novalidate autocomplete="off">
                                         <input type="hidden" name="edpartyid" id="edpartyid" />
                                         <input type="hidden" id="partyidss" name="partyidss" />
                                         <div class="col-md-4">
@@ -613,9 +613,11 @@ else if(ty=="Train"){
     $("#airprices").hide();
                     $("#trainprices").show();
 }
+// alert(ty)
 
-
-                    $('#bookmode').change(function(e) {
+if(ty=="admin")
+              {     
+                  $('#bookmode').change(function(e) {
                         e.preventDefault();
                         var value = $('#partyname').val();
                         var partyid = $('#parties [value="' + value + '"]').data('value');
@@ -657,6 +659,53 @@ else if(ty=="Train"){
                             });
                         }
                     });
+                }
+                else{
+                    bookmode = $('#bookmode').val();
+
+                    $('#route').change(function(e) {
+                        e.preventDefault();
+                     var value = $('#partyname').val();
+                        var partyid = $('#parties [value="' + value + '"]').data('value');
+                        var route = $('#route').val();
+                    
+                        if (partyid != '' && route != '') {
+                            $.ajax({
+                                url: 'ajax/ajax_request.php?action=partydetfetch',
+                                type: 'POST',
+                                dataType: "JSON",
+                                data: {
+                                    'action': "partydetfetch",
+                                    'id': partyid,
+                                    'route': route,
+                                    'bookmode': bookmode
+                                },
+                                success: function(response) {
+                                    $("#partyids").val(response.data.id);
+                                    $("#partymobile").val(response.data.partymobile);
+                                    $("#gst").val(response.data.gst);
+                                    $("#trainprice").val(response.data.trainprice);
+                                    $("#airprice").val(response.data.airprice);
+                                    $("#bookmode").val(response.data.bookmode);
+                                    var booksmode = $("#bookmode").val();
+
+                                    if (booksmode == "Train") {
+                                        $('#train').prop('checked', true);
+                                        $("#trainprices").show();
+                                        $('#air').prop('checked', false);
+                                        $("#airprices").hide();
+                                    } else if (booksmode == "Air") {
+                                        $('#train').prop('checked', false);
+                                        $("#trainprices").hide();
+                                        $('#air').prop('checked', true);
+                                        $("#airprices").show();
+                                    }
+                                }
+                            });
+                                
+                }
+            });
+        }
 
                     $('#edpartyname').change(function(e) {
                         $('#edroute').val('');
@@ -943,6 +992,7 @@ else if(ty=="Train"){
                     });
 
                 });
+                
             </script>
             <!-- App js -->
             <script src="assets/js/app.js"></script>

@@ -12,7 +12,7 @@ $month=date("M",$time);
    $output = "";
          
         $output .= '<table class="table table-bordered" border="1">  
-        <tr rowspan="16" align="center"><td colspan="5"><img src="http://localhost/star_cargo/assets/images/Star-cargo-logo.png" style="width=50px !important;height: 50px !important;"/></td>
+        <tr rowspan="16" align="center"><td colspan="5"><img src="https://udhaarsudhaar.net/star_cargo/assets/images/Star-cargo-logo.png" style="width:10% !important;height: 10% !important;"/></td>
         <td colspan="13">
      STAR CARGO SYSTEM<br/>
      (An ultimate name in cargo services)<br/>

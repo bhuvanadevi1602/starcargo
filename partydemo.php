@@ -59,7 +59,7 @@ if ($user_name != "") {
 
                                                     </div><!--end card-header-->
                                                     <div class="card-body">
-                                                        <form class="row g-3 needs-validation" method="POST" novalidate>
+                                                        <form class="row g-3 needs-validation" method="POST" novalidate autocomplete="off">
                                                             <div class="col-md-4">
                                                                 <label for="validationCustom01" class="form-label">Date</label>
                                                                 <input type="date" value="<?=$dates?>" class="form-control" id="creationdate" name="creationdate" required>
@@ -301,7 +301,7 @@ if ($user_name != "") {
                       <div class="modal-body">
                         <div class="row">
  <div class="card-body">
-                          <form class="row g-3 needs-validation" method="POST" novalidate>
+                          <form class="row g-3 needs-validation" method="POST" novalidate autocomplete="off">
                           <input type="hidden" name="edpartyid" id="edpartyid" value="<?= $party['id'] ?>" />
                                                                     <div class="col-md-4">
                                                                 <label for="validationCustom01" class="form-label">Date</label>

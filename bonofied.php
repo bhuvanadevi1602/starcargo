@@ -108,7 +108,7 @@ if ($user_name != "") {
 
 
                           <div class="card-body">
-                            <form class="row g-3 needs-validation" novalidate method="POST">
+                            <form class="row g-3 needs-validation" autocomplete="off" novalidate method="POST">
 
                               <div class="col-md-2">
                                 <label for="validationCustom01" class="form-label">Date</label>
@@ -576,7 +576,8 @@ if ($user_name != "") {
                         <th>S.No</th>
                         <th>M.No</th>
                         <th data-type="date" data-format="YYYY/DD/MM">Date</th>
-                        <th>Type</th>
+                        <th>Book No</th>
+                       <th>Type</th>
                         <th>From - To</th>
                         <th>Origin - Destination</th>
                         <th>Transport</th>
@@ -615,13 +616,21 @@ if ($user_name != "") {
 
                       if ($resultbook != "") {
                         foreach ($resultbook as $book) {
+                          $ids=$book['partyid'];
+                          $sqlbookp = "select * from party where id=:ids";
+                          $exebookp = $con->prepare($sqlbookp);
+                          $datap = [':ids' => $ids];
+                          $exebookp->execute($datap);
+                          $resultbookp = $exebookp->fetch(PDO::FETCH_ASSOC);
+
                           $i++;
                       ?>
                           <tr>
                             <td><?= $i ?></td>
                             <td><?= $book['mno'] ?></td>
                             <td><?= $book['creationdate'] ?></td>
-                            <td><?= $book['type'] ?></td>
+                            <td><?= $resultbookp['partyname'] ?></td>
+                         <td><?= $book['type'] ?></td>
                             <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
                             <td><?= $book['origin'] . " - " . $book['destination'] ?></td>
                             <td><?= $book['transport'] ?></td>
@@ -717,7 +726,7 @@ if ($user_name != "") {
 
 
                 <div class="card-body">
-                  <form class="row g-3 needs-validation" novalidate method="POST">
+                  <form class="row g-3 needs-validation" autocomplete="off" novalidate method="POST">
                     <input type="hidden" name="ed_bookid" id="ed_bookid" />
                     <input type="text" name="role" id="role" value="<?= $types ?>" />
                     <div class="col-md-2">
@@ -1195,7 +1204,7 @@ if ($user_name != "") {
 
 
                 <div class="card-body">
-                  <form class="row g-3 needs-validation" novalidate method="POST">
+                  <form class="row g-3 needs-validation" autocomplete="off" novalidate method="POST">
                     <input type="hidden" name="edmbookid" id="edmbookid" />
                     <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>

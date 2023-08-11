@@ -162,7 +162,7 @@ if ($user_name != "") {
 
 
                           <div class="card-body">
-                            <form class="row g-3 needs-validation" novalidate method="POST">
+                            <form class="row g-3 needs-validation" novalidate method="POST" autocomplete="off">
 
                               <div class="col-md-2">
                                 <label for="validationCustom01" class="form-label">Date</label>
@@ -629,7 +629,8 @@ if ($user_name != "") {
                       <tr>
                         <th>S.No</th>
                         <th>M.No</th>
-                        <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                         <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                         <th>Party</th>
                         <th>Type</th>
                         <th>From - To</th>
                         <th>Origin - Destination</th>
@@ -669,12 +670,20 @@ if ($user_name != "") {
 
                       if ($resultbook != "") {
                         foreach ($resultbook as $book) {
+$ids=$book['partyid'];
+                          $sqlbookp = "select * from party where id=:ids";
+                          $exebookp = $con->prepare($sqlbookp);
+                          $datap = [':ids' => $ids];
+                          $exebookp->execute($datap);
+                          $resultbookp = $exebookp->fetch(PDO::FETCH_ASSOC);
+
                           $i++;
                       ?>
                           <tr>
                             <td><?= $i ?></td>
                             <td><?= $book['mno'] ?></td>
                             <td><?= $book['creationdate'] ?></td>
+                            <td><?= $resultbookp['partyname'] ?></td>
                             <td><?= $book['type'] ?></td>
                             <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
                             <td><?= $book['origin'] . " - " . $book['destination'] ?></td>
@@ -787,9 +796,9 @@ if ($user_name != "") {
 
 
                 <div class="card-body">
-                  <form class="row g-3 needs-validation" novalidate method="POST">
+                  <form class="row g-3 needs-validation" novalidate method="POST" autocomplete="off">
                     <input type="hidden" name="ed_bookid" id="ed_bookid" />
-                    <input type="text" name="role" id="role" value="<?= $types ?>" />
+                    <input type="hidden" name="role" id="role" value="<?= $types ?>" />
                     <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>
                       <input type="date" class="form-control" id="edcreationdate" name="edcreationdate" value="<?= $dates ?>" required>
@@ -1265,7 +1274,7 @@ if ($user_name != "") {
 
 
                 <div class="card-body">
-                  <form class="row g-3 needs-validation" novalidate method="POST">
+                  <form class="row g-3 needs-validation" novalidate method="POST" autocomplete="off">
                     <input type="hidden" name="edmbookid" id="edmbookid" />
                     <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>
@@ -1460,6 +1469,7 @@ if ($user_name != "") {
           $("#cgst").hide();
 
           var ty = $("#role").val();
+          // alert(ty)
           if (ty == "Air") {
             $("#types").val("Air");
           } else if (ty == "Train") {
@@ -1496,6 +1506,15 @@ if ($user_name != "") {
                     $("#rate").val(response.data.airprice);
                   } else if (typ == "Train") {
                     $("#rate").val(response.data.trainprice);
+                  }
+                  else if(typ == "Admin")
+                  {
+                    if(response.data.airprice==0){
+                    $("#rate").val(response.data.trainprice);
+                    }
+                    else if(response.data.trainprice==0){
+                    $("#rate").val(response.data.airprice);
+                    }
                   }
                 }
               });

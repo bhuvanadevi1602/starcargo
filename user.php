@@ -68,7 +68,7 @@ if ($user_name != "") {
 
                           </div><!--end card-header-->
                           <div class="card-body">
-                            <form class="row g-3 needs-validation" novalidate action="" method="POST">
+                            <form class="row g-3 needs-validation" novalidate action="" method="POST" autocomplete="off">
                               <div class="col-md-4">
                                 <label for="creationdate" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="creationdate" name="creationdate" value="<?= $dates ?>" required>
@@ -155,7 +155,7 @@ if ($user_name != "") {
                             <h4 class="card-title">Create User</h4>
                           </div><!--end card-header-->
                           <div class="card-body">
-                            <form class="row g-3 needs-validation" novalidate action="" method="POST">
+                            <form class="row g-3 needs-validation" novalidate action="" method="POST" autocomplete="off">
                               <input type="hidden" name="ed_userid" id="ed_userid" />
                               <div class="col-md-4">
                                 <label for="creationdate" class="form-label">Date</label>
