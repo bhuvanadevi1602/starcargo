@@ -143,7 +143,7 @@ if ($user_name != "") {
                                                             </div>
 
                                                             <div class="col-md-3">
-                                                                <label for="validationCustom03" class="form-label">GST</label>
+                                                                <label for="validationCustom03" class="form-label">GST No</label>
                                                                 <input type="text" class="form-control" name="detpartygst" id="detpartygst" required>
                                                                 <div class="invalid-feedback" id="detpartygsts">
                                                                     Please provide a valid GST.

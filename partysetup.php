@@ -598,7 +598,7 @@ if ($user_name != "") {
                 $(document).ready(function() {
                    
                     var ty=$("#role").val();
-                    if(ty=="Admin")
+                   if(ty=="Admin")
 {
     $("#airprices").hide();
                     $("#trainprices").hide();
@@ -614,16 +614,16 @@ else if(ty=="Train"){
                     $("#trainprices").show();
 }
 // alert(ty)
-
-if(ty=="admin")
+if(ty=="Admin")
               {     
-                  $('#bookmode').change(function(e) {
+             
+                $('#bookmode').change(function(e) {
                         e.preventDefault();
                         var value = $('#partyname').val();
                         var partyid = $('#parties [value="' + value + '"]').data('value');
                         var route = $('#route').val();
                         bookmode = $('#bookmode').val();
-
+             
                         if (partyid != '' && route != '') {
                             $.ajax({
                                 url: 'ajax/ajax_request.php?action=partydetfetch',

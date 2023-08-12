@@ -27,12 +27,84 @@ if ($action == "usercreation") {
   echo json_encode($data);
 }
 
+if ($action == "gstcreation") {
+  $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
+  $bookmode = isset($_POST['bookmode']) ? $_POST['bookmode'] : "";
+  $cgst = isset($_POST['cgst']) ? $_POST['cgst'] : "";
+  $sgst = isset($_POST['sgst']) ? $_POST['sgst'] : "";
+  $igst = isset($_POST['igst']) ? $_POST['igst'] : "";
+  $gsttype = isset($_POST['gsttype']) ? $_POST['gsttype'] : "";
+  if ($creationdate != "" && $gsttype != "") {
+    $query = "insert into gst(creationdate,gsttype,bookmode,igst,cgst,sgst) values(:creationdate,:gsttype,:bookmode,:igst,:cgst,:sgst)";
+    $exe = $con->prepare($query);
+    $data = [':creationdate' => $creationdate, ':gsttype' => $gsttype, ':bookmode' => $bookmode, ':igst' => $igst, ':sgst' => $sgst, ':cgst' => $cgst];
+    // print_r($data);die();
+    $query_execute = $exe->execute($data);
+    if ($query_execute) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  echo json_encode($data);
+}
+
 if ($action == "userfetch") {
   $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
   if ($ids != "") {
     $query = "select * from user where id=:ids";
     $exe = $con->prepare($query);
     $data = [':ids' => $ids];
+    $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  $data['data'] = $result;
+  echo json_encode($data);
+}
+
+if ($action == "gstfetch") {
+  $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
+  if ($ids != "") {
+    $query = "select * from gst where id=:ids";
+    $exe = $con->prepare($query);
+    $data = [':ids' => $ids];
+    $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  $data['data'] = $result;
+  echo json_encode($data);
+}
+
+
+if ($action == "gstfetchtype") {
+  $gsttype = isset($_POST['gsttype']) ? $_POST['gsttype'] : "";
+  $booktype = isset($_POST['booktype']) ? $_POST['booktype'] : "";
+  if ($gsttype != "" && $booktype!="") {
+    $query = "select * from gst where gsttype=:gsttype and bookmode=:bookmode";
+    $exe = $con->prepare($query);
+    $data = [':gsttype' => $gsttype,':bookmode'=>$booktype];
     $exe->execute($data);
     $result = $exe->fetch(PDO::FETCH_ASSOC);
     if ($result) {
@@ -96,13 +168,39 @@ if ($action == "userupdation") {
   echo json_encode($data);
 }
 
+if ($action == "gstupdation") {
+  $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
+  $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
+  $bookmode = isset($_POST['bookmode']) ? $_POST['bookmode'] : "";
+  $gsttype = isset($_POST['gsttype']) ? $_POST['gsttype'] : "";
+  $igst = isset($_POST['igst']) ? $_POST['igst'] : "";
+  $sgst = isset($_POST['sgst']) ? $_POST['sgst'] : "";
+  $cgst = isset($_POST['cgst']) ? $_POST['cgst'] : "";
+  if ($creationdate != "" && $bookmode != "" && $gsttype != "") {
+    $query = "update gst set creationdate=:creationdate,bookmode=:bookmode,gsttype=:gsttype,igst=:igst,sgst=:sgst,cgst=:cgst where id=:ids";
+    $exe = $con->prepare($query);
+    $data = [':creationdate' => $creationdate, ':bookmode' => $bookmode, ':gsttype' => $gsttype, ':igst' => $igst, ':sgst' => $sgst,':cgst' => $cgst, ':ids' => $ids];
+    $query_execute = $exe->execute($data);
+    if ($query_execute) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  echo json_encode($data);
+}
+
 if ($action == "mnoupdation") {
-  $ids = isset($_POST['bookmid']) ? $_POST['bookmid'] : "";
+  $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
   $mno = isset($_POST['mno']) ? $_POST['mno'] : "";
  
-    $query = "update booking set mno=:mno where id=:ids";
+    $query = "update booking set mno=:mno where creationdate=:creationdate";
     $exe = $con->prepare($query);
-    $data = [':mno' => $mno, ':ids' => $ids];
+    $data = [':mno' => $mno, ':creationdate' => $creationdate];
     $query_execute = $exe->execute($data);
     if ($query_execute) {
       $msg = "Success";

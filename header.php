@@ -113,6 +113,9 @@ $roles=$_SESSION['role'];
                             <li class="nav-item">
                                 <a class="nav-link" href="user.php"><i class="ti ti-file-invoice menu-icon"></i><span>User Control</span></a>
                             </li><!--end nav-item-->
+                            <li class="nav-item">
+                                <a class="nav-link" href="gst.php"><i class="ti ti-percentage menu-icon"></i><span>GST</span></a>
+                            </li><!--end nav-item-->
 <?php } ?>
                         </ul>
                    
