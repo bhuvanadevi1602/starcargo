@@ -67,8 +67,8 @@ if ($user_name != "") {
                                                     </div><!--end card-header-->
                                                     <div class="card-body">
                                                         <form class="row g-3 needs-validation" method="POST" novalidate autocomplete="off">
-                                                      <input type="hidden" id="role" name="role" value="<?=$types?>" />
-                                                        <div class="col-md-4">
+                                                            <input type="hidden" id="role" name="role" value="<?= $types ?>" />
+                                                            <div class="col-md-4">
                                                                 <label for="validationCustom01" class="form-label">Date</label>
                                                                 <input type="hidden" id="partyids" name="partyids" />
                                                                 <input type="date" value="<?= $dates ?>" class="form-control" id="creationdate" name="creationdate" required>
@@ -115,7 +115,7 @@ if ($user_name != "") {
                                                                     Please provide a valid Party Name.
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-3" id="validationCustom05">
+                                                            <div class="col-md-2" id="validationCustom05">
                                                                 <label for="validationCustom05" class="form-label">Type of Booking</label>
                                                                 <input list="bookmodes" class="form-control" name="bookmode" id="bookmode">
 
@@ -127,7 +127,16 @@ if ($user_name != "") {
                                                                 </datalist>
 
                                                             </div><!--end row-->
-                                                            <div class="col-md-3" id="airprices">
+
+                                                            <div class="col-md-2" id="weights">
+                                                                <label for="validationCustom03" class="form-label">Weight</label>
+                                                                <input type="number" class="form-control" name="weight" id="weight" readonly required>
+                                                                <div class="invalid-feedback" id="airpricem">
+                                                                    Please provide a valid Weight.
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-2" id="airprices">
                                                                 <label for="validationCustom03" class="form-label">Air Rate</label>
                                                                 <input type="number" class="form-control" name="airprice" id="airprice" readonly required>
                                                                 <div class="invalid-feedback" id="airpricem">
@@ -135,7 +144,7 @@ if ($user_name != "") {
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-3" id="trainprices">
+                                                            <div class="col-md-2" id="trainprices">
                                                                 <label for="validationCustom03" class="form-label">Trian Rate</label>
                                                                 <input type="number" class="form-control" name="trainprice" id="trainprice" readonly required>
                                                                 <div class="invalid-feedback" id="trainpricem">
@@ -263,10 +272,10 @@ if ($user_name != "") {
                                             <tr>
                                                 <th>S.No</th>
                                                 <th data-type="date" data-format="YYYY/DD/MM">Date</th>
-                                                  <th>Party</th>
+                                                <th>Party</th>
                                                 <th>Mobile</th>
                                                 <th>Address</th>
-                                               <th>Air - Rs</th>
+                                                <th>Air - Rs</th>
                                                 <th>Train - Rs</th>
                                                 <th>City</th>
                                                 <th>Destination</th>
@@ -289,7 +298,7 @@ if ($user_name != "") {
                                             }
                                             $i = 0;
                                             foreach ($resultparty as $party) {
-                                               $i += 1;
+                                                $i += 1;
                                             ?>
                                                 <tr>
                                                     <td><?= $i ?></td>
@@ -297,27 +306,27 @@ if ($user_name != "") {
                                                     <td><?= $party['partyname'] ?></td>
                                                     <td><?= $party['partymobile'] ?></td>
                                                     <td><?= $party['partyaddress'] ?></td>
-                                                     <?php if($types=="Air") { ?>
-                                                    <td><?= "Air - " . $party['airprice']; ?> </td>
-                                                    <td>-</td>
-                                                    <?php } 
-                                                      if($types=="Train") { ?>
-                                                     <td>-</td>
-                                                   <td><?= "Train - " . $party['trainprice']; ?> </td>
-                                                 <?php } else { 
-                                                    if($party['bookmode']=="Air" && $types=="Admin") {
+                                                    <?php if ($types == "Air") { ?>
+                                                        <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                        <td>-</td>
+                                                    <?php }
+                                                    if ($types == "Train") { ?>
+                                                        <td>-</td>
+                                                        <td><?= "Train - " . $party['trainprice']; ?> </td>
+                                                        <?php } else {
+                                                        if ($party['bookmode'] == "Air" && $types == "Admin") {
                                                         ?>
-                                                    <td><?= "Air - " . $party['airprice']; ?> </td>
-                                                    <td>-</td>
+                                                            <td><?= "Air - " . $party['airprice']; ?> </td>
+                                                            <td>-</td>
+                                                        <?php
+                                                        }
+                                                        if ($party['bookmode'] == "Train"  && $types == "Admin") {
+                                                        ?>
+                                                            <td>-</td>
+                                                            <td><?= "Train - " . $party['trainprice']; ?> </td>
                                                     <?php
-                                                    }
-                                                    if($party['bookmode']=="Train"  && $types=="Admin") {
-                                                        ?>
-                                                       <td>-</td>
-                                                 <td><?= "Train - " . $party['trainprice']; ?> </td>
-                                                     <?php
-                                                    }
-                                                  } ?>
+                                                        }
+                                                    } ?>
                                                     <td><?= $party['city'] ?></td>
                                                     <td><?= $party['destinate'] ?></td>
                                                     <td> <button type="button" class="btn btn-primary btn-sm edit_party" data-bs-toggle="modal" data-bs-target="#editparty" ids="<?= $party['id'] ?>">
@@ -405,7 +414,7 @@ if ($user_name != "") {
                                                 <option value="Other Place">Other Place</option>
                                             </datalist>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="validationCustom03" class="form-label">Book Mode</label>
                                             <input list="edbookmodes" class="form-control" name="edbookmode" id="edbookmode">
 
@@ -417,8 +426,15 @@ if ($user_name != "") {
                                             </datalist>
                                         </div>
 
+                                        <div class="col-md-2" id="edweights">
+                                            <label for="validationCustom03" class="form-label">Weight</label>
+                                            <input type="number" class="form-control" name="edweight" id="edweight" readonly required>
+                                            <div class="invalid-feedback" id="airpricem">
+                                                Please provide a valid Weight.
+                                            </div>
+                                        </div>
 
-                                        <div class="col-md-3" id="edairprices">
+                                        <div class="col-md-2" id="edairprices">
                                             <label for="validationCustom03" class="form-label">Air Rate</label>
                                             <input type="number" class="form-control " name="edairprice" id="edairprice" readonly required>
                                             <div class="invalid-feedback" id="edpartyairpricem">
@@ -426,7 +442,7 @@ if ($user_name != "") {
                                             </div>
                                         </div>
 
-                                        <div class="col-md-3" id="edtrainprices">
+                                        <div class="col-md-2" id="edtrainprices">
                                             <label for="validationCustom03" class="form-label">Trian Rate</label>
                                             <input type="number" class="form-control " name="edtrainprice" id="edtrainprice" readonly required>
                                             <div class="invalid-feedback" id="edpartytrainpricem">
@@ -596,116 +612,118 @@ if ($user_name != "") {
             <script src="assets/pages/datatable.init.js"></script>
             <script>
                 $(document).ready(function() {
-                   
-                    var ty=$("#role").val();
-                   if(ty=="Admin")
-{
-    $("#airprices").hide();
-                    $("#trainprices").hide();
-}
-else if(ty=="Air"){
-    $("#bookmode").val("Air");
-    $("#airprices").show();
-                    $("#trainprices").hide();
-}
-else if(ty=="Train"){
-    $("#bookmode").val("Train");
-    $("#airprices").hide();
-                    $("#trainprices").show();
-}
-// alert(ty)
-if(ty=="Admin")
-              {     
-             
-                $('#bookmode').change(function(e) {
-                        e.preventDefault();
-                        var value = $('#partyname').val();
-                        var partyid = $('#parties [value="' + value + '"]').data('value');
-                        var route = $('#route').val();
+
+                    var ty = $("#role").val();
+                    if (ty == "Admin") {
+                        $("#airprices").hide();
+                        $("#trainprices").hide();
+                        $("#weights").hide();
+                    } else if (ty == "Air") {
+                        $("#bookmode").val("Air");
+                        $("#airprices").show();
+                        $("#trainprices").hide();
+                        $("#weights").show();
+                    } else if (ty == "Train") {
+                        $("#bookmode").val("Train");
+                        $("#airprices").hide();
+                        $("#trainprices").show();
+                        $("#weights").hide();
+                    }
+                    // alert(ty)
+                    if (ty == "Admin") {
+
+                        $('#bookmode').change(function(e) {
+                            e.preventDefault();
+                            var value = $('#partyname').val();
+                            var partyid = $('#parties [value="' + value + '"]').data('value');
+                            var route = $('#route').val();
+                            bookmode = $('#bookmode').val();
+
+                            if (partyid != '' && route != '') {
+                                $.ajax({
+                                    url: 'ajax/ajax_request.php?action=partydetfetch',
+                                    type: 'POST',
+                                    dataType: "JSON",
+                                    data: {
+                                        'action': "partydetfetch",
+                                        'id': partyid,
+                                        'route': route,
+                                        'bookmode': bookmode
+                                    },
+                                    success: function(response) {
+                                        $("#partyids").val(response.data.id);
+                                        $("#partymobile").val(response.data.partymobile);
+                                        $("#gst").val(response.data.gst);
+                                        $("#trainprice").val(response.data.trainprice);
+                                        $("#airprice").val(response.data.airprice);
+                                        $("#bookmode").val(response.data.bookmode);
+                                        $("#weight").val(response.data.weight);
+                                        var booksmode = $("#bookmode").val();
+
+                                        if (booksmode == "Train") {
+                                            $('#train').prop('checked', true);
+                                            $("#trainprices").show();
+                                            $('#air').prop('checked', false);
+                                            $("#airprices").hide();
+                                            $("#weights").hide();
+                                        } else if (booksmode == "Air") {
+                                            $('#train').prop('checked', false);
+                                            $("#trainprices").hide();
+                                            $('#air').prop('checked', true);
+                                            $("#airprices").show();
+                                            $("#weights").show();
+
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                    } else {
                         bookmode = $('#bookmode').val();
-             
-                        if (partyid != '' && route != '') {
-                            $.ajax({
-                                url: 'ajax/ajax_request.php?action=partydetfetch',
-                                type: 'POST',
-                                dataType: "JSON",
-                                data: {
-                                    'action': "partydetfetch",
-                                    'id': partyid,
-                                    'route': route,
-                                    'bookmode': bookmode
-                                },
-                                success: function(response) {
-                                    $("#partyids").val(response.data.id);
-                                    $("#partymobile").val(response.data.partymobile);
-                                    $("#gst").val(response.data.gst);
-                                    $("#trainprice").val(response.data.trainprice);
-                                    $("#airprice").val(response.data.airprice);
-                                    $("#bookmode").val(response.data.bookmode);
-                                    var booksmode = $("#bookmode").val();
 
-                                    if (booksmode == "Train") {
-                                        $('#train').prop('checked', true);
-                                        $("#trainprices").show();
-                                        $('#air').prop('checked', false);
-                                        $("#airprices").hide();
-                                    } else if (booksmode == "Air") {
-                                        $('#train').prop('checked', false);
-                                        $("#trainprices").hide();
-                                        $('#air').prop('checked', true);
-                                        $("#airprices").show();
+                        $('#route').change(function(e) {
+                            e.preventDefault();
+                            var value = $('#partyname').val();
+                            var partyid = $('#parties [value="' + value + '"]').data('value');
+                            var route = $('#route').val();
+
+                            if (partyid != '' && route != '') {
+                                $.ajax({
+                                    url: 'ajax/ajax_request.php?action=partydetfetch',
+                                    type: 'POST',
+                                    dataType: "JSON",
+                                    data: {
+                                        'action': "partydetfetch",
+                                        'id': partyid,
+                                        'route': route,
+                                        'bookmode': bookmode
+                                    },
+                                    success: function(response) {
+                                        $("#partyids").val(response.data.id);
+                                        $("#partymobile").val(response.data.partymobile);
+                                        $("#gst").val(response.data.gst);
+                                        $("#trainprice").val(response.data.trainprice);
+                                        $("#airprice").val(response.data.airprice);
+                                        $("#bookmode").val(response.data.bookmode);
+                                        var booksmode = $("#bookmode").val();
+
+                                        if (booksmode == "Train") {
+                                            $('#train').prop('checked', true);
+                                            $("#trainprices").show();
+                                            $('#air').prop('checked', false);
+                                            $("#airprices").hide();
+                                        } else if (booksmode == "Air") {
+                                            $('#train').prop('checked', false);
+                                            $("#trainprices").hide();
+                                            $('#air').prop('checked', true);
+                                            $("#airprices").show();
+                                        }
                                     }
-                                }
-                            });
-                        }
-                    });
-                }
-                else{
-                    bookmode = $('#bookmode').val();
+                                });
 
-                    $('#route').change(function(e) {
-                        e.preventDefault();
-                     var value = $('#partyname').val();
-                        var partyid = $('#parties [value="' + value + '"]').data('value');
-                        var route = $('#route').val();
-                    
-                        if (partyid != '' && route != '') {
-                            $.ajax({
-                                url: 'ajax/ajax_request.php?action=partydetfetch',
-                                type: 'POST',
-                                dataType: "JSON",
-                                data: {
-                                    'action': "partydetfetch",
-                                    'id': partyid,
-                                    'route': route,
-                                    'bookmode': bookmode
-                                },
-                                success: function(response) {
-                                    $("#partyids").val(response.data.id);
-                                    $("#partymobile").val(response.data.partymobile);
-                                    $("#gst").val(response.data.gst);
-                                    $("#trainprice").val(response.data.trainprice);
-                                    $("#airprice").val(response.data.airprice);
-                                    $("#bookmode").val(response.data.bookmode);
-                                    var booksmode = $("#bookmode").val();
-
-                                    if (booksmode == "Train") {
-                                        $('#train').prop('checked', true);
-                                        $("#trainprices").show();
-                                        $('#air').prop('checked', false);
-                                        $("#airprices").hide();
-                                    } else if (booksmode == "Air") {
-                                        $('#train').prop('checked', false);
-                                        $("#trainprices").hide();
-                                        $('#air').prop('checked', true);
-                                        $("#airprices").show();
-                                    }
-                                }
-                            });
-                                
-                }
-            });
-        }
+                            }
+                        });
+                    }
 
                     $('#edpartyname').change(function(e) {
                         $('#edroute').val('');
@@ -747,9 +765,12 @@ if(ty=="Admin")
                                     if (booksmode == "Train") {
                                         $("#edtrainprices").show();
                                         $("#edairprices").hide();
+                                        $("#edweights").hide();
                                     } else if (booksmode == "Air") {
                                         $("#edtrainprices").hide();
                                         $("#edairprices").show();
+                                        $("#edweights").show();
+
                                     }
                                 }
                             });
@@ -770,6 +791,7 @@ if(ty=="Admin")
                         var partyzip = $('#partyzip').val();
                         var route = $('#route').val();
                         var book_mode = $("#bookmode").val();
+                        var weight = $("#weight").val();
                         if (book_mode == "Air") {
                             $('#trainprice').val(0);
                             var trainprice = $('#trainprice').val();
@@ -804,7 +826,8 @@ if(ty=="Admin")
                                 'airprice': airprice,
                                 'gst': gst,
                                 'destinate': destination,
-                                'route': route
+                                'route': route,
+                                'weight': weight
                             },
                             success: function(response) {
                                 if (response.msg == "Success") {
@@ -860,6 +883,7 @@ if(ty=="Admin")
                                 $("#edpartyaddress").val(response.data.partyaddress);
                                 $("#edgst").val(response.data.gst);
                                 $("#partyidss").val(response.data.partyid);
+                                $("#edweight").val(response.data.weight);
                                 var booksmode = $("#edbookmode").val();
 
                                 if (booksmode == "Train") {
@@ -867,11 +891,13 @@ if(ty=="Admin")
                                     $("#edtrainprices").show();
                                     $('#edair').prop('checked', false);
                                     $("#edairprices").hide();
+                                    $("#edweights").hide();
                                 } else {
                                     $('#edtrain').prop('checked', false);
                                     $("#edtrainprices").hide();
                                     $('#edair').prop('checked', true);
                                     $("#edairprices").show();
+                                    $("#edweights").show();
                                 }
 
                                 $("#edairprice").val(response.data.airprice);
@@ -898,6 +924,7 @@ if(ty=="Admin")
                         var trainprice = $("#edtrainprice").val();
                         var gst = $("#edgst").val();
                         var destination = $("#ed_destination").val();
+                        var weight = $("#edweight").val();
 
                         if (creationdate != "" && partyname != "" && partymobile != '' && state != '' && city != '' && partyzip != '' && partyaddress != '' && (airprice != '' || trainprice != '') && gst != '' && destination != '') {
                             $.ajax({
@@ -920,7 +947,8 @@ if(ty=="Admin")
                                     'trainprice': trainprice,
                                     'gst': gst,
                                     'route': route,
-                                    'destination': destination
+                                    'destination': destination,
+                                    'weight': weight
 
                                 },
                                 success: function(response) {
@@ -992,7 +1020,6 @@ if(ty=="Admin")
                     });
 
                 });
-                
             </script>
             <!-- App js -->
             <script src="assets/js/app.js"></script>

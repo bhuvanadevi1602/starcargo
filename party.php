@@ -126,6 +126,16 @@ if ($user_name != "") {
                                                                 </div>
                                                             </div>
 
+                                                         
+                                                            <div class="col-md-3" id="weights">
+                                                                <label for="validationCustom03" class="form-label">Weight</label>
+                                                                <input type="text" class="form-control" name="weight" id="weight" required>
+                                                                <div class="invalid-feedback" id="weight">
+                                                                    Please provide a valid Weight.
+                                                                </div>
+                                                            </div>
+
+                                                         
                                                             <div class="col-md-3" id="airprices">
                                                                 <label for="validationCustom03" class="form-label">Air Rate</label>
                                                                 <input type="number" class="form-control" name="airprice" id="airprice" required>
@@ -141,12 +151,11 @@ if ($user_name != "") {
                                                                     Please provide a valid Trian Rate.
                                                                 </div>
                                                             </div>
-
-                                                            <div class="col-md-3">
+   <div class="col-md-3">
                                                                 <label for="validationCustom03" class="form-label">GST No</label>
                                                                 <input type="text" class="form-control" name="detpartygst" id="detpartygst" required>
-                                                                <div class="invalid-feedback" id="detpartygsts">
-                                                                    Please provide a valid GST.
+                                                                  <div class="invalid-feedback" id="rate">
+                                                                    Please provide a valid Rate.
                                                                 </div>
                                                             </div>
 
@@ -296,6 +305,7 @@ if ($user_name != "") {
                                                 <option value="Other Place">Other Place</option>
                                             </datalist>
                                         </div>
+
                                         <div class="col-md-3" id="validationCustom05">
                                             <label for="validationCustom05" class="form-label">Type of Booking</label>
                                             <div class="col-md-12">
@@ -313,8 +323,18 @@ if ($user_name != "") {
                                                 </div>
                                             </div>
 
-                                        </div><!--end row-->
-                                        <div class="col-md-3" id="edairprices">
+                                             </div><!--end row-->
+                                             
+                                             <div class="col-md-3" id="edweights">
+                                                                <label for="validationCustom03" class="form-label">Weight</label>
+                                                                <input type="text" class="form-control" name="edweight" id="edweight" required>
+                                                                <div class="invalid-feedback" id="weight">
+                                                                    Please provide a valid Weight.
+                                                                </div>
+                                                            </div>
+
+                                      
+                                             <div class="col-md-3" id="edairprices">
                                             <label for="validationCustom03" class="form-label">Air Rate</label>
                                             <input type="number" class="form-control " name="edairprice" id="edairprice" required>
                                             <div class="invalid-feedback">
@@ -413,21 +433,24 @@ if ($user_name != "") {
                     $("#airprices").hide();
                     $("#edtrainprices").hide();
                     $("#edairprices").hide();
-                    }
+                    $("#edweights").hide();
+                          }
                    else if(ty=="Air") {
                     $("#air").prop('checked',true);
                         $("#trainprices").hide();
                     $("#airprices").show();
                     $("#edtrainprices").hide();
                     $("#edairprices").show();
-          }
+                    $("#edweights").show();
+                           }
           else if(ty=="Train") {
             $("#train").prop('checked',true);
                        $("#trainprices").show();
                     $("#airprices").hide();
                     $("#edtrainprices").show();
                     $("#edairprices").hide();
-         }
+                    $("#edweights").hide();
+                           }
                     
                     
                     $("input[type='radio']").click(function() {
@@ -438,16 +461,20 @@ if ($user_name != "") {
                         if (airs != "Air" && trains != "Train") {
                             $("#trainprices").hide();
                             $("#airprices").hide();
-                        } else if (airs == "Air" && trains != "Train") {
+                            $("#weights").hide();
+                          } else if (airs == "Air" && trains != "Train") {
                             $("#trainprices").hide();
+                            $("#weights").show();
                             $("#airprices").show();
                         } else if (airs != "Air" && trains == "Train") {
                             $("#trainprices").show();
                             $("#airprices").hide();
-                        } else if (airs == "Air" && trains == "Train") {
+                            $("#weights").hide();
+                          } else if (airs == "Air" && trains == "Train") {
                             $("#trainprices").show();
                             $("#airprices").show();
-                        }
+                            $("#weights").show();
+                         }
                     });
 
                     $("input[type='radio']").click(function() {
@@ -458,16 +485,20 @@ if ($user_name != "") {
                         if (airs != "Air" && trains != "Train") {
                             $("#edtrainprices").hide();
                             $("#edairprices").hide();
-                        } else if (airs == "Air" && trains != "Train") {
+                            $("#edweights").hide();
+                   } else if (airs == "Air" && trains != "Train") {
                             $("#edtrainprices").hide();
                             $("#edairprices").show();
-                        } else if (airs != "Air" && trains == "Train") {
+                            $("#edweights").show();
+                  } else if (airs != "Air" && trains == "Train") {
                             $("#edtrainprices").show();
                             $("#edairprices").hide();
-                        } else if (airs == "Air" && trains == "Train") {
+                            $("#edweights").hide();
+                    } else if (airs == "Air" && trains == "Train") {
                             $("#edtrainprices").show();
                             $("#edairprices").show();
-                        }
+                            $("#edweights").show();
+                     }
                     });
 
 
@@ -479,6 +510,7 @@ if ($user_name != "") {
                         var mobile = $('#detpartymobile').val();
                         var gst = $('#detpartygst').val();
                         var route = $('#route').val();
+                        var weight = $('#weight').val();
 
                         var types = [];
                         $.each($("input[name='bookmode']:checked"), function() {
@@ -504,7 +536,8 @@ if ($user_name != "") {
                                     'gst': gst,
                                     'airprice': airp,
                                     'trainprice': trainp,
-                                    'route': route
+                                    'route': route,
+                                    'weight':weight
                                 },
                                 success: function(response) {
                                     if (response.msg == "Success") {
@@ -552,17 +585,20 @@ if ($user_name != "") {
                                 $("#edairprice").val(response.data.airprice);
                                 $("#edtrainprice").val(response.data.trainprice);
                                 $("#ed_route").val(response.data.route);
+                                $("#edweight").val(response.data.weight);
                                 var booksmode = $("#ed_bookmode").val();
 
                                 if (booksmode == "Train") {
                                     $("#edtrain").prop('checked', true);
                                     $("#edtrainprices").show();
                                     $("#edairprices").hide();
+                                    $("#edweights").hide();
                                 } else if (booksmode == "Air") {
                                     $("#edair").prop('checked', true);
                                     $("#edtrainprices").hide();
                                     $("#edairprices").show();
-                                }
+                                    $("#edweights").show();
+                               }
                                 $("#edgst").val(response.data.gst);
                             }
                         });
@@ -577,7 +613,8 @@ if ($user_name != "") {
                         var partymobile = $("#edpartymobile").val();
                         var gst = $("#edgst").val();
                         var book_mode = $("input[name='edbookmode']:checked").val();
-
+                        var weight = $("#edweight").val();
+                          
                         if (book_mode == "Air") {
                             $("#edtrainprice").val(0);
                         } else if (book_mode == "Train") {
@@ -601,7 +638,8 @@ if ($user_name != "") {
                                 'trainprice': trainprice,
                                 'gst': gst,
                                 'bookmode': book_mode,
-                                'route': route
+                                'route': route,
+                                'weight': weight
                             },
                             success: function(response) {
                                 console.log(response.data)

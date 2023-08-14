@@ -60,13 +60,14 @@ if ($user_name != "") {
                     $partytypes = isset($_POST['partytypes']) ? $_POST['partytypes'] : "-";
 
 
-                    $pid = $_POST['partynamess'];
-                    $query1 = "select * from party where id=:pid";
+                    $pname = $_POST['partynamess'];
+                    $query1 = "select * from party where partyname=:pname";
                     $exe = $con->prepare($query1);
-                    $data = [':pid' => $pid];
+                    $data = [':pname' => $pname];
                     $exe->execute($data);
                     $result = $exe->fetch(PDO::FETCH_ASSOC);
 
+                    $pid=$_POST['pid'];
                     $partynames = isset($result['partyname']) ? $result['partyname'] : "-";
                     ?>
                     <h5>From Date : <?= $fromdate ?></h5>
@@ -78,10 +79,6 @@ if ($user_name != "") {
                     <h5>Type : <?= $partytypes ?></h5>
                   </div>
                   <div class="col-md-3 text-center">
-                    <?php
-
-                    ?>
-
                     <h5>Party Name : <?= $partynames ?></h5>
                   </div>
                 </div>
@@ -123,15 +120,14 @@ if ($user_name != "") {
                         ?>
 
                           <option selected disabled value="">Choose State...</option>
-                          <option data-value="<?= $res['id'] ?>" value="<?= $res['id'] ?>"><?= $res['partyname'] ?></option>
+                          <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
                         <?php } ?>
                       </datalist>
-
-
                     </div>
 
                     <div class="col-md-2">
-                      <input type="submit" name="search" id="search" class="btn btn-sm btn-de-primary csv p-2" value="Search" />
+                    <input type="hidden" name="pid" id="pid" class="btn btn-sm btn-de-primary csv p-2" value="" />
+                     <input type="submit" name="search" id="search" class="btn btn-sm btn-de-primary csv p-2" value="Search" />
                       <?php
                       if ($partytypes == "Air") {
                       ?>
@@ -338,8 +334,8 @@ if ($user_name != "") {
                               <div class="col-md-3">
                                 <label for="validationCustom03" class="form-label">POD No</label>
                                 <input type="text" class="form-control" id="pod" name="pod" required>
-                                <div class="invalid-feedback" id="booktoaddress">
-                                  Please provide a valid consignee address.
+                                <div class="invalid-feedback" id="podsuc">
+                                  Already Taken POD., Please Change
                                 </div>
                               </div>
 
@@ -482,7 +478,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2" id="weights1">
                                 <label for="validationCustom05" class="form-label">Charged Weight (1&lt30) </label>
                                 <input type="text" class="form-control" id="weight" name="weight" required>
                                 <div class="invalid-feedback" id="bookweight">
@@ -490,7 +486,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2" id="rates1">
                                 <label for="validationCustom05" class="form-label">Rate</label>
                                 <input type="text" class="form-control" id="rate" name="rate" required>
                                 <div class="invalid-feedback" id="bookrate">
@@ -498,39 +494,39 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2" id="weight30">
                                 <label for="validationCustom05" class="form-label">Charged Weight (31&lt50)</label>
-                                <input type="text" class="form-control" id="weight" name="weight" required>
+                                <input type="text" class="form-control" id="weight1" name="weight1" required>
                                 <div class="invalid-feedback" id="bookweight">
                                   Please provide a valid Charged Weight.
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2" id="rate30">
                                 <label for="validationCustom05" class="form-label">Rate</label>
-                                <input type="text" class="form-control" id="rate" name="rate" required>
+                                <input type="text" class="form-control" id="rate1" name="rate1" required>
                                 <div class="invalid-feedback" id="bookrate">
                                   Please provide a valid Rate.
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2"  id="weight50">
                                 <label for="validationCustom05" class="form-label">Charged Weight (&gt50)</label>
-                                <input type="text" class="form-control" id="weight" name="weight" required>
+                                <input type="text" class="form-control" id="weight2" name="weight2" required>
                                 <div class="invalid-feedback" id="bookweight">
                                   Please provide a valid Charged Weight.
                                 </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-2"  id="rate50">
                                 <label for="validationCustom05" class="form-label">Rate</label>
-                                <input type="text" class="form-control" id="rate" name="rate" required>
+                                <input type="text" class="form-control" id="rate2" name="rate2" required>
                                 <div class="invalid-feedback" id="bookrate">
                                   Please provide a valid Rate.
                                 </div>
                               </div>
 
-                              <div class="col-md-4">
+                              <div class="col-md-2">
                               </div>
 
                               <div class="col-md-3" style="text-align:center;">
@@ -690,6 +686,7 @@ if ($user_name != "") {
                       if (isset($_POST['search'])) {
 
                         $sqlbook = "SELECT * from booking where type='$partytypes' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$pid'  ORDER BY id ASC";
+                        // print_r($sqlbook);die();
                         $exebook = $con->prepare($sqlbook);
                         $exebook->execute();
                         $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
@@ -859,7 +856,7 @@ if ($user_name != "") {
                         ?>
 
                           <option selected disabled value="">Choose State...</option>
-                          <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                          <option ="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
                         <?php } ?>
                       </datalist>
 
@@ -1480,6 +1477,21 @@ if ($user_name != "") {
       <script>
         $(document).ready(function() {
 
+          $("#weights1").show();
+              $("#weight30").hide();
+              $("#weight50").hide();
+              $("#rates1").show();
+              $("#rate30").hide();
+              $("#rate50").hide();
+
+          $('#partynamess').change(function(e) {
+          var vals = this.value;
+           var partyids = $('#partiess [value="' + vals + '"]').data('value');
+           $("#pid").val(partyids);
+          //  var pids=$("#pid").val();
+          //  alert(pids);
+          });
+
           $("#states").hide();
           $("#sgst").hide();
           $("#cgst").hide();
@@ -1494,6 +1506,58 @@ if ($user_name != "") {
             $("#types").val("");
           }
 
+          $('#types').change(function(e) {
+            var tys=this.value;
+            if(tys=="Air"){
+              $("#weights1").show();
+              $("#weight30").show();
+              $("#weight50").show();
+              $("#rates1").show();
+              $("#rate30").show();
+              $("#rate50").show();
+             }
+             else if(tys=="Train"){
+           
+          $("#weights1").show();
+              $("#weight30").hide();
+              $("#weight50").hide();
+              $("#rates1").show();
+              $("#rate30").hide();
+              $("#rate50").hide();
+             }
+             else{
+              $("#weights1").show();
+              $("#weight30").hide();
+              $("#weight50").hide();
+              $("#rates1").show();
+              $("#rate30").hide();
+              $("#rate50").hide();
+             }
+            });
+          
+          $('#pod').change(function(e) {
+            e.preventDefault();
+            var pod = $("#pod").val();
+            // alert(pod)
+           $.ajax({
+                url: 'ajax/ajax_request.php?action=partypod',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "partypod",
+                  'pod': pod,
+                },
+                success: function(response) {
+                if(response.msg=="Success"){
+                  $("#podsuc").show();
+                }
+                if(response.msg=="Failure"){
+                  $("#podsuc").hide();
+             }
+                }
+              });
+          });
+          
           $('#destination').change(function(e) {
             e.preventDefault();
             var value = $('#partyname').val();
@@ -1519,6 +1583,7 @@ if ($user_name != "") {
                 },
                 success: function(response) {
                   if (typ == "Air") {
+                    $("#weight").val(response.data.weight);
                     $("#rate").val(response.data.airprice);
                   } else if (typ == "Train") {
                     $("#rate").val(response.data.trainprice);
@@ -1527,7 +1592,8 @@ if ($user_name != "") {
                       $("#rate").val(response.data.trainprice);
                     } else if (response.data.trainprice == 0) {
                       $("#rate").val(response.data.airprice);
-                    }
+                      $("#weight").val(response.data.weight);
+                     }
                   }
                 }
               });
@@ -1856,7 +1922,14 @@ if ($user_name != "") {
             $("#amount").val(amountss);
             var amount = $("#amount").val();
 
-
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+            var doc = $("#docs").val(); 
+            var tots = parseFloat(tot) + parseFloat(doc);
+         
+            $("#amount").val(tots);
+      
             if (gst == 'State') {
               $("#states").hide();
               $("#sgst").show();
@@ -1880,13 +1953,7 @@ if ($user_name != "") {
               $("#paid").val(amount);
             }
 
-            var rates = $("#rate").val();
-            var weights = $("#weight").val();
-            var tot = rates * weights;
-            var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#amount").val(tots);
-          });
+           });
 
 
           $("#otherchg").on("keyup change", function() {

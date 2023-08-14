@@ -23,8 +23,8 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
 
    $output = "";
          
-        $output .= '<table class="table table-bordered" border="1">  
-        <tr rowspan="12" align="center"><td colspan="3"><img src="https://udhaarsudhaar.net/star_cargo/assets/images/Star-cargo-logo.png" style="width=10% !important;height: 10% !important;"/></td>
+        $output .= '<table class="table table-bordered" border="1" style="border-collapse:collapse">  
+        <tr rowspan="12" align="center"><td colspan="3"><img src="assets/images/Star-cargo-logo.png" style="width=10% !important;height: 10% !important;"/></td>
         <td colspan="9">
      STAR CARGO SYSTEM<br/>
      (An ultimate name in cargo services)<br/>
@@ -125,7 +125,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
           
         $output .= '
         <tr>
-        <td></td>   
+        <td>&nbsp;</td>   
         <td></td> 
         <td></td>   
         <td></td> 
@@ -136,60 +136,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
         <td></td>   
         <td></td> 
         <td></td>   
-        <td></td> </tr>
-        <tr>
-        <td></td>   
         <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> </tr>
-        <tr>
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> </tr>
-        <tr>
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> </tr>
-        <tr>
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> </tr>
-         
         <tr>  
         <td></td>   
         <td></td> 
