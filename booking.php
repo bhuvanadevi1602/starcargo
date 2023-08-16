@@ -67,7 +67,7 @@ if ($user_name != "") {
                     $exe->execute($data);
                     $result = $exe->fetch(PDO::FETCH_ASSOC);
 
-                    $pid=$_POST['pid'];
+                    $pid = $_POST['pid'];
                     $partynames = isset($result['partyname']) ? $result['partyname'] : "-";
                     ?>
                     <h5>From Date : <?= $fromdate ?></h5>
@@ -126,8 +126,8 @@ if ($user_name != "") {
                     </div>
 
                     <div class="col-md-2">
-                    <input type="hidden" name="pid" id="pid" class="btn btn-sm btn-de-primary csv p-2" value="" />
-                     <input type="submit" name="search" id="search" class="btn btn-sm btn-de-primary csv p-2" value="Search" />
+                      <input type="hidden" name="pid" id="pid" class="btn btn-sm btn-de-primary csv p-2" value="" />
+                      <input type="submit" name="search" id="search" class="btn btn-sm btn-de-primary csv p-2" value="Search" />
                       <?php
                       if ($partytypes == "Air") {
                       ?>
@@ -510,7 +510,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2"  id="weight50">
+                              <div class="col-md-2" id="weight50">
                                 <label for="validationCustom05" class="form-label">Charged Weight (&gt50)</label>
                                 <input type="text" class="form-control" id="weight2" name="weight2" required>
                                 <div class="invalid-feedback" id="bookweight">
@@ -518,7 +518,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-2"  id="rate50">
+                              <div class="col-md-2" id="rate50">
                                 <label for="validationCustom05" class="form-label">Rate</label>
                                 <input type="text" class="form-control" id="rate2" name="rate2" required>
                                 <div class="invalid-feedback" id="bookrate">
@@ -856,7 +856,7 @@ if ($user_name != "") {
                         ?>
 
                           <option selected disabled value="">Choose State...</option>
-                          <option ="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                          <option="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
                         <?php } ?>
                       </datalist>
 
@@ -1314,14 +1314,14 @@ if ($user_name != "") {
                   <form class="row g-3 needs-validation" novalidate method="POST" autocomplete="off">
                     <input type="hidden" name="edmbookid" id="edmbookid" />
                     <div class="col-md-2"></div>
-                     <div class="col-md-4">
+                    <div class="col-md-4">
                       <label for="validationCustom01" class="form-label">From Date</label>
                       <input type="date" class="form-control" id="mcreationdate" name="mcreationdate" value="<?= $dates ?>" required>
                       <div class="invalid-feedback">
                         Please provide a valid Date.
                       </div>
                     </div>
-                 
+
                     <!-- <div class="col-md-3">
                       <label for="validationCustom01" class="form-label">Party Name</label>
                       <input list="ed_parties" class="form-control" name="mpartyname" readonly id="mpartyname">
@@ -1478,18 +1478,18 @@ if ($user_name != "") {
         $(document).ready(function() {
 
           $("#weights1").show();
-              $("#weight30").hide();
-              $("#weight50").hide();
-              $("#rates1").show();
-              $("#rate30").hide();
-              $("#rate50").hide();
+          $("#weight30").hide();
+          $("#weight50").hide();
+          $("#rates1").show();
+          $("#rate30").hide();
+          $("#rate50").hide();
 
           $('#partynamess').change(function(e) {
-          var vals = this.value;
-           var partyids = $('#partiess [value="' + vals + '"]').data('value');
-           $("#pid").val(partyids);
-          //  var pids=$("#pid").val();
-          //  alert(pids);
+            var vals = this.value;
+            var partyids = $('#partiess [value="' + vals + '"]').data('value');
+            $("#pid").val(partyids);
+            //  var pids=$("#pid").val();
+            //  alert(pids);
           });
 
           $("#states").hide();
@@ -1507,57 +1507,55 @@ if ($user_name != "") {
           }
 
           $('#types').change(function(e) {
-            var tys=this.value;
-            if(tys=="Air"){
+            var tys = this.value;
+            if (tys == "Air") {
               $("#weights1").show();
               $("#weight30").show();
               $("#weight50").show();
               $("#rates1").show();
               $("#rate30").show();
               $("#rate50").show();
-             }
-             else if(tys=="Train"){
-           
-          $("#weights1").show();
-              $("#weight30").hide();
-              $("#weight50").hide();
-              $("#rates1").show();
-              $("#rate30").hide();
-              $("#rate50").hide();
-             }
-             else{
+            } else if (tys == "Train") {
+
               $("#weights1").show();
               $("#weight30").hide();
               $("#weight50").hide();
               $("#rates1").show();
               $("#rate30").hide();
               $("#rate50").hide();
-             }
-            });
-          
+            } else {
+              $("#weights1").show();
+              $("#weight30").hide();
+              $("#weight50").hide();
+              $("#rates1").show();
+              $("#rate30").hide();
+              $("#rate50").hide();
+            }
+          });
+
           $('#pod').change(function(e) {
             e.preventDefault();
             var pod = $("#pod").val();
             // alert(pod)
-           $.ajax({
-                url: 'ajax/ajax_request.php?action=partypod',
-                type: 'POST',
-                dataType: "JSON",
-                data: {
-                  'action': "partypod",
-                  'pod': pod,
-                },
-                success: function(response) {
-                if(response.msg=="Success"){
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=partypod',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "partypod",
+                'pod': pod,
+              },
+              success: function(response) {
+                if (response.msg == "Success") {
                   $("#podsuc").show();
                 }
-                if(response.msg=="Failure"){
+                if (response.msg == "Failure") {
                   $("#podsuc").hide();
-             }
                 }
-              });
+              }
+            });
           });
-          
+
           $('#destination').change(function(e) {
             e.preventDefault();
             var value = $('#partyname').val();
@@ -1593,7 +1591,7 @@ if ($user_name != "") {
                     } else if (response.data.trainprice == 0) {
                       $("#rate").val(response.data.airprice);
                       $("#weight").val(response.data.weight);
-                     }
+                    }
                   }
                 }
               });
@@ -1669,6 +1667,7 @@ if ($user_name != "") {
                   var tots = parseFloat(tot) + parseFloat(doc);
                   $("#edamount").val(tots);
 
+
                   var gst = $("#edgst_types").val();
                   if (gst == 'State') {
                     $("#edstates").hide();
@@ -1727,6 +1726,34 @@ if ($user_name != "") {
                 } else {
                   others = 0;
                 }
+
+                var rates = $("#rate").val();
+                var weights = $("#weight").val();
+                var rates1 = $("#rate1").val();
+                var weights1 = $("#weight1").val();
+                var rates2 = $("#rate2").val();
+                var weights2 = $("#weight2").val();
+               
+                if(rates1!='' && weights1!='')
+                {
+                  var rates = $("#rate1").val();
+                var weights = $("#weight1").val();
+               }
+               else if(rates2!='' && weights2!='')
+                {
+                  var rates = $("#rate2").val();
+                var weights = $("#weight2").val();
+               }
+               else{
+                var rates = $("#rate").val();
+                var weights = $("#weight").val();
+               }
+             
+                var tot = rates * weights;
+                var doc = $("#docs").val();
+                var tots = parseFloat(tot) + parseFloat(doc);
+                $("#amount").val(tots);
+                
                 var amount = $("#amount").val();
 
                 if (gst == 'State') {
@@ -1752,12 +1779,7 @@ if ($user_name != "") {
                   $("#paid").val(amount);
                 }
 
-                var rates = $("#rate").val();
-                var weights = $("#weight").val();
-                var tot = rates * weights;
-                var doc = $("#docs").val();
-                var tots = parseFloat(tot) + parseFloat(doc);
-                $("#amount").val(tots);
+               
               }
 
             });
@@ -1904,7 +1926,7 @@ if ($user_name != "") {
           });
 
 
-          $("#weight").change(function() {
+          $("#weight,#weight1,#weight2").keyup(function() {
             var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
@@ -1925,11 +1947,13 @@ if ($user_name != "") {
             var rates = $("#rate").val();
             var weights = $("#weight").val();
             var tot = rates * weights;
-            var doc = $("#docs").val(); 
+
+
+            var doc = $("#docs").val();
             var tots = parseFloat(tot) + parseFloat(doc);
-         
+
             $("#amount").val(tots);
-      
+
             if (gst == 'State') {
               $("#states").hide();
               $("#sgst").show();
@@ -1953,10 +1977,61 @@ if ($user_name != "") {
               $("#paid").val(amount);
             }
 
-           });
+          });
 
+          $("#rate1").keyup(function() {
+           var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
 
-          $("#otherchg").on("keyup change", function() {
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+            var amounts = $("#amount").val();
+            var amountss = parseFloat(amounts) + parseFloat(others);
+            $("#amount").val(amountss);
+            var amount = $("#amount").val();
+
+            var rates = $("#rate1").val();
+            var weights = $("#weight1").val();
+            var tot = rates * weights;
+
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc);
+
+            $("#amount").val(tots);
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gsta
+              mt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+          });
+
+        $("#otherchg").on("keyup", function() {
             var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
