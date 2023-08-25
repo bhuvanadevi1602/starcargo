@@ -605,7 +605,7 @@ if ($user_name != "") {
                           $exebook = $con->prepare($sqlbook);
                           $exebook->execute();
                           $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                        } else if ($types == "Air" || $types == "Train") {
+                        } else if ($types == "Air" || $types == "Train" || $types == "Delivery Air" || $types == "Delivery Train") {
                           $sqlbook = "select * from booking where type=:types";
                           $exebook = $con->prepare($sqlbook);
                           $data = [':types' => $types];

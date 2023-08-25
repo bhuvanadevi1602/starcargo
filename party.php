@@ -200,13 +200,13 @@ if ($user_name != "") {
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $exeparty->execute();
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($types == "Air") {
+                                            } else if ($types == "Air" || $types == "Delivery Air") {
                                                 $sqlparty = "select * from party where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
                                                 $exeparty->execute($data);
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($types == "Train") {
+                                            } else if ($types == "Train" || $types == "Delivery Train") {
                                                 $sqlparty = "select * from party where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];

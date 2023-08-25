@@ -289,7 +289,7 @@ if ($user_name != "") {
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $exeparty->execute();
                                                 $resultparty = $exeparty->fetchAll(PDO::FETCH_ASSOC);
-                                            } else if ($types == "Air" || $types == "Train") {
+                                            } else if ($types == "Air" || $types == "Train" || $types == "Delivery Train" || $types == "Delivery Air") {
                                                 $sqlparty = "select * from partyset where bookmode=:bookmode";
                                                 $exeparty = $con->prepare($sqlparty);
                                                 $data = [':bookmode' => $types];
@@ -306,11 +306,11 @@ if ($user_name != "") {
                                                     <td><?= $party['partyname'] ?></td>
                                                     <td><?= $party['partymobile'] ?></td>
                                                     <td><?= $party['partyaddress'] ?></td>
-                                                    <?php if ($types == "Air") { ?>
+                                                    <?php if ($types == "Air" || $types == "Delivery Air") { ?>
                                                         <td><?= "Air - " . $party['airprice']; ?> </td>
                                                         <td>-</td>
                                                     <?php }
-                                                    if ($types == "Train") { ?>
+                                                    if ($types == "Train" || $types == "Delivery Train") { ?>
                                                         <td>-</td>
                                                         <td><?= "Train - " . $party['trainprice']; ?> </td>
                                                         <?php } else {

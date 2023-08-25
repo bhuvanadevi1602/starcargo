@@ -92,6 +92,7 @@ if ($user_name != "") {
                                   <option selected value="">Choose Type </option>
                                   <option value="Air">Air</option>
                                   <option value="Train">Train</option>
+                                  <option value="Delivery">Delivery</option>
                                 </select>
                                 <div class="invalid-type text text-danger" id="invalid-type">
                                   Please provide a valid type.

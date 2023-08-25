@@ -91,7 +91,7 @@ if ($user_name != "") {
                       <input type="date" name="todate" to="todate" class="form-control" />
                     </div>
                     <div class="col-md-2">
-                      <?php if ($types == "Air" || $types == "Train") { ?>
+                      <?php if ($types == "Air" || $types == "Train" || $types == "Delivery Air" || $types == "Delivery Train") { ?>
                         <input list="partytypess" class="form-control" name="partytypes" id="partytypes" value="<?= $types ?>">
                         <datalist id="partytypess">
                           <option selected disabled value="">Choose Type...</option>
@@ -656,6 +656,30 @@ if ($user_name != "") {
                     </div><!--end modal-content-->
                   </div><!--end modal-dialog-->
                 </div><!--end modal-->
+                <div class="modal fade bd-example-modal-xl" id="uploadimage" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title m-0" id="myLargeModalLabel">View Image</h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div><!--end modal-header-->
+                        <div class="modal-body">
+                            <div class="row">
+
+
+                                <div class="card-header">
+                                    <h4 class="card-title" style="color:#22b783;">View Image Details</h4>
+                                </div><!--end card-header-->
+
+                                <div class="card-body">
+                                    <input type="hidden" name="edbookid" id="edbookid" value=""/>
+                                    <img src="" name="delimg" id="delimg" width="100%"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
               </div><!--end card-header-->
               <div class="card-body">
@@ -696,7 +720,7 @@ if ($user_name != "") {
                           $exebook = $con->prepare($sqlbook);
                           $exebook->execute();
                           $resultbook = $exebook->fetchAll(PDO::FETCH_ASSOC);
-                        } else if ($types == "Air" || $types == "Train") {
+                        } else if ($types == "Air" || $types == "Train" || $types == "Delivery Air" || $types == "Delivery Train") {
                           $sqlbook = "select * from booking where type=:types";
                           $exebook = $con->prepare($sqlbook);
                           $data = [':types' => $types];
@@ -735,6 +759,11 @@ if ($user_name != "") {
                                 <i class="fa fa-pen"></i>
                               </button>
                             </td>
+                            <?php if($book['proofdoc']!="") { ?>
+                                                        <td>
+                                                            <button class="btn btn-dark btn-sm upload_image" data-bs-toggle="modal" data-bs-target="#uploadimage" imgids="<?= $book['id'] ?>"><i class="fa fa-image"></i></button>
+                                                        </td>
+                                                        <?php } ?>
                             <!-- <td>
                               <button type="button" class="btn btn-primary btn-sm edit_mno" data-bs-toggle="modal" data-bs-target="#editmno" idss="<?= $book['id'] ?>">
                                 <i class="fa fa-file"></i>
@@ -833,9 +862,9 @@ if ($user_name != "") {
 
 
                 <div class="card-body">
+                  <input type="hidden" name="role" id="role" value="<?= $types ?>" />
                   <form class="row g-3 needs-validation" novalidate method="POST" autocomplete="off">
                     <input type="hidden" name="ed_bookid" id="ed_bookid" />
-                    <input type="hidden" name="role" id="role" value="<?= $types ?>" />
                     <div class="col-md-2">
                       <label for="validationCustom01" class="form-label">Date</label>
                       <input type="date" class="form-control" id="edcreationdate" name="edcreationdate" value="<?= $dates ?>" required>
@@ -854,9 +883,8 @@ if ($user_name != "") {
                         $result = $exestate->fetchAll(PDO::FETCH_ASSOC);
                         foreach ($result as $res) {
                         ?>
-
                           <option selected disabled value="">Choose State...</option>
-                          <option="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
+                          <option data-value="<?= $res['id'] ?>" value="<?= $res['partyname'] ?>"><?= $res['partyname'] ?></option>
                         <?php } ?>
                       </datalist>
 
@@ -1008,8 +1036,8 @@ if ($user_name != "") {
                     <div class="col-md-3">
                       <label for="validationCustom03" class="form-label">POD No</label>
                       <input type="text" class="form-control" id="edpod" name="edpod" required>
-                      <div class="invalid-feedback" id="booktoaddress">
-                        Please provide a valid consignee address.
+                      <div class="invalid-feedback" id="edpodsuc">
+                        Already Taken POD., Please Change
                       </div>
                     </div>
 
@@ -1144,27 +1172,63 @@ if ($user_name != "") {
                       </div>
                     </div>
                     <div class="col-md-2">
-                      <label for="validationCustom05" class="form-label">Charged Weight</label>
-                      <input type="text" class="form-control" id="edweight" name="edweight" required>
-                      <div class="invalid-feedback" id="bookweight">
-                        Please provide a valid Charged Weight.
-                      </div>
-                    </div>
-
-                    <div class="col-md-2">
                       <label for="validationCustom05" class="form-label">Doc Charge</label>
                       <input type="text" class="form-control" id="eddocs" name="eddocs" required value="50">
                       <div class="invalid-feedback" id="bookdocs">
                         Please provide a valid Rate.
                       </div>
                     </div>
+
                     <div class="col-md-2">
+                      <label for="validationCustom05" class="form-label">Charged Weight</label>
+                      <input type="text" class="form-control" id="edweight" name="edweight" required>
+                      <div class="invalid-feedback" id="bookweight">
+                        Please provide a valid Charged Weight.
+                      </div>
+                    </div>
+                    <div class="col-md-2" id="edrates1">
                       <label for="validationCustom05" class="form-label">Rate</label>
                       <input type="text" class="form-control" id="edrate" name="edrate" required>
                       <div class="invalid-feedback" id="bookrate">
                         Please provide a valid Rate.
                       </div>
                     </div>
+
+                    <div class="col-md-2" id="edweight30">
+                      <label for="validationCustom05" class="form-label">Charged Weight (31&lt50)</label>
+                      <input type="text" class="form-control" id="edweight1" name="edweight1" required>
+                      <div class="invalid-feedback" id="bookweight">
+                        Please provide a valid Charged Weight.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="edrate30">
+                      <label for="validationCustom05" class="form-label">Rate</label>
+                      <input type="text" class="form-control" id="edrate1" name="edrate1" required>
+                      <div class="invalid-feedback" id="bookrate">
+                        Please provide a valid Rate.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="edweight50">
+                      <label for="validationCustom05" class="form-label">Charged Weight (&gt50)</label>
+                      <input type="text" class="form-control" id="edweight2" name="edweight2" required>
+                      <div class="invalid-feedback" id="bookweight">
+                        Please provide a valid Charged Weight.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2" id="edrate50">
+                      <label for="validationCustom05" class="form-label">Rate</label>
+                      <input type="text" class="form-control" id="edrate2" name="edrate2" required>
+                      <div class="invalid-feedback" id="bookrate">
+                        Please provide a valid Rate.
+                      </div>
+                    </div>
+
+                    <div class="col-md-2">
+                    </div>
+
                     <div class="col-md-3" style="text-align:center;">
                       <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">Amount</label>
                       <div class="col-sm-12">
@@ -1215,13 +1279,13 @@ if ($user_name != "") {
                     <div class="col-md-3"></div>
                     <div class="col-md-2">
                       <label for="validationCustom02" class="form-label">GST Type</label>
-                      <input list="gst_types" class="form-control" name="edgst_types" id="edgst_types">
-                      <datalist id="gst_types">
+                      <input list="edgsttypes" class="form-control" name="edgst_types" id="edgst_types">
+                      <datalist id="edgsttypes">
                         <option value="" disabled>Select Types</option>
                         <option value="State">State</option>
                         <option value="Interstate">Interstate</option>
                       </datalist>
-                      <div class="invalid-feedback" id="ed_types">
+                      <div class="invalid-feedback" id="edtype_s">
                         Please provide a valid types.
                       </div>
                     </div>
@@ -1484,6 +1548,13 @@ if ($user_name != "") {
           $("#rate30").hide();
           $("#rate50").hide();
 
+          $("#edweights1").show();
+          $("#edweight30").hide();
+          $("#edweight50").hide();
+          $("#edrates1").show();
+          $("#edrate30").hide();
+          $("#edrate50").hide();
+
           $('#partynamess').change(function(e) {
             var vals = this.value;
             var partyids = $('#partiess [value="' + vals + '"]').data('value');
@@ -1495,6 +1566,11 @@ if ($user_name != "") {
           $("#states").hide();
           $("#sgst").hide();
           $("#cgst").hide();
+
+          $("#edstates").hide();
+          $("#edsgst").hide();
+          $("#edcgst").hide();
+
 
           var ty = $("#role").val();
           // alert(ty)
@@ -1533,6 +1609,34 @@ if ($user_name != "") {
             }
           });
 
+          $('#edtypes').change(function(e) {
+            var tys = this.value;
+            if (tys == "Air") {
+              $("#edweights1").show();
+              $("#edweight30").show();
+              $("#edweight50").show();
+              $("#edrates1").show();
+              $("#edrate30").show();
+              $("#edrate50").show();
+            } else if (tys == "Train") {
+
+              $("#edweights1").show();
+              $("#edweight30").hide();
+              $("#edweight50").hide();
+              $("#edrates1").show();
+              $("#edrate30").hide();
+              $("#edrate50").hide();
+            } else {
+              $("#edweights1").show();
+              $("#edweight30").hide();
+              $("#edweight50").hide();
+              $("#edrates1").show();
+              $("#edrate30").hide();
+              $("#edrate50").hide();
+            }
+          });
+
+
           $('#pod').change(function(e) {
             e.preventDefault();
             var pod = $("#pod").val();
@@ -1551,6 +1655,29 @@ if ($user_name != "") {
                 }
                 if (response.msg == "Failure") {
                   $("#podsuc").hide();
+                }
+              }
+            });
+          });
+
+          $('#edpod').change(function(e) {
+            e.preventDefault();
+            var pod = $("#edpod").val();
+            // alert(pod)
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=partypod',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "partypod",
+                'pod': pod,
+              },
+              success: function(response) {
+                if (response.msg == "Success") {
+                  $("#edpodsuc").show();
+                }
+                if (response.msg == "Failure") {
+                  $("#edpodsuc").hide();
                 }
               }
             });
@@ -1593,36 +1720,19 @@ if ($user_name != "") {
                       $("#weight").val(response.data.weight);
                     }
                   }
+
+                  var weight = $("#weight").val();
+                  var rate = $("#rate").val();
+                  var amount = weight * rate;
+                  var docs = $("#docs").val();
+
+                  var qty = (weight * rate);
+                  var tot = parseFloat(qty) + parseFloat(docs);
+                  $("#amount").val(tot);
+
                 }
               });
             }
-          });
-
-          $(".mcreationdate").change(function(e) {
-            e.preventDefault();
-            var creationdate = $(this).attr("mcreationdate");
-            $("#edmbookid").val(bookeid);
-            $.ajax({
-              url: 'ajax/ajax_request.php?action=bookfetch',
-              type: 'POST',
-              dataType: "JSON",
-              data: {
-                'action': "bookfetch",
-                'ids': bookeid
-              },
-              success: function(response) {
-                // $('#mcreationdate').val(response.data.creationdate);
-                // $('#mpartyname').val(response.data.party.partyname);
-                // $('#mtypes').val(response.data.type);
-                // $('#mroute').val(response.data.route);
-                // $('#morigin').val(response.data.origin);
-                // $('#mdestination').val(response.data.destination);
-                // $('#mcoraddress').val(response.data.coraddress);
-                // $('#mconaddress').val(response.data.conaddress);
-                // $('#mpod').val(response.data.pod);
-                // $('#mno').val(response.data.mno);
-              }
-            });
           });
 
           $('#eddestination').change(function(e) {
@@ -1633,6 +1743,7 @@ if ($user_name != "") {
             var types = $('#edtypes').val();
             var city = $('#edorigin').val();
             var destinate = $('#eddestination').val();
+            var typ = "<?= $types ?>";
             var sgst = $("#edsgstamt").val();
             var cgst = $("#edcgstamt").val();
             var igst = $("#edigstamt").val();
@@ -1651,45 +1762,28 @@ if ($user_name != "") {
                   'destinate': destinate
                 },
                 success: function(response) {
-                  $("#edrate").val(response.data.airprice);
-
-                  var other = $("#edotherchg").val();
-                  if (other != '') {
-                    others = other;
-                  } else {
-                    others = 0;
+                  if (typ == "Air") {
+                    $("#edweight").val(response.data.weight);
+                    $("#edrate").val(response.data.airprice);
+                  } else if (typ == "Train") {
+                    $("#edrate").val(response.data.trainprice);
+                  } else if (typ == "Admin") {
+                    if (response.data.airprice == 0) {
+                      $("#edrate").val(response.data.trainprice);
+                    } else if (response.data.trainprice == 0) {
+                      $("#edrate").val(response.data.airprice);
+                      $("#edweight").val(response.data.weight);
+                    }
                   }
 
-                  var rates = $("#edrate").val();
-                  var weights = $("#edweight").val();
-                  var tot = rates * weights;
-                  var doc = $("#eddocs").val();
-                  var tots = parseFloat(tot) + parseFloat(doc);
-                  $("#edamount").val(tots);
+                  var weight = $("#edweight").val();
+                  var rate = $("#edrate").val();
+                  var amount = weight * rate;
+                  var docs = $("#eddocs").val();
 
-
-                  var gst = $("#edgst_types").val();
-                  if (gst == 'State') {
-                    $("#edstates").hide();
-                    $("#edsgst").show();
-                    $("#edcgst").show();
-                    var gtamts = parseFloat(tots) + parseFloat(others);
-                    var gsttot1 = ((gtamts * cgst) / 100);
-                    var gsttot2 = ((gtamts * sgst) / 100);
-                    var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
-                    $("#edpaid").val(gstamt);
-                  } else if (gst == 'Interstate') {
-                    $("#edstates").show();
-                    $("#edsgst").hide();
-                    $("#edcgst").hide();
-
-                    var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
-                    var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
-                    $("#edpaid").val(gstamt);
-                  } else {
-                    var amount = $("#edamount").val();
-                    $("#edpaid").val(amount);
-                  }
+                  var qty = (weight * rate);
+                  var tot = parseFloat(qty) + parseFloat(docs);
+                  $("#edamount").val(tot);
                 }
               });
             }
@@ -1719,7 +1813,6 @@ if ($user_name != "") {
                 var cgst = $("#cgstamt").val();
                 var igst = $("#igstamt").val();
 
-                var docs = $("#docs").val();
                 var other = $("#otherchg").val();
                 if (other != '') {
                   others = other;
@@ -1733,27 +1826,107 @@ if ($user_name != "") {
                 var weights1 = $("#weight1").val();
                 var rates2 = $("#rate2").val();
                 var weights2 = $("#weight2").val();
-               
-                if(rates1!='' && weights1!='')
-                {
+
+                if (rates1 != '' && weights1 != '') {
                   var rates = $("#rate1").val();
-                var weights = $("#weight1").val();
-               }
-               else if(rates2!='' && weights2!='')
-                {
+                  var weights = $("#weight1").val();
+                } else if (rates2 != '' && weights2 != '') {
                   var rates = $("#rate2").val();
-                var weights = $("#weight2").val();
-               }
-               else{
+                  var weights = $("#weight2").val();
+                } else {
+                  var rates = $("#rate").val();
+                  var weights = $("#weight").val();
+                }
+
+                var tot = rates * weights;
+                var doc = $("#docs").val();
+                var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(other);
+                $("#amount").val(tots);
+
+                var amount = $("#amount").val();
+
+                if (gst == 'State') {
+                  $("#states").hide();
+                  $("#sgst").show();
+                  $("#cgst").show();
+
+                  var gstamts = parseFloat(amount);
+                  var gsttot1 = ((gstamts * cgst) / 100);
+                  var gsttot2 = ((gstamts * sgst) / 100);
+                  var gstamt = parseFloat(gstamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+                  $("#paid").val(gstamt);
+                } else if (gst == 'Interstate') {
+                  $("#states").show();
+                  $("#sgst").hide();
+                  $("#cgst").hide();
+
+                  var gsttot1 = parseFloat(amount);
+                  var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+                  $("#paid").val(gstamt);
+                } else {
+                  var amount = $("#amount").val();
+                  $("#paid").val(amount);
+                }
+
+
+              }
+
+            });
+
+          });
+
+          $("#edgst_types").change(function() {
+            var gst = this.value;
+            var booktype = $("#types").val();
+            $.ajax({
+              url: 'ajax/ajax_request.php?action=gstfetchtype',
+              type: 'POST',
+              dataType: "JSON",
+              data: {
+                'action': "gstfetchtype",
+                'gsttype': gst,
+                'booktype': booktype
+              },
+              success: function(response) {
+
+                $("#sgstamt").val(response.data.sgst);
+                $("#cgstamt").val(response.data.cgst);
+                $("#igstamt").val(response.data.igst);
+
+                var sgst = $("#sgstamt").val();
+                var cgst = $("#cgstamt").val();
+                var igst = $("#igstamt").val();
+
+                var other = $("#otherchg").val();
+                if (other != '') {
+                  others = other;
+                } else {
+                  others = 0;
+                }
+
                 var rates = $("#rate").val();
                 var weights = $("#weight").val();
-               }
-             
+                var rates1 = $("#rate1").val();
+                var weights1 = $("#weight1").val();
+                var rates2 = $("#rate2").val();
+                var weights2 = $("#weight2").val();
+
+                if (rates1 != '' && weights1 != '') {
+                  var rates = $("#rate1").val();
+                  var weights = $("#weight1").val();
+                } else if (rates2 != '' && weights2 != '') {
+                  var rates = $("#rate2").val();
+                  var weights = $("#weight2").val();
+                } else {
+                  var rates = $("#rate").val();
+                  var weights = $("#weight").val();
+                }
+
                 var tot = rates * weights;
                 var doc = $("#docs").val();
                 var tots = parseFloat(tot) + parseFloat(doc);
                 $("#amount").val(tots);
-                
+
                 var amount = $("#amount").val();
 
                 if (gst == 'State') {
@@ -1779,57 +1952,9 @@ if ($user_name != "") {
                   $("#paid").val(amount);
                 }
 
-               
+
               }
-
             });
-
-          });
-
-          $("#edgst_types").change(function() {
-            var gst = $('#gst_types').val();
-            var sgst = $("#edsgstamt").val();
-            var cgst = $("#edcgstamt").val();
-            var igst = $("#edigstamt").val();
-
-            var docs = $("#eddocs").val();
-
-            var other = $("#edotherchg").val();
-            if (other != '') {
-              others = other;
-            } else {
-              others = 0;
-            }
-
-            var rates = $("#edrate").val();
-            var weights = $("#edweight").val();
-            var tot = rates * weights;
-            var doc = $("#eddocs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#edamount").val(tots);
-
-            var gst = $("#edgst_types").val();
-            if (gst == 'State') {
-              $("#edstates").hide();
-              $("#edsgst").show();
-              $("#edcgst").show();
-              var gstamts = parseFloat(amount) + parseFloat(others);
-              var gsttot1 = ((gtamts * cgst) / 100);
-              var gsttot2 = ((gtamts * sgst) / 100);
-              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
-              $("#edpaid").val(gstamt);
-            } else if (gst == 'Interstate') {
-              $("#edstates").show();
-              $("#edsgst").hide();
-              $("#edcgst").hide();
-
-              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
-              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
-              $("#edpaid").val(gstamt);
-            } else {
-              var amount = $("#edamount").val();
-              $("#edpaid").val(amount);
-            }
           });
 
 
@@ -1839,7 +1964,6 @@ if ($user_name != "") {
             var cgst = $("#cgstamt").val();
             var igst = $("#igstamt").val();
 
-            var docs = $("#docs").val();
             var other = $("#otherchg").val();
             if (other != '') {
               others = other;
@@ -1885,8 +2009,6 @@ if ($user_name != "") {
             var cgst = $("#edcgstamt").val();
             var igst = $("#edigstamt").val();
 
-            var docs = $("#eddocs").val();
-
             var other = $("#edotherchg").val();
             if (other != '') {
               others = other;
@@ -1926,33 +2048,29 @@ if ($user_name != "") {
           });
 
 
-          $("#weight,#weight1,#weight2").keyup(function() {
+          $("#weight").keyup(function() {
             var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
             var igst = $("#igstamt").val();
 
-            var docs = $("#docs").val();
             var other = $("#otherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            var amounts = $("#amount").val();
-            var amountss = parseFloat(amounts) + parseFloat(others);
-            $("#amount").val(amountss);
-            var amount = $("#amount").val();
 
             var rates = $("#rate").val();
             var weights = $("#weight").val();
             var tot = rates * weights;
 
-
             var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
             $("#amount").val(tots);
+
+            var amount = $("#amount").val();
 
             if (gst == 'State') {
               $("#states").hide();
@@ -1961,8 +2079,7 @@ if ($user_name != "") {
 
               var gsttot1 = ((amount * cgst) / 100);
               var gsttot2 = ((amount * sgst) / 100);
-              var gsta
-              mt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
               $("#paid").val(gstamt);
             } else if (gst == 'Interstate') {
               $("#states").show();
@@ -1979,32 +2096,174 @@ if ($user_name != "") {
 
           });
 
-          $("#rate1").keyup(function() {
-           var gst = $('#gst_types').val();
+          $("#edweight").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            $("#edamount").val(tots);
+
+            var amount = $("#edamount").val();
+
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+
+          });
+
+          $("#rate").keyup(function() {
+            var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
             var igst = $("#igstamt").val();
 
-            var docs = $("#docs").val();
             var other = $("#otherchg").val();
             if (other != '') {
               others = other;
             } else {
               others = 0;
             }
-            var amounts = $("#amount").val();
-            var amountss = parseFloat(amounts) + parseFloat(others);
-            $("#amount").val(amountss);
+
+            var rates = $("#rate").val();
+            var weights = $("#weight").val();
+            var tot = rates * weights;
+
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            // alert(tots)
+            $("#amount").val(tots);
             var amount = $("#amount").val();
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+          });
+
+          $("#edrate").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var tot = rates * weights;
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            // alert(tots)
+            $("#edamount").val(tots);
+            var amount = $("#edamount").val();
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+
+          });
+
+          $("#weight1").keyup(function() {
+            var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
 
             var rates = $("#rate1").val();
             var weights = $("#weight1").val();
             var tot = rates * weights;
 
             var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            // alert(tots)
             $("#amount").val(tots);
+
+            var amount = $("#amount").val();
 
             if (gst == 'State') {
               $("#states").hide();
@@ -2013,8 +2272,7 @@ if ($user_name != "") {
 
               var gsttot1 = ((amount * cgst) / 100);
               var gsttot2 = ((amount * sgst) / 100);
-              var gsta
-              mt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
               $("#paid").val(gstamt);
             } else if (gst == 'Interstate') {
               $("#states").show();
@@ -2031,7 +2289,363 @@ if ($user_name != "") {
 
           });
 
-        $("#otherchg").on("keyup", function() {
+          $("#edweight1").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+           
+            $("#edrate2").val(0);
+            $("#edweight2").val(0);
+
+            var rates = $("#edrate1").val();
+            var weights = $("#edweight1").val();
+            var tot = rates * weights;
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            $("#edamount").val(tots);
+
+            var amount = $("#edamount").val();
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+
+          });
+
+          $("#rate1").keyup(function() {
+            var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#rate1").val();
+            var weights = $("#weight1").val();
+            var tot = rates * weights;
+
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            // alert(tots)
+            $("#amount").val(tots);
+            var amount = $("#amount").val();
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+          });
+
+          $("#edrate1").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            $("#edrate2").val(0);
+            $("#edweight2").val(0);
+
+            var rates = $("#edrate1").val();
+            var weights = $("#edweight1").val();
+            var tot = rates * weights;
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            alert(tots)
+            $("#edamount").val(tots);
+            var amount = $("#edamount").val();
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+
+          });
+
+          $("#weight2").keyup(function() {
+            var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#rate2").val();
+            var weights = $("#weight2").val();
+            var tot = rates * weights;
+
+            $("#edrate2").val(0);
+            $("#edweight2").val(0);
+
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            $("#amount").val(tots);
+
+            var amount = $("#amount").val();
+
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+          });
+
+          $("#edweight2").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+           var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#edrate2").val();
+            var weights = $("#edweight2").val();
+            var tot = rates * weights;
+
+        
+            $("#edrate1").val(0);
+            $("#edweight1").val(0);
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            // alert(tots)
+            $("#edamount").val(tots);
+
+            var amount = $("#edamount").val();
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#edpaid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+
+          });
+
+          $("#rate2").keyup(function() {
+            var gst = $('#gst_types').val();
+            var sgst = $("#sgstamt").val();
+            var cgst = $("#cgstamt").val();
+            var igst = $("#igstamt").val();
+
+            var docs = $("#docs").val();
+            var other = $("#otherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#rate2").val();
+            var weights = $("#weight2").val();
+            var tot = rates * weights;
+
+            var doc = $("#docs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            // alert(tots)
+            $("#amount").val(tots);
+            var amount = $("#amount").val();
+
+            if (gst == 'State') {
+              $("#states").hide();
+              $("#sgst").show();
+              $("#cgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#states").show();
+              $("#sgst").hide();
+              $("#cgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#paid").val(gstamt);
+            } else {
+              var amount = $("#amount").val();
+              $("#paid").val(amount);
+            }
+
+          });
+
+          $("#edrate2").keyup(function() {
+            var gst = $('#edgst_types').val();
+            var sgst = $("#edsgstamt").val();
+            var cgst = $("#edcgstamt").val();
+            var igst = $("#edigstamt").val();
+
+            var docs = $("#eddocs").val();
+            var other = $("#edotherchg").val();
+            if (other != '') {
+              others = other;
+            } else {
+              others = 0;
+            }
+
+            var rates = $("#edrate2").val();
+            var weights = $("#edweight2").val();
+            var tot = rates * weights;
+
+            $("#edrate1").val(0);
+            $("#edweight1").val(0);
+
+            var doc = $("#eddocs").val();
+            var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
+            console.log(tots)
+            // alert(tots)
+            $("#edamount").val(tots);
+            var amount = $("#edamount").val();
+
+            if (gst == 'State') {
+              $("#edstates").hide();
+              $("#edsgst").show();
+              $("#edcgst").show();
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
+              $("#paid").val(gstamt);
+            } else if (gst == 'Interstate') {
+              $("#edstates").show();
+              $("#edsgst").hide();
+              $("#edcgst").hide();
+
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
+              $("#edpaid").val(gstamt);
+            } else {
+              var amount = $("#edamount").val();
+              $("#edpaid").val(amount);
+            }
+          });
+
+          $("#otherchg").on("keyup", function() {
             var gst = $('#gst_types').val();
             var sgst = $("#sgstamt").val();
             var cgst = $("#cgstamt").val();
@@ -2039,8 +2653,22 @@ if ($user_name != "") {
 
             var rates = $("#rate").val();
             var weights = $("#weight").val();
-            var tot = rates * weights;
+            var rate1 = $("#rate1").val();
+            var weight1 = $("#weight1").val();
+            var rate2 = $("#rate2").val();
+            var weight2 = $("#weight2").val();
+            if (rates != "" && weights != "") {
+              var tot = rates * weights;
+            }
+            if (rate1 != "" && weight1 != "") {
+              var tot = rate1 * weight1;
+            }
+            if (rate2 != "" && weight2 != "") {
+              var tot = rate2 * weight2;
+            }
             var doc = $("#docs").val();
+
+
             var tots = parseFloat(tot) + parseFloat(doc);
             $("#amount").val(tots);
 
@@ -2082,13 +2710,34 @@ if ($user_name != "") {
 
           });
 
-          $("#edweight").change(function() {
-            var gst = this.value;
+          $("#edotherchg").on("keyup", function() {
+            var gst = $('#edgst_types').val();
             var sgst = $("#edsgstamt").val();
             var cgst = $("#edcgstamt").val();
             var igst = $("#edigstamt").val();
 
-            var docs = $("#eddocs").val();
+            var rates = $("#edrate").val();
+            var weights = $("#edweight").val();
+            var rate1 = $("#edrate1").val();
+            var weight1 = $("#edweight1").val();
+            var rate2 = $("#edrate2").val();
+            var weight2 = $("#edweight2").val();
+            if (rates != "" && weights != "") {
+              var tot = rates * weights;
+            }
+            if (rate1 != "" && weight1 != "") {
+              var tot = rate1 * weight1;
+            }
+            if (rate2 != "" && weight2 != "") {
+              var tot = rate2 * weight2;
+            }
+            var doc = $("#eddocs").val();
+
+
+            var tots = parseFloat(tot) + parseFloat(doc);
+            $("#edamount").val(tots);
+
+            // alert(tots)
 
             var other = $("#edotherchg").val();
             if (other != '') {
@@ -2097,131 +2746,36 @@ if ($user_name != "") {
               others = 0;
             }
 
-            var rates = $("#edrate").val();
-            var weights = $("#edweight").val();
-            var tot = rates * weights;
-            var doc = $("#eddocs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#edamount").val(tots);
-
-            var gst = $("#edgst_types").val();
+            var amounts = $("#edamount").val();
+            var amountss = parseFloat(amounts) + parseFloat(others);
+            $("#edamount").val(amountss);
+            var amount = $("#edamount").val();
             if (gst == 'State') {
               $("#edstates").hide();
               $("#edsgst").show();
               $("#edcgst").show();
-              var gtamts = parseFloat(tots) + parseFloat(others);
-              var gsttot1 = ((gtamts * cgst) / 100);
-              var gsttot2 = ((gtamts * sgst) / 100);
-              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
+
+              var gsttot1 = ((amount * cgst) / 100);
+              var gsttot2 = ((amount * sgst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(gsttot2);
               $("#edpaid").val(gstamt);
             } else if (gst == 'Interstate') {
               $("#edstates").show();
               $("#edsgst").hide();
               $("#edcgst").hide();
 
-              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
-              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
+              var gsttot1 = ((amount * igst) / 100);
+              var gstamt = parseFloat(amount) + parseFloat(gsttot1);
               $("#edpaid").val(gstamt);
             } else {
               var amount = $("#edamount").val();
               $("#edpaid").val(amount);
             }
+
+
           });
 
-
-          $("#rate").change(function() {
-            var gst = this.value;
-            var sgst = $("#sgstamt").val();
-            var cgst = $("#cgstamt").val();
-            var igst = $("#igstamt").val();
-
-            var docs = $("#docs").val();
-            var other = $("#otherchg").val();
-            if (other != '') {
-              others = other;
-            } else {
-              others = 0;
-            }
-            var amount = $("#amount").val();
-
-            if (gst == 'State') {
-              $("#states").hide();
-              $("#sgst").show();
-              $("#cgst").show();
-
-              var gstamts = parseFloat(amount) + parseFloat(others);
-              var gsttot1 = ((gstamts * cgst) / 100);
-              var gsttot2 = ((gstamts * sgst) / 100);
-              var gstamt = parseFloat(gstamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
-              $("#paid").val(gstamt);
-            } else if (gst == 'Interstate') {
-              $("#states").show();
-              $("#sgst").hide();
-              $("#cgst").hide();
-
-              var gsttot1 = parseFloat(amount) + parseFloat(others);
-              var gstamt = parseFloat(gsttot1) + ((amount * igst) / 100);
-              $("#paid").val(gstamt);
-            } else {
-              var amount = $("#amount").val();
-              $("#paid").val(amount);
-            }
-
-            var rates = $("#rate").val();
-            var weights = $("#weight").val();
-            var tot = rates * weights;
-            var doc = $("#docs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#amount").val(tots);
-          });
-
-          $("#edrate").change(function() {
-            var gst = this.value;
-            var sgst = $("#edsgstamt").val();
-            var cgst = $("#edcgstamt").val();
-            var igst = $("#edigstamt").val();
-
-            var docs = $("#eddocs").val();
-
-            var other = $("#edotherchg").val();
-            if (other != '') {
-              others = other;
-            } else {
-              others = 0;
-            }
-
-            var rates = $("#edrate").val();
-            var weights = $("#edweight").val();
-            var tot = rates * weights;
-            var doc = $("#eddocs").val();
-            var tots = parseFloat(tot) + parseFloat(doc);
-            $("#edamount").val(tots);
-
-            var gst = $("#edgst_types").val();
-            if (gst == 'State') {
-              $("#edstates").hide();
-              $("#edsgst").show();
-              $("#edcgst").show();
-              var gtamts = parseFloat(tots) + parseFloat(others);
-              var gsttot1 = ((gtamts * cgst) / 100);
-              var gsttot2 = ((gtamts * sgst) / 100);
-              var gstamt = parseFloat(gtamts) + parseFloat(gsttot1) + parseFloat(gsttot2);
-              $("#edpaid").val(gstamt);
-            } else if (gst == 'Interstate') {
-              $("#edstates").show();
-              $("#edsgst").hide();
-              $("#edcgst").hide();
-
-              var gsttot1 = parseFloat(amount) + parseFloat(gsttot1) + parseFloat(others);
-              var gstamt = parseFloat(gsttot1) + ((gsttot1 * igst) / 100);
-              $("#edpaid").val(gstamt);
-            } else {
-              var amount = $("#edamount").val();
-              $("#edpaid").val(amount);
-            }
-          });
-
-          $("#bookupdationmno").click(function(e) {
+         $("#bookupdationmno").click(function(e) {
             e.preventDefault();
             var mcreationdate = $('#mcreationdate').val();
             var mno = $("#mno").val();
@@ -2283,8 +2837,12 @@ if ($user_name != "") {
             var quantity = $('#quantity').val();
             var gross = $('#gross').val();
             var weight = $('#weight').val();
-            var docs = $('#docs').val();
             var rate = $('#rate').val();
+            var weight1 = $('#weight1').val();
+            var rate1 = $('#rate1').val();
+            var weight2 = $('#weight2').val();
+            var rate2 = $('#rate2').val();
+            var docs = $('#docs').val();
             var amount = $('#amount').val();
             var othercharge = $('#otherchg').val();
             var paymentmode = $('#paymentmode').val();
@@ -2330,8 +2888,12 @@ if ($user_name != "") {
                 'quantity': quantity,
                 'gross': gross,
                 'weight': weight,
-                'docs': docs,
                 'rate': rate,
+                'weight1': weight1,
+                'rate1': rate1,
+                'weight2': weight2,
+                'rate2': rate2,
+                'docs': docs,
                 'amount': amount,
                 'othercharge': othercharge,
                 'gst_types': gst_types,
@@ -2365,83 +2927,7 @@ if ($user_name != "") {
                 }
               }
             });
-            // } 
-            // else {
-            //   if (type == '' || type == null) {
-            //     $("#booktypes").show();
-            //   }
-
-            //   if (origin == '') {
-            //     $("#bookorigin").show();
-            //   }
-
-            //   if (destination == '') {
-            //     $("#bookdestination").show();
-            //   }
-
-            //   if (area == '') {
-            //     $("#bookarea").show();
-            //   }
-
-            //   if (coraddress == '') {
-            //     $("#bookfromaddress").show();
-            //   }
-
-            //   if (conaddress == '') {
-            //     $("#booktoaddress").show();
-            //   }
-
-            //   if (transports == '') {
-            //     $("#booktransport").show();
-            //   }
-
-            //   if (packs == '') {
-            //     $("#bookpack").show();
-            //   }
-
-            //   if (invoiceno == '') {
-            //     $("#bookinvno").show();
-            //   }
-
-            //   if (describe == '') {
-            //     $("#bookdescribe").show();
-            //   }
-
-            //   if (quantity == '') {
-            //     $("#bookquantity").show();
-            //   }
-
-            //   if (gross == '') {
-            //     $("#bookgross").show();
-            //   }
-
-            //   if (weight == '') {
-            //     $("#bookweights").show();
-            //   }
-
-            //   if (rate == '') {
-            //     $("#bookrate").show();
-            //   }
-
-            //   if (amount == '') {
-            //     $("#bookamount").show();
-            //   }
-
-            //   if (amount == '') {
-            //     $("#bookamount").show();
-            //   }
-
-            //   if (paymentmode == '' || paymentmode == null) {
-            //     $("#bookpayment").show();
-            //   }
-
-            //   if (paid == '') {
-            //     $("#bookpaid").show();
-            //   }
-
-            // }
-
-          });
+                     });
 
           $(".bookingdeletion").click(function(e) {
             e.preventDefault();
@@ -2511,12 +2997,16 @@ if ($user_name != "") {
                 $("#edtransport").val(response.data.transport);
 
                 $('#edpacks').val(response.data.pack);
-                $('#edrate').val(response.data.rate);
                 $('#edinvoiceno').val(response.data.invoiceno);
                 $('#eddescribe').val(response.data.description);
                 $('#edquantity').val(response.data.quantity);
                 $('#edgross').val(response.data.gross);
                 $('#edweight').val(response.data.weight);
+                $('#edrate').val(response.data.rate);
+                $('#edweight1').val(response.data.weight1);
+                $('#edrate1').val(response.data.rate1);
+                $('#edweight2').val(response.data.weight2);
+                $('#edrate2').val(response.data.rate2);
                 $('#edamount').val(response.data.amount);
                 $('#edotherchg').val(response.data.othercharge);
                 $('#edgst_types').val(response.data.gst);
@@ -2529,6 +3019,32 @@ if ($user_name != "") {
                   $("#edsgst").hide();
                   $("#edcgst").hide();
                 }
+
+                var typess = $("#edtypes").val();
+                if (typess == "Air") {
+                  $("#edweights1").show();
+                  $("#edweight30").show();
+                  $("#edweight50").show();
+                  $("#edrates1").show();
+                  $("#edrate30").show();
+                  $("#edrate50").show();
+                } else if (typess == "Train") {
+
+                  $("#edweights1").show();
+                  $("#edweight30").hide();
+                  $("#edweight50").hide();
+                  $("#edrates1").show();
+                  $("#edrate30").hide();
+                  $("#edrate50").hide();
+                } else {
+                  $("#edweights1").show();
+                  $("#edweight30").hide();
+                  $("#edweight50").hide();
+                  $("#edrates1").show();
+                  $("#edrate30").hide();
+                  $("#edrate50").hide();
+                }
+
                 $('#edpaymentmode').val(response.data.paymentmode);
                 $('#edpaid').val(response.data.paid);
 
@@ -2542,6 +3058,7 @@ if ($user_name != "") {
             var creationdate = $('#edcreationdate').val();
             var value = $('#edpartyname').val();
             var partyid = $('#ed_parties [value="' + value + '"]').data('value');
+            // alert(partyid)
             var type = $('#edtypes').val();
             var route = $('#edroute').val();
             var origin = $('#edorigin').val();
@@ -2560,8 +3077,12 @@ if ($user_name != "") {
             var quantity = $('#edquantity').val();
             var gross = $('#edgross').val();
             var weight = $('#edweight').val();
-            var docs = $('#eddocs').val();
             var rate = $('#edrate').val();
+            var weight1 = $('#edweight1').val();
+            var rate1 = $('#edrate1').val();
+            var weight2 = $('#edweight2').val();
+            var rate2 = $('#edrate2').val();
+            var docs = $('#eddocs').val();
             var amount = $('#edamount').val();
             var othercharge = $('#edotherchg').val();
             var paymentmode = $('#edpaymentmode').val();
@@ -2605,8 +3126,12 @@ if ($user_name != "") {
                 'quantity': quantity,
                 'gross': gross,
                 'weight': weight,
-                'docs': docs,
                 'rate': rate,
+                'weight1': weight1,
+                'rate1': rate1,
+                'weight2': weight2,
+                'rate2': rate2,
+                'docs': docs,
                 'amount': amount,
                 'othercharge': othercharge,
                 'gst_types': gst_types,
@@ -2644,7 +3169,25 @@ if ($user_name != "") {
 
           });
 
-
+          $(".upload_image").click(function(e) {
+                        e.preventDefault();
+                        var bookeid = $(this).attr("imgids");
+                        // alert(bookeid)
+                        $("#edbookid").val(bookeid);
+                        $.ajax({
+                url: 'ajax/ajax_request.php?action=partyimg',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "partyimg",
+                  'id': bookeid
+                 },
+                success: function(response) {
+                    var path="uploads/"+response.data.proofdoc;
+                    $('#delimg').attr("src",path);
+                  }
+                });
+                });
 
         });
       </script>

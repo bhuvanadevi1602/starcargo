@@ -122,9 +122,9 @@ if(isset($_POST['login'])){
     $exe=$con->prepare($query);
     $data=[':username'=>$username,':password'=>$password];
     $queryexecute=$exe->execute($data);
-    $count=$exe->rowCount();
+   $count=$exe->rowCount();
+    // print_r($count);die();
     
- 
   if($count>0){
     $_SESSION['user_name']=$username;
     echo "<script type='text/javascript'>
