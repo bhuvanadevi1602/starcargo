@@ -26,8 +26,8 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
 
    $output1.="Hi,,";
 
-        $output .= '<table class="table table-bordered" border="1" style="border-collapse:collapse">  
-        <tr rowspan="12" align="center"><td colspan="3"><img src="assets/images/Star-cargo-logo.png" style="width=10% !important;height: 10%px !important;"/></td>
+        $output .= '<table  class="table table-bordered" border="1" style="border-collapse:collapse">  
+        <tr rowspan="12" align="center"><td colspan="3"><img src="assets/images/Star-cargo-logo.png" style="width=50px !important;height: 50px !important;"/></td>
         <td colspan="9">
      STAR CARGO SYSTEM<br/>
      (An ultimate name in cargo services)<br/>
@@ -146,8 +146,8 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
         <td></td> 
         <td></td>  
         <td></td>   
-          <td>Total</td>   
           <td></td>   
+          <td>Total</td>   
           <td>'.$qty.'</td>   
           <td>'.$weight.'</td>   
           <td></td>   
@@ -166,8 +166,8 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
         <td></td> 
         <td></td>  
         <td></td>   
-          <td>IGST</td>   
           <td></td>   
+          <td>IGST</td>   
           <td>'.$value['igst'].'%</td>   
           <td></td>   
           <td></td>   
@@ -179,13 +179,13 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
    <td></td> 
    <td></td>  
    <td></td>   
-     <td>Round Off</td>   
      <td></td>   
      <td></td>   
      <td></td>   
      <td></td>   
      <td></td>   
-   <td></td>   
+     <td></td>   
+   <td>Round Off</td>   
    <td>'.round($roffs,2).'</td>   
     
    </tr>';
@@ -201,8 +201,8 @@ $grand=$net+$sgstamt+$cgstamt;
     <td></td> 
     <td></td>  
     <td></td>   
-      <td>SGST</td>   
       <td></td>   
+      <td>SGST</td>   
       <td>'.$value['sgst'].'%</td>   
       <td></td>   
       <td></td>   
@@ -215,8 +215,8 @@ $grand=$net+$sgstamt+$cgstamt;
 <td></td> 
 <td></td>  
 <td></td>   
-  <td>CGST</td>   
   <td></td>   
+  <td>CGST</td>   
   <td>'.$value['cgst'].'%</td>   
   <td></td>   
   <td></td>   
@@ -229,13 +229,13 @@ $grand=$net+$sgstamt+$cgstamt;
 <td></td> 
 <td></td>  
 <td></td>   
-  <td>Round Off</td>   
   <td></td>   
   <td></td>   
   <td></td>   
   <td></td>   
   <td></td>   
-<td></td>   
+  <td></td>   
+<td>Round Off</td>   
 <td>'.round($roff,2).'</td>   
  
 </tr>';
@@ -246,13 +246,13 @@ $grand=$net+$sgstamt+$cgstamt;
    <td></td> 
    <td></td>  
    <td></td>   
-     <td>Grand Total</td>   
      <td></td>   
      <td></td>   
      <td></td>   
      <td></td>   
      <td></td>   
-   <td></td>   
+     <td></td>   
+   <td>Grand Total</td>   
    <td>'.round($grand,0).'</td>   
     
    </tr>
@@ -297,9 +297,9 @@ $grand=$net+$sgstamt+$cgstamt;
   </table>';
         
         // $filename = "table_data_export_".date('Ymd') . ".xls"; 
-        $filename = "Air ".$result2['partyname']." ".$fromdate." - ".$todate. ".xls";         
-        header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=\"$filename\"");  
+        // $filename = "Air ".$result2['partyname']." ".$fromdate." - ".$todate. ".xls";         
+        // header("Content-Type: application/vnd.ms-excel");
+        // header("Content-Disposition: attachment; filename=\"$filename\"");  
             echo $output;
       }   
 ?>

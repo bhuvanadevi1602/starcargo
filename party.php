@@ -87,7 +87,7 @@ if ($user_name != "") {
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label for="validationCustom03" class="form-label">Mobile</label>
-                                                                <input type="number" class="form-control" id="detpartymobile" name="detpartymobile" required>
+                                                                <input type="number" class="form-control" id="detpartymobile" name="detpartymobile">
                                                                 <div class="invalid-feedback" id="detpartymobile">
                                                                     Please provide a valid Mobile.
                                                                 </div>
@@ -153,7 +153,7 @@ if ($user_name != "") {
                                                             </div>
    <div class="col-md-3">
                                                                 <label for="validationCustom03" class="form-label">GST No</label>
-                                                                <input type="text" class="form-control" name="detpartygst" id="detpartygst" required>
+                                                                <input type="text" class="form-control" name="detpartygst" id="detpartygst">
                                                                   <div class="invalid-feedback" id="rate">
                                                                     Please provide a valid Rate.
                                                                 </div>
@@ -287,7 +287,7 @@ if ($user_name != "") {
                                         </div>
                                         <div class="col-md-3">
                                             <label for="validationCustom03" class="form-label">Mobile</label>
-                                            <input type="number" class="form-control" id="edpartymobile" name="edpartymobile" required>
+                                            <input type="number" class="form-control" id="edpartymobile" name="edpartymobile">
                                             <div class="invalid-feedback" id="edpartymobilem">
                                                 Please provide a valid Mobile.
                                             </div>
@@ -521,7 +521,7 @@ if ($user_name != "") {
                         var airp = $("#airprice").val();
                         var trainp = $("#trainprice").val();
 
-                        if (partyname != "" && mobile != "" && types != "") {
+                        if (partyname != "" && types != "") {
                             $("#invalid-type").hide();
                             $.ajax({
                                 url: 'ajax/ajax_request.php?action=userpartydetail',
@@ -544,7 +544,7 @@ if ($user_name != "") {
                                         Swal.fire({
                                             position: 'top-end',
                                             icon: 'success',
-                                            title: 'User Created',
+                                            title: 'Party Created',
                                             showConfirmButton: false,
                                             timer: 3000
                                         }).then(function() {
@@ -554,7 +554,7 @@ if ($user_name != "") {
                                         Swal.fire({
                                             position: 'top-end',
                                             icon: 'error',
-                                            title: 'User Create Failed',
+                                            title: 'Party Create Failed',
                                             showConfirmButton: false,
                                             timer: 3000
                                         }).then(function() {

@@ -11,9 +11,9 @@ $month=date("M",$time);
 
    $output = "";
          
-        $output .= '<table class="table table-bordered" border="1">  
-        <tr rowspan="16" align="center"><td colspan="5"><img src="assets/images/Star-cargo-logo.png" style="width:10% !important;height: 10% !important;"/></td>
-        <td colspan="13">
+        $output .= '<table   class="table table-bordered" border="1" style="border-collapse:collapse">  
+        <tr rowspan="16" align="center"><td colspan="5"><img src="http://localhost/star_cargo/assets/images/Star-cargo-logo.png" style="width:50px !important;height: 50px !important;"/></td>
+        <td colspan="11">
      STAR CARGO SYSTEM<br/>
      (An ultimate name in cargo services)<br/>
      CHENNAI Off : # 5/8,Macfor Lane, 1st Floor Periamet Chennai - 600 003.<br/>
@@ -82,9 +82,9 @@ $month=date("M",$time);
 </table>';
         
         // $filename = "table_data_export_".date('Ymd') . ".xls";         
-        $filename = "Details ".$month. ".xls";         
-        header("Content-Type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=\"$filename\"");  
+      //   $filename = "Details ".$month. ".xls";         
+      //   header("Content-Type: application/vnd.ms-excel");
+      //   header("Content-Disposition: attachment; filename=\"$filename\"");  
         echo $output;
       }   
 ?>

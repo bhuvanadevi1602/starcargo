@@ -1,5 +1,51 @@
-<?php include('include/config.php');
- //export table data to excel
+<?php
+session_start();
+error_reporting(0);
+$user_name = $_SESSION['user_name'];
+include('include/config.php');
+$dates = date("Y-m-d");
+// print_r($user_name);die();
+if ($user_name != "") {
+  include('header.php');
+  $types = $_SESSION['types'];
+  $roles = $_SESSION['role'];
+  // print_r($_SESSION);die();
+?>
+  <!DOCTYPE html>
+<script>
+    window.onload = function() { window.print(); }
+    </script>
+  
+  <div class="page-wrapper">
+
+    <!-- Page Content-->
+    <div class="page-content-tab">
+
+      <div class="container-fluid">
+        <!-- Page-Title -->
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="page-title-box">
+              <div class="float-end">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="#">Booking</a></li>
+                  <li class="breadcrumb-item"><a href="#">Tables</a></li>
+                  <li class="breadcrumb-item active">Datatables</li>
+                </ol>
+              </div>
+            </div>
+            <!--end page-title-box-->
+          </div>
+          <!--end col-->
+        </div>
+        <!-- end page title end breadcrumb -->
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <div class="row col-md-12">
+                <?php
+
 if(isset($_GET['export']))
 {
 
@@ -22,8 +68,11 @@ $exe2->execute($data2);
 $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
 
    $output = "";
-         
-        $output .= '<table class="table table-bordered" border="1" style="border-collapse:collapse">  
+   $output1 = "";
+
+   $output1.="Hi,,";
+
+        $output .= '<table  class="table table-bordered" border="1" style="border-collapse:collapse">  
         <tr rowspan="12" align="center"><td colspan="3"><img src="assets/images/Star-cargo-logo.png" style="width=50px !important;height: 50px !important;"/></td>
         <td colspan="9">
      STAR CARGO SYSTEM<br/>
@@ -36,7 +85,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
      <tr rowspan="12">
      <td colspan="3" align="left">  To
      </td>	
-     <td colspan="6" align="center">  By Train Invoice
+     <td colspan="6" align="center">  By Air Invoice
      </td>		
      <td colspan="3"> Pan No: EEUPS8160H
      </td>			
@@ -92,7 +141,7 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
                           <th scope="col">Total</th>
                     </tr>';
              
-   $sql = "SELECT * from booking where type='Train' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$partyid'  ORDER BY id ASC";
+   $sql = "SELECT * from booking where type='Air' and (creationdate>='$fromdate' and creationdate<='$todate') and partyid='$partyid'  ORDER BY id ASC";
    $stmt = $con->prepare($sql);
    $stmt->execute();
    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);   
@@ -123,20 +172,21 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
                     </tr>';  
         }
           
-        $output .= '
-        <tr>
-        <td>&nbsp;</td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
-        <td></td>   
-        <td></td> 
+        $output .= '  <tr>
+<td>&nbsp;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+        </tr>
+       
         <tr>  
         <td></td>   
         <td></td> 
@@ -151,7 +201,8 @@ $result2 = $exe2->fetch(PDO::FETCH_ASSOC);
         <td></td>   
         <td>'.$net.'</td>   
          
-   </tr>';
+   </tr>
+   ';
    if($value['igst']!=0){
     $igstamt=($value['igst']*$net)/100;
     $roffs=fmod($igstamt, 1);
@@ -250,7 +301,8 @@ $grand=$net+$sgstamt+$cgstamt;
    <td>Grand Total</td>   
    <td>'.round($grand,0).'</td>   
     
-   </tr><tr>  
+   </tr>
+ <tr>  
    <td colspan="12" align="center"> OUR ACCOUNT DETAIL BELOW	</td>										
     </tr>
     <tr>  
@@ -290,10 +342,20 @@ $grand=$net+$sgstamt+$cgstamt;
  </tr>	
   </table>';
         
-        // $filename = "table_data_export_".date('Ymd') . ".xls";         
-        // $filename = "Train ".$result['partyname']." ".$fromdate." - ".$todate . ".xls";         
+        // $filename = "table_data_export_".date('Ymd') . ".xls"; 
+        // $filename = "Air ".$result2['partyname']." ".$fromdate." - ".$todate. ".xls";         
         // header("Content-Type: application/vnd.ms-excel");
         // header("Content-Disposition: attachment; filename=\"$filename\"");  
-        echo $output;
+            echo $output;
       }   
+
 ?>
+            </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <?php } ?>

@@ -132,11 +132,13 @@ if ($user_name != "") {
                       if ($partytypes == "Air") {
                       ?>
                         <a href="exportair.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Export CSV</a>
-                      <?php } else if ($partytypes == "Train") { ?>
+                        <a href="exportsair.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Print</a>
+                       <?php } else if ($partytypes == "Train") { ?>
                         <a href="exporttrain.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Export CSV</a>
+                        <a href="exportstrain.php?export&fromdate=<?= $fromdate ?>&todate=<?= $todate ?>&type=<?= $partytypes ?>&partyname=<?= $pid ?>" class="btn btn-sm btn-de-primary csv p-2" target="_blank">Print</a>
                       <?php } else { ?>
                         <a href="#" class="btn btn-sm btn-de-primary csv p-2">Export CSV</a>
-
+                      
                       <?php } ?>
                     </div>
 
@@ -165,6 +167,13 @@ if ($user_name != "") {
                               <div class="col-md-2">
                                 <label for="validationCustom01" class="form-label">Date</label>
                                 <input type="date" class="form-control" id="creationdate" name="creationdate" value="<?= $dates ?>" required>
+                                <div class="invalid-feedback">
+                                  Please provide a valid Date.
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <label for="validationCustom01" class="form-label">Running Date</label>
+                                <input type="date" class="form-control" id="runcreationdate" name="runcreationdate" value="<?= $dates ?>" required>
                                 <div class="invalid-feedback">
                                   Please provide a valid Date.
                                 </div>
@@ -204,7 +213,7 @@ if ($user_name != "") {
                                   </div>
                               </div>
 
-                              <div class="col-md-2">
+                              <div class="col-md-3">
                                 <label for="validationCustom03" class="form-label">Route</label>
                                 <input list="edroutes" class="form-control" name="route" id="route">
 
@@ -369,7 +378,7 @@ if ($user_name != "") {
                                 </div>
                               </div> -->
 
-                              <div class="col-md-6">
+                              <div class="col-md-4">
                                 <label for="validationCustom05" class="form-label">Area</label>
                                 <textarea class="form-control" id="area" name="area" required></textarea>
                                 <div class="invalid-feedback" id="bookarea">
@@ -385,7 +394,7 @@ if ($user_name != "") {
                                 </div>
                               </div>
 
-                              <div class="col-md-3" id="validationCustom05">
+                              <div class="col-md-2" id="validationCustom05">
                                 <label for="validationCustom05" class="form-label">Transport</label>
                                 <div class="col-md-12 mt-1">
                                   <input list="transports" class="form-control" name="transport" id="transport">
@@ -450,7 +459,7 @@ if ($user_name != "") {
                               </div>
                               <div class="col-md-2">
                                 <label for="validationCustom05" class="form-label">Said to Content</label>
-                                <input type="text" class="form-control" id="describe" name="describe" required>
+                                <input type="text" class="form-control" id="describe" name="describe">
                                 <div class="invalid-feedback" id="bookdescribe">
                                   Please provide a valid Said to Content.
                                 </div>
@@ -591,7 +600,7 @@ if ($user_name != "") {
                               </div>
 
                               <div class="col-md-2" id="states">
-                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount (%)</label>
                                 <div class="col-sm-12">
                                   <input type="text" name="igstamt" id="igstamt" value="5" class="form-control">
                                 </div>
@@ -601,7 +610,7 @@ if ($user_name != "") {
                               </div>
 
                               <div class="col-md-2" id="cgst">
-                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount (%)</label>
                                 <div class="col-sm-12">
                                   <input type="text" name="cgstamt" id="cgstamt" value="2.5" class="form-control">
                                 </div>
@@ -611,7 +620,7 @@ if ($user_name != "") {
                               </div>
 
                               <div class="col-md-2" id="sgst">
-                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
+                                <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount (%)</label>
                                 <div class="col-sm-12">
                                   <input type="text" name="sgstamt" id="sgstamt" value="2.5" class="form-control">
                                 </div>
@@ -690,6 +699,7 @@ if ($user_name != "") {
                         <th>S.No</th>
                         <th>M.No</th>
                         <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                        <th data-type="date" data-format="YYYY/DD/MM">Run Date</th>
                         <th>Party</th>
                         <th>Type</th>
                         <th>From - To</th>
@@ -700,6 +710,7 @@ if ($user_name != "") {
                         <th>Amount</th>
                         <th>GST</th>
                         <th>Payment</th>
+                        <th>Status</th>
                         <th colspan="3">Action</th>
                       </tr>
                     </thead>
@@ -744,7 +755,8 @@ if ($user_name != "") {
                             <td><?= $i ?></td>
                             <td><?= $book['mno'] ?></td>
                             <td><?= $book['creationdate'] ?></td>
-                            <td><?= $resultbookp['partyname'] ?></td>
+                            <td><?= $book['runningdate'] ?></td>
+                             <td><?= $resultbookp['partyname'] ?></td>
                             <td><?= $book['type'] ?></td>
                             <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
                             <td><?= $book['origin'] . " - " . $book['destination'] ?></td>
@@ -754,6 +766,11 @@ if ($user_name != "") {
                             <td><?= $book['amount'] ?></td>
                             <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
                             <td><?= $book['paid'] ?></td>
+                            <?php if($book['status']!="") { ?>
+                              <td> <button class="btn btn-sm btn-warning"><?=$book["status"]?></button></td>
+                                    <?php } else { ?>
+                            <td>-</td>
+                            <?php } ?>
                             <td>
                               <button type="button" class="btn btn-primary btn-sm edit_book" data-bs-toggle="modal" data-bs-target="#editbooking" ids="<?= $book['id'] ?>">
                                 <i class="fa fa-pen"></i>
@@ -872,6 +889,13 @@ if ($user_name != "") {
                         Please provide a valid Date.
                       </div>
                     </div>
+                    <div class="col-md-2">
+                      <label for="validationCustom01" class="form-label">Date</label>
+                      <input type="date" class="form-control" id="edrunningdate" name="edrunningdate" value="<?= $dates ?>" required>
+                      <div class="invalid-feedback">
+                        Please provide a valid Date.
+                      </div>
+                    </div>
                     <div class="col-md-3">
                       <label for="validationCustom01" class="form-label">Party Name</label>
                       <input list="ed_parties" class="form-control" name="edpartyname" id="edpartyname">
@@ -906,7 +930,7 @@ if ($user_name != "") {
                         </div>
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                       <label for="validationCustom03" class="form-label">Route</label>
                       <input list="e_droutes" class="form-control" name="edroute" id="edroute">
 
@@ -1071,7 +1095,7 @@ if ($user_name != "") {
                                 </div>
                               </div> -->
 
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                       <label for="validationCustom05" class="form-label">Area</label>
                       <textarea class="form-control" id="edarea" name="edarea" required></textarea>
                       <div class="invalid-feedback" id="bookarea">
@@ -1087,7 +1111,7 @@ if ($user_name != "") {
                       </div>
                     </div>
 
-                    <div class="col-md-3" id="validationCustom05">
+                    <div class="col-md-2" id="validationCustom05">
                       <label for="validationCustom05" class="form-label">Transport</label>
                       <div class="col-md-12 mt-1">
                         <input list="transport_s" class="form-control" name="edtransport" id="edtransport">
@@ -1291,7 +1315,7 @@ if ($user_name != "") {
                     </div>
 
                     <div class="col-md-2" id="edstates">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount</label>
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">IGST Amount (%)</label>
                       <div class="col-sm-12">
                         <input type="text" name="edigstamt" id="edigstamt" value="5" class="form-control">
                       </div>
@@ -1301,7 +1325,7 @@ if ($user_name != "") {
                     </div>
 
                     <div class="col-md-2" id="edcgst">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount</label>
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">CGST Amount (%)</label>
                       <div class="col-sm-12">
                         <input type="text" name="edcgstamt" id="edcgstamt" value="2.5" class="form-control">
                       </div>
@@ -1311,7 +1335,7 @@ if ($user_name != "") {
                     </div>
 
                     <div class="col-md-2" id="edsgst">
-                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount</label>
+                      <label for="validationCustom05" class="form-label" style="font-weight:1000;color:#6d81f5;">SGST Amount (%)</label>
                       <div class="col-sm-12">
                         <input type="text" name="edsgstamt" id="edsgstamt" value="2.5" class="form-control">
                       </div>
@@ -1720,7 +1744,8 @@ if ($user_name != "") {
                       $("#weight").val(response.data.weight);
                     }
                   }
-
+                  $("#area").val(response.data.partyaddress);
+              
                   var weight = $("#weight").val();
                   var rate = $("#rate").val();
                   var amount = weight * rate;
@@ -1840,7 +1865,8 @@ if ($user_name != "") {
 
                 var tot = rates * weights;
                 var doc = $("#docs").val();
-                var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(other);
+
+                var tots = parseFloat(tot) + parseFloat(doc) + parseFloat(others);
                 $("#amount").val(tots);
 
                 var amount = $("#amount").val();
@@ -2817,6 +2843,7 @@ if ($user_name != "") {
           $("#bookcreation").click(function(e) {
             e.preventDefault();
             var creationdate = $('#creationdate').val();
+            var runcreationdate = $('#runcreationdate').val();
             var value = $('#partyname').val();
             var partyid = $('#edparties [value="' + value + '"]').data('value');
             var type = $('#types').val();
@@ -2871,6 +2898,7 @@ if ($user_name != "") {
               data: {
                 'action': "bookcreation",
                 'creationdate': creationdate,
+                'runcreationdate':runcreationdate,
                 'partyid': partyid,
                 'type': type,
                 'route': route,
@@ -3056,7 +3084,8 @@ if ($user_name != "") {
             e.preventDefault();
             var ids = $('#ed_bookid').val();
             var creationdate = $('#edcreationdate').val();
-            var value = $('#edpartyname').val();
+            var runningdate = $('#edrunningdate').val();
+        var value = $('#edpartyname').val();
             var partyid = $('#ed_parties [value="' + value + '"]').data('value');
             // alert(partyid)
             var type = $('#edtypes').val();
@@ -3109,6 +3138,7 @@ if ($user_name != "") {
                 'action': "bookupdation",
                 'ids': ids,
                 'creationdate': creationdate,
+                'rundate':runningdate,
                 'partyid': partyid,
                 'type': type,
                 'route': route,

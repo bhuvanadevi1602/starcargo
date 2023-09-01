@@ -100,6 +100,7 @@ if ($user_name != "") {
                                                 <th>S.No</th>
                                                 <th>M.No</th>
                                                 <th data-type="date" data-format="YYYY/DD/MM">Date</th>
+                                                <th data-type="date" data-format="YYYY/DD/MM">Run Date</th>
                                                 <th>Party</th>
                                                 <th>Type</th>
                                                 <th>From - To</th>
@@ -110,8 +111,8 @@ if ($user_name != "") {
                                                 <th>Amount</th>
                                                 <th>GST</th>
                                                 <th>Payment</th>
+                                                <th>Status</th>
                                                 <th colspan="3">Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -142,6 +143,7 @@ if ($user_name != "") {
                                                         <td><?= $i ?></td>
                                                         <td><?= $book['mno'] ?></td>
                                                         <td><?= $book['creationdate'] ?></td>
+                                                        <td><?= isset($book['runningdate'])?$book['runningdate']:""; ?></td>
                                                         <td><?= $resultbookp['partyname'] ?></td>
                                                         <td><?= $book['type'] ?></td>
                                                         <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
@@ -152,7 +154,12 @@ if ($user_name != "") {
                                                         <td><?= $book['amount'] ?></td>
                                                         <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
                                                         <td><?= $book['paid'] ?></td>
-                                                        <td>
+                                                        <?php if($book['status']!="") { ?>
+                              <td> <button class="btn btn-sm btn-warning"><?=$book["status"]?></button></td>
+                                    <?php } else { ?>
+                            <td>-</td>
+                            <?php } ?>
+                               <td>
                                                             <button type="button" class="btn btn-primary btn-sm upload_book" data-bs-toggle="modal" data-bs-target="#uploadbooking" ids="<?= $book['id'] ?>">
                                                                 <i class="fa fa-upload"></i>
                                                             </button>
@@ -197,7 +204,8 @@ if ($user_name != "") {
                                                         <td><?= $i ?></td>
                                                         <td><?= $book['mno'] ?></td>
                                                         <td><?= $book['creationdate'] ?></td>
-                                                        <td><?= $resultbookp['partyname'] ?></td>
+                                                        <td><?= isset($book['runningdate'])?$book['runningdate']:""; ?></td>
+                                                           <td><?= $resultbookp['partyname'] ?></td>
                                                         <td><?= $book['type'] ?></td>
                                                         <td><?= $book['coraddress'] . " - " . $book['conaddress'] ?></td>
                                                         <td><?= $book['origin'] . " - " . $book['destination'] ?></td>
@@ -207,7 +215,11 @@ if ($user_name != "") {
                                                         <td><?= $book['amount'] ?></td>
                                                         <td><?= ($book['gst'] != "") ? $book['gst'] : "-" ?></td>
                                                         <td><?= $book['paid'] ?></td>
-                                                        <td>
+                                                        <?php if($book['status']!="") { ?>
+                              <td> <button class="btn btn-sm btn-warning"><?=$book["status"]?></button></td>
+                                    <?php } else { ?>
+                            <td>-</td>
+                            <?php } ?> <td>
                                                             <button type="button" class="btn btn-primary btn-sm upload_book" data-bs-toggle="modal" data-bs-target="#uploadbooking" ids="<?= $book['id'] ?>">
                                                                 <i class="fa fa-upload"></i>
                                                             </button>
@@ -335,7 +347,7 @@ if ($user_name != "") {
 
                                         <div class="col-md-3">
                                             <label for="validationCustom03" class="form-label">From</label>
-                                            <input type="file" class="form-control" id="uploadimg" name="uploadimg" multiple required>
+                                            <input type="file" class="form-control" id="uploadimg" name="uploadimg" multiple>
                                             <div class="invalid-feedback" id="bookfromaddress">
                                                 Please provide a consignor address.
                                             </div>
@@ -345,7 +357,7 @@ if ($user_name != "") {
                                             <label for="validationCustom03" class="form-label">Status</label>
                                             <select class="form-control" name="delstatus" id="delstatus">
                                                 <option value="Started">Started</option>
-                                                <option value="Processing">Processing</option>
+                                                <option value="Transit">Transit</option>
                                                 <option value="Delivered">Delivered</option>
                                             </select>
                                         </div>
@@ -385,6 +397,20 @@ if ($user_name != "") {
                         e.preventDefault();
                         var bookeid = $(this).attr("ids");
                         $("#ed_bookid").val(bookeid);
+                        $.ajax({
+                url: 'ajax/ajax_request.php?action=bookupfet',
+                type: 'POST',
+                dataType: "JSON",
+                data: {
+                  'action': "bookupfet",
+                  'id': bookeid
+                 },
+                success: function(response) {
+                    var path="uploads/"+response.data.proofdoc;
+                    $('#delimg').attr("src",path);
+                    $('#delstatus').val(response.data.status);
+                  }
+                });
                     });
 
                     $(".upload_image").click(function(e) {
@@ -447,6 +473,33 @@ if ($user_name != "") {
                                 position: 'top-end',
                                 icon: 'error',
                                 title: 'Image Upload Failed',
+                                showConfirmButton: false,
+                                timer: 3000
+                              }).then(function() {
+                                window.location.href = 'bookupdate.php';
+                              })</script>";
+                }
+            }
+            else {
+                $query = "update booking set deliveryid=$delid,deliverydate='$deldate',status='$delstatus' where id=$bookid";
+                $exe = $con->prepare($query);
+                $query_execute = $exe->execute();
+
+                if ($query_execute) {
+                    echo "<script>Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Status Update Success',
+                            showConfirmButton: false,
+                            timer: 3000
+                          }).then(function() {
+                            window.location.href = 'bookupdate.php';
+                          })</script>";
+                } else {
+                    echo "<script>Swal.fire({
+                                position: 'top-end',
+                                icon: 'error',
+                                title: 'Status Update Failed',
                                 showConfirmButton: false,
                                 timer: 3000
                               }).then(function() {

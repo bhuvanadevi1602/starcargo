@@ -216,13 +216,35 @@ if($action=="partypod"){
   $data['data'] = $result;
   echo json_encode($data);
 }
+if($action=="bookupfet"){
+  $bookid = isset($_POST['id']) ? $_POST['id'] : "";
+  if ($bookid != "") {
+    $query = "select * from booking where id=:id";
+    $exe = $con->prepare($query);
+    $data = [':id' => $bookid];
+  //  print_r($data);die();
+   $exe->execute($data);
+    $result = $exe->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $msg = "Success";
+    } else {
+      $msg = "Failure";
+    }
+  } else {
+    $msg = "Failure";
+  }
+  $data = [];
+  $data['msg'] = $msg;
+  $data['data'] = $result;
+  echo json_encode($data);
+}
 if ($action == "mnoupdation") {
   $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
   $mno = isset($_POST['mno']) ? $_POST['mno'] : "";
  
-    $query = "update booking set mno=:mno where creationdate=:creationdate";
+    $query = "update booking set mno=:mno where runningdate=:runningdate";
     $exe = $con->prepare($query);
-    $data = [':mno' => $mno, ':creationdate' => $creationdate];
+    $data = [':mno' => $mno, ':runningdate' => $creationdate];
     $query_execute = $exe->execute($data);
     if ($query_execute) {
       $msg = "Success";
@@ -264,7 +286,7 @@ if ($action == "userpartydetail") {
   $route = isset($_POST['route']) ? $_POST['route'] : "";
   $weight = isset($_POST['weight']) ? $_POST['weight'] : 0;
 
-  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $types != "" && ($trainprice != "" || $airprice != "") && $gst != "" && $route!="") {
+  if ($creationdate != "" && $partyname != "" && $types != "" && ($trainprice != "" || $airprice != "") && $route!="") {
    $query = "insert into party(creationdate,partyname,partymobile,bookmode,trainprice,airprice,gst,route,weight) values(:creationdate,:partyname,:partymobile,:bookmode,:trainprice,:airprice,:gst,:route,:weight)";
       $exe = $con->prepare($query);
     $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':bookmode' => $types, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst,':route'=>$route,':weight'=>$weight];
@@ -409,7 +431,7 @@ if ($action == "partycreation") {
   $route = isset($_POST['route']) ? $_POST['route'] : "";
   $weight = isset($_POST['weight']) ? $_POST['weight'] : "";
 
-  if ($creationdate != "" && $partyname != "" && $partymobile != "" && $partyaddress != "" && $state != "" && $city != "" && $partyzip != "" && $bookmode != "" && ($trainprice != 0 || $airprice != 0) && $gst != "" && $destinate != "" && $route!='') {
+  if ($creationdate != "" && $partyname != "" && $bookmode != "" && ($trainprice != 0 || $airprice != 0) && $destinate != "" && $route!='') {
     $query = "insert into partyset(creationdate,partyname,partymobile,partyaddress,state,city,partyzip,bookmode,trainprice,airprice,gst,destinate,partyid,route,weight) values(:creationdate,:partyname,:partymobile,:partyaddress,:state,:city,:partyzip,:bookmode,:trainprice,:airprice,:gst,:destinate,:partyid,:route,:weight)";
     $exe = $con->prepare($query);
     $data = [':creationdate' => $creationdate, ':partyname' => $partyname, ':partymobile' => $partymobile, ':partyaddress' => $partyaddress, ':state' => $state, ':city' => $city, ':partyzip' => $partyzip, ':bookmode' => $bookmode, ':trainprice' => $trainprice, ':airprice' => $airprice, ':gst' => $gst, ':destinate' => $destinate,':partyid'=>$partyids,':route'=>$route,':weight'=>$weight];
@@ -553,7 +575,8 @@ if ($action == "partydeletion") {
 if ($action == "bookcreation") {
 
 $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
-  $partyid = isset($_POST['partyid']) ? $_POST['partyid'] : "";
+$runcreationdate = isset($_POST['runcreationdate']) ? $_POST['runcreationdate'] : "";
+$partyid = isset($_POST['partyid']) ? $_POST['partyid'] : "";
    $type = isset($_POST['type']) ? $_POST['type'] : "";
    $route = isset($_POST['route']) ? $_POST['route'] : "";
   $origin = isset($_POST['origin']) ? $_POST['origin'] : "";
@@ -585,10 +608,10 @@ $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
   $paymentmode = isset($_POST['paymentmode']) ? $_POST['paymentmode'] : "";
   $paid = isset($_POST['paid']) ? $_POST['paid'] : "";
 
-  if ($creationdate != "" && $type != "" && $origin != "" && $destination != "" && $coraddress != "" && $conaddress != "" && $area != "" && $transport != "" && $pack != "" &&  $invoiceno != "" && $describe != "" && $quantity != "" && $gross != "" && $weight != "" && $docs != "" && $rate != "" && $amount != "" && $gst_types != "" && $paymentmode != "" && $paid != "") {
-    $query = "insert into booking(creationdate,partyid,type,route,origin,destination,coraddress,conaddress,area,transport,pod,trainname,pack,invoiceno,description,quantity,rate,docs,gross,weight,amount,othercharge,gst,igst,cgst,sgst,paymentmode,paid,weight1,rate1,weight2,rate2) values(:creationdate,:partyid,:type,:route,:origin,:destination,:coraddress,:conaddress,:area,:transport,:pod,:trainname,:pack,:invoiceno,:description,:quantity,:rate,:docs,:gross,:weight,:amount,:othercharge,:gst,:igst,:cgst,:sgst,:paymentmode,:paid,:weight1,:rate1,:weight2,:rate2)";
+  if ($creationdate != "" && $type != "" && $origin != "" && $runcreationdate!="" && $destination != "" && $coraddress != "" && $conaddress != "" && $transport != "" && $pack != "" &&  $invoiceno != "" && $quantity != "" && ($gross != "" || $weight != "") && $docs != "" && $rate != "" && $amount != "" && $gst_types != "" && $paymentmode != "" && $paid != "") {
+    $query = "insert into booking(creationdate,runningdate,partyid,type,route,origin,destination,coraddress,conaddress,area,transport,pod,trainname,pack,invoiceno,description,quantity,rate,docs,gross,weight,amount,othercharge,gst,igst,cgst,sgst,paymentmode,paid,weight1,rate1,weight2,rate2) values(:creationdate,:runningdate,:partyid,:type,:route,:origin,:destination,:coraddress,:conaddress,:area,:transport,:pod,:trainname,:pack,:invoiceno,:description,:quantity,:rate,:docs,:gross,:weight,:amount,:othercharge,:gst,:igst,:cgst,:sgst,:paymentmode,:paid,:weight1,:rate1,:weight2,:rate2)";
     $exe = $con->prepare($query);
-    $data = [':creationdate' => $creationdate,':partyid'=>$partyid,':type' => $type,':route'=>$route,':origin' => $origin, ':destination' => $destination, ':coraddress' => $coraddress, ':conaddress' => $conaddress, ':area' => $area, ':transport' => $transport,':pod'=>$pod,':trainname'=>$trainname,':pack' => $pack, ':invoiceno' => $invoiceno, ':description' => $describe, ':quantity' => $quantity, ':rate' => $rate, ':docs' => $docs, ':gross' => $gross, ':weight' => $weight, ':amount' => $amount,':othercharge'=>$othercharge,':gst' => $gst_types, ':igst' => $igst, ':cgst' => $cgst, ':sgst' => $sgst, ':paymentmode' => $paymentmode, ':paid' => $paid,':weight1'=>$weight1,':rate1'=>$rate1,':weight2'=>$weight2,':rate2'=>$rate2];
+    $data = [':creationdate' => $creationdate,':runningdate'=>$runcreationdate,':partyid'=>$partyid,':type' => $type,':route'=>$route,':origin' => $origin, ':destination' => $destination, ':coraddress' => $coraddress, ':conaddress' => $conaddress, ':area' => $area, ':transport' => $transport,':pod'=>$pod,':trainname'=>$trainname,':pack' => $pack, ':invoiceno' => $invoiceno, ':description' => $describe, ':quantity' => $quantity, ':rate' => $rate, ':docs' => $docs, ':gross' => $gross, ':weight' => $weight, ':amount' => $amount,':othercharge'=>$othercharge,':gst' => $gst_types, ':igst' => $igst, ':cgst' => $cgst, ':sgst' => $sgst, ':paymentmode' => $paymentmode, ':paid' => $paid,':weight1'=>$weight1,':rate1'=>$rate1,':weight2'=>$weight2,':rate2'=>$rate2];
     // print_r($data);die();
     $query_execute = $exe->execute($data);
     if ($query_execute) {
@@ -682,6 +705,8 @@ if ($action == "bookupdation") {
 
   $ids = isset($_POST['ids']) ? $_POST['ids'] : "";
   $creationdate = isset($_POST['creationdate']) ? $_POST['creationdate'] : "";
+  $rundate = isset($_POST['rundate']) ? $_POST['rundate'] : "";
+  $runcreationdate = isset($_POST['runcreationdate']) ? $_POST['runcreationdate'] : "";
     $type = isset($_POST['type']) ? $_POST['type'] : "";
  $partyid = isset($_POST['partyid']) ? $_POST['partyid'] : "";
  $route = isset($_POST['route']) ? $_POST['route'] : "";
@@ -715,9 +740,9 @@ if ($action == "bookupdation") {
   $paid = isset($_POST['paid']) ? $_POST['paid'] : "";
 
   //  print_r($_POST);die();
-  $query = "update booking set creationdate=:creationdate,type=:type,partyid=:partyid,route=:route,origin=:origin,destination=:destination,coraddress=:coraddress,conaddress=:conaddress,area=:area, pod=:pod,trainname=:trainname,transport=:transport,pack=:pack,invoiceno=:invoiceno,description=:description,quantity=:quantity,gross=:gross,weight=:weight,docs=:docs,rate=:rate,amount=:amount,gst=:gst,igst=:igst,sgst=:sgst,cgst=:cgst,paymentmode=:paymentmode,paid=:paid,weight1=:weight1,rate1=:rate1,weight2=:weight2,rate2=:rate2 where id=:ids";
+  $query = "update booking set creationdate=:creationdate,runningdate=:runningdate,type=:type,partyid=:partyid,route=:route,origin=:origin,destination=:destination,coraddress=:coraddress,conaddress=:conaddress,area=:area, pod=:pod,trainname=:trainname,transport=:transport,pack=:pack,invoiceno=:invoiceno,description=:description,quantity=:quantity,gross=:gross,weight=:weight,docs=:docs,rate=:rate,amount=:amount,gst=:gst,igst=:igst,sgst=:sgst,cgst=:cgst,paymentmode=:paymentmode,paid=:paid,weight1=:weight1,rate1=:rate1,weight2=:weight2,rate2=:rate2 where id=:ids";
   $exe = $con->prepare($query);
-  $data = [':creationdate' => $creationdate,':type' => $type,':partyid'=>$partyid,':route'=>$route,':origin' => $origin, ':destination' => $destination, ':coraddress' => $coraddress, ':conaddress' => $conaddress,':area' => $area,':pod'=>$pod,':trainname'=>$trainname, ':transport' => $transport, ':pack' => $pack, ':invoiceno' => $invoiceno, ':description' => $describe, ':quantity' => $quantity, ':gross' => $gross, ':weight' => $weight,':docs' => $docs, ':rate' => $rate, ':amount' => $amount, ':gst' => $gst, ':igst' => $igst,':cgst'=>$cgst,':sgst'=>$sgst, ':paymentmode' => $paymentmode, ':paid' => $paid,':weight1'=>$weight1,':rate1'=>$rate1,':weight2'=>$weight2,':rate2'=>$rate2, ':ids' => $ids];
+  $data = [':creationdate' => $creationdate,'runningdate'=>$rundate,':type' => $type,':partyid'=>$partyid,':route'=>$route,':origin' => $origin, ':destination' => $destination, ':coraddress' => $coraddress, ':conaddress' => $conaddress,':area' => $area,':pod'=>$pod,':trainname'=>$trainname, ':transport' => $transport, ':pack' => $pack, ':invoiceno' => $invoiceno, ':description' => $describe, ':quantity' => $quantity, ':gross' => $gross, ':weight' => $weight,':docs' => $docs, ':rate' => $rate, ':amount' => $amount, ':gst' => $gst, ':igst' => $igst,':cgst'=>$cgst,':sgst'=>$sgst, ':paymentmode' => $paymentmode, ':paid' => $paid,':weight1'=>$weight1,':rate1'=>$rate1,':weight2'=>$weight2,':rate2'=>$rate2, ':ids' => $ids];
   // print_r($data);die();
   $query_execute = $exe->execute($data);
   if ($query_execute) {

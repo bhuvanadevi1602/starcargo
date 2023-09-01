@@ -221,7 +221,7 @@ if ($user_name != "") {
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label for="validationCustom05" class="form-label">Zip</label>
-                                                                <input type="number" class="form-control" name="partyzip" id="partyzip" required>
+                                                                <input type="number" class="form-control" name="partyzip" id="partyzip">
                                                                 <div class="invalid-feedback" id="partyzipm">
                                                                     Please provide a valid zip.
                                                                 </div>
@@ -803,7 +803,6 @@ if ($user_name != "") {
                         }
 
                         var destination = $("#destination").val();
-
                         var gst = $('#gst').val();
 
 
